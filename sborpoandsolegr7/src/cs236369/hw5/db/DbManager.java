@@ -6,25 +6,40 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 public class DbManager {
 
 	
 	public static class DbConnections
 	{
-		private static String dbName ; 
-		private static String userName;
-		private static String password;
-		private static String url;
+		private String dbName ; 
+		private String userName;
+		private String password;
+		private String url;
+		private static DbConnections connection;
 		
-		static
-		{
-			//TODO: should be changed
-			dbName="labdb";
-			userName="root";
-			password="123456";
-			url="jdbc:mysql://localhost";
+		
+		public void setDbName(String dbName) {
+			this.dbName = dbName;
 		}
-		public static Connection getConnection() throws SQLException
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
+		public void setUrl(String url) {
+			this.url = url;
+		}
+		public static DbConnections getInstance()
+		{
+			if (connection==null)
+			{
+				connection = new DbConnections();
+			}
+			return connection;
+		}
+		public Connection getConnection() throws SQLException
 		{
 				return DriverManager.getConnection (url+"/"+dbName, userName, password); 
 		}
@@ -33,7 +48,7 @@ public class DbManager {
 	
 	public static void  constructTables() throws SQLException
 	{
-		Connection conn=DbConnections.getConnection();
+		Connection conn=DbConnections.getInstance().getConnection();
 		Statement statment=null;
 		conn.setAutoCommit(false);
 		try{

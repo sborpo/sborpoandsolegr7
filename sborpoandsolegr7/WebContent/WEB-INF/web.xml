@@ -9,4 +9,33 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <context-param>
+    <param-name>db-server</param-name>
+    <param-value>jdbc:mysql://localhost</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db-user</param-name>
+    <param-value>root</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db-password</param-name>
+    <param-value>123456</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db-dbname</param-name>
+    <param-value>labdb</param-value>
+  </context-param>
+  <listener>
+    <listener-class>cs236369.hw5.ApplicationStarts</listener-class>
+  </listener>
+  <servlet>
+    <description></description>
+    <display-name>TestServlet</display-name>
+    <servlet-name>TestServlet</servlet-name>
+    <servlet-class>cs236369.hw5.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestServlet</servlet-name>
+    <url-pattern>/TestServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
