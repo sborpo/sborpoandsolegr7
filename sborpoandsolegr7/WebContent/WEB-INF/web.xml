@@ -38,4 +38,25 @@
     <servlet-name>TestServlet</servlet-name>
     <url-pattern>/TestServlet</url-pattern>
   </servlet-mapping>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>sborpoandsolegr7</web-resource-name>
+  		<url-pattern>/*</url-pattern>
+  		<http-method>GET</http-method>
+  		<http-method>POST</http-method>
+  		<http-method>PUT</http-method>
+  		<http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	<auth-constraint>
+  		<role-name>admin</role-name></auth-constraint>
+  </security-constraint>
+  <login-config>
+  	<auth-method>FORM</auth-method>
+  	<form-login-config>
+  		<form-login-page>/login.html</form-login-page>
+  		<form-error-page>/authenticationError.html</form-error-page>
+  	</form-login-config></login-config>
+  <security-role>
+  	<role-name>admin</role-name>
+  </security-role>
 </web-app>
