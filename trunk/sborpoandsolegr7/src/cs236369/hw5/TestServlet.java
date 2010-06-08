@@ -30,6 +30,7 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter wr=response.getWriter();
+		wr.println("Hello "+request.getUserPrincipal().getName()+"!");
 		try {
 			DbManager.constructTables();
 		} catch (SQLException e) {
