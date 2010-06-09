@@ -6,8 +6,11 @@ public class TimeSlot {
 		this.year = year;
 		this.month = slotNumber%12;
 		this.day = slotNumber %30;
-		this.slotNumber = (slotNumber/12)/30;
+		this.slotNumber= slotNumber;
 	}
+	
+	public static final int numberOfTimeSlotsInAYear = 34560;
+	
 	int year;
 	int month;
 	int day;
@@ -35,5 +38,14 @@ public class TimeSlot {
 	 */
 	public int getSlotNumber() {
 		return slotNumber;
+	}
+	
+	public static int numOfSlotsInDay()
+	{
+		return (numberOfTimeSlotsInAYear/12/30);
+	}
+	public static int numOfSlotInWeek()
+	{
+		return (numOfSlotsInDay()*7);
 	}
 }
