@@ -15,7 +15,14 @@ public class TestingClass {
 		DbManager.DbConnections.getInstance().setPassword("123456");
 		DbManager.DbConnections.getInstance().setUrl("jdbc:mysql://localhost");
 		try {
-			ReservationManager.Search(new TimeSlot(2010, 1), 5, "a");
+			ReservationManager.ReservationTable table = new ReservationManager.ReservationTable(2010, 2,1, 5, "a");
+			String [][] arr= table.getReservationTable();
+			for (String[] strings : arr) {
+				for (String string : strings) {
+					System.out.print(string+"  ");
+				}
+				System.out.println();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
