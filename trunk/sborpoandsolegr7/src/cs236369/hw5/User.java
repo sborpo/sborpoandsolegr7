@@ -56,6 +56,11 @@ public class User {
 		this.address = address;
 		this.photo = photo;
 	}
+	public User()
+	{
+		
+	}
+	
 	
 	public void
 	
