@@ -57,8 +57,50 @@ public  class ReservationManager {
 		public HashSet<Long> getInstruments() {
 			return instruments;
 		}
+		
+	
 
 	}
+	
+	public static class ReservationTable
+	{
+		String [][] arr;
+		public ReservationTable(int year,int month,int day,int k ,String type) throws SQLException {
+			
+			ReservationManager.AvailabilityResult[] res=ReservationManager.Search(new TimeSlot(year,month,day),k,type);
+			int index=0;
+			TimeSlot t1= new TimeSlot(year,month,day);
+			TimeSlot t2 = new TimeSlot(year, month, day);
+			arr = new String[TimeSlot.numOfSlotsInDay()+1][8];
+			arr[0][0]="Time/Date";
+			for (int i=1; i<=TimeSlot.numOfSlotsInDay();i++)
+			{
+				arr[i][0]=TimeSlot.getSlotTime(t1.getSlotNumber());
+				t1=t1.nextSlot();
+			}
+			for (int j=1; j<8; j++)
+			{
+				arr[0][j]=t2.getDay()+"/"+t2.getMonth();
+				for (int i=1; i<=TimeSlot.numOfSlotsInDay(); i++)
+				{
+					arr[i][j]=String.valueOf(res[index].getAvilability().actualValue)+";";
+					String values="";
+					for (Long instrument : res[index].getInstruments()) {
+						values=values+" "+instrument.toString();
+					}
+					arr[i][j]=arr[i][j]+values;
+					index++;
+				}
+				t2=new TimeSlot(t2.getYear(), t2.getSlotNumber()+TimeSlot.numOfSlotsInDay());
+				
+			}
+		}
+		public String[][] getReservationTable()
+		{
+			return arr;
+		}
+	}
+	
 	
 	private static ResultSet executeOccupiedSlotsQuery(Connection conn,TimeSlot initialeSlot,String type) throws SQLException
 	{
