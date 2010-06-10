@@ -55,34 +55,23 @@ public class DbManager {
 		statment= conn.createStatement(); 
 		String db= "CREATE SCHEMA IF NOT EXISTS `labdb` ;";	
 		statment.executeUpdate(db); 
-		String instruments="CREATE  TABLE IF NOT EXISTS `labdb`.`instruments` " +
-				"(`id` BIGINT NOT NULL ," +
-				"`type` VARCHAR(30) NOT NULL ," +
-				"`permission` INT NOT NULL ," +
-				"`timeslot` INT NOT NULL ," +
-				"`description` TEXT NOT NULL ," +
-				"PRIMARY KEY (`id`) )" +
-				"ENGINE = InnoDB;";
+		String instruments=" CREATE TABLE `instruments` " +
+				"(`id` bigint(20) NOT NULL, " +
+				"`type` varchar(30) NOT NULL," +
+				"`permission` int(11) NOT NULL," +
+				"`timeslot` int(11) NOT NULL," +
+				"`description` text NOT NULL," +
+				"PRIMARY KEY (`id`)," +
+				"KEY `Permission` (`permission`)," +
+				"KEY `Type` (`type`)) " +
+				"ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(instruments); 
-		String users= "CREATE  TABLE IF NOT EXISTS `labdb`.`users` " +
-				"(`login` varchar(30) NOT NULL," +
-				"`password` varchar(32) NOT NULL," +
-				"`name` varchar(50) NOT NULL," +
-				"`permission` text," +
-				"`group` varchar(50) NOT NULL," +
-				"`phone` varchar(15) DEFAULT NULL," +
-				"`address` varchar(50) DEFAULT NULL," +
-				"`photo` blob,`admin` char(1) NOT NULL," +
-				"PRIMARY KEY (`login`)) ENGINE=InnoDB" +
-				" DEFAULT CHARSET=utf8;";
-		 statment.executeUpdate(users); 
-		String reservations= "CREATE  TABLE IF NOT EXISTS `labdb`.`reservations`" +
-				" (`instid` BIGINT UNSIGNED NOT NULL ," +
-				"`year` INT NOT NULL ,`month` INT NOT NULL ," +
-				"`day` INT NOT NULL ,`slotbegin` INT NOT NULL ," +
-				"`numofslots` INT NOT NULL ," +
-				"PRIMARY KEY (`instid`, `year`, `month`, `day`, `slotbegin`) );";
+		String users= "CREATE TABLE `users` (`login` varchar(30) NOT NULL,`password` varchar(32) NOT NULL,`name` varchar(50) NOT NULL,`permission` text,`group` varchar(50) NOT NULL,`phone` varchar(15) DEFAULT NULL,`address` varchar(50) DEFAULT NULL,`photo` blob,PRIMARY KEY (`login`),KEY `group` (`group`),KEY `name` (`name`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		statment.executeUpdate(users); 
+		String reservations= "CREATE TABLE `reservations` (`instid` bigint(20) unsigned NOT NULL,`year` int(11) NOT NULL,`month` int(11) NOT NULL,`day` int(11) NOT NULL,`slotbegin` int(11) NOT NULL,`slotend` int(11) NOT NULL,PRIMARY KEY (`instid`,`year`,`month`,`day`,`slotbegin`),UNIQUE KEY `Instrument` (`instid`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		 statment.executeUpdate(reservations); 
+		String userRoles="CREATE TABLE `user_roles` (`login` varchar(30) NOT NULL,`rolename` varchar(45) NOT NULL, PRIMARY KEY (`login`,`rolename`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		statment.executeUpdate(userRoles); 
 		conn.commit();
 		conn.setAutoCommit(true);
 		}

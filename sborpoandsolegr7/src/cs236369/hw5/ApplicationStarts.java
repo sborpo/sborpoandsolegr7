@@ -32,6 +32,11 @@ public class ApplicationStarts implements ServletContextListener {
       DbManager.DbConnections.getInstance().setUserName( arg0.getServletContext().getInitParameter("db-user"));
       DbManager.DbConnections.getInstance().setPassword( arg0.getServletContext().getInitParameter("db-password"));
       DbManager.DbConnections.getInstance().setDbName( arg0.getServletContext().getInitParameter("db-dbname"));
+      try {
+		DbManager.constructTables();
+	} catch (SQLException e) {
+		// TODO Handle Table Construction SQL Problem
+	}
     }
 
 	/**
