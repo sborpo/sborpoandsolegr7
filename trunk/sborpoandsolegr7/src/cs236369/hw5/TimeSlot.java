@@ -13,7 +13,7 @@ public class TimeSlot {
 	
 	static 
 	{
-		slotSizeInMinutes=30; 
+		slotSizeInMinutes=15; 
 		numberOfTimeSlotsInAYear= (60/slotSizeInMinutes)*24*30*12;	
 	}
 	
@@ -88,7 +88,7 @@ public class TimeSlot {
 		this.year=year;
 		this.month=month;
 		this.day=day;
-		slotNumber=30*24*(month-1)+(day-1)*24+1;
+		slotNumber=30*numOfSlotsInDay()*(month-1)+(day-1)*numOfSlotsInDay()+1;
 	}
 	public static String getSlotTime(int slotNumber)
 	{
