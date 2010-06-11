@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+ <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
+      driverName="com.mysql.jdbc.Driver"
+   connectionURL="jdbc:mysql://localhost/labdb"
+    connectionName="root" connectionPassword="123456"
+       userTable="users" userNameCol="login" userCredCol="password"
+   userRoleTable="user_roles" roleNameCol="rolename"/> 
+</Context>
