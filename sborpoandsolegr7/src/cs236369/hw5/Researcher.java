@@ -41,6 +41,11 @@ public class Researcher extends User {
 		
 	}
 
+	@Override
+	public UserType getRole() {
+		return UserType.REASEARCHER;
+	}
+
 
 
 

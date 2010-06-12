@@ -1,9 +1,10 @@
 package cs236369.hw5;
 
-import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+
 
 
 
@@ -23,8 +24,22 @@ import java.sql.SQLException;
  * @author Oleg
  *
  */
-public class User {
+public abstract class User {
 	
+	public static enum UserType { ADMIN,REASEARCHER;
+	
+	public String toString()
+	{
+		if (this.equals(ADMIN))
+		{
+			return "admin";
+		}
+		else
+		{
+			return "researcher";
+		}
+	}
+	}
 	protected String login;
 	protected String password;
 	protected String name;
@@ -65,10 +80,6 @@ public class User {
 	
 	
 	public void
-	
-	
-	
-	
 	updateUser(String login, String password, String name, String premissions,
 			String group, String phoneNumber, String address,
 			byte[] photo) {
@@ -143,7 +154,7 @@ public class User {
 	public PreparedStatement setInsertUser(Connection conn) throws SQLException
 	{
 		//TODO: handle BLOB
-		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`group`,`phone`,`address`,`photo`) VALUES(?,?,?,?,?,?,?,NULL)";
+		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`) VALUES(?,?,?,?,?,?,?,NULL)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, login);
 		prepareStatement.setString(2,password);
@@ -155,6 +166,14 @@ public class User {
 		return prepareStatement;
 	}
 	
+	public static PreparedStatement getAllUsersNoPicture(Connection conn) throws SQLException
+	{
+
+		String query= "SELECT U.login , password , name ,permission, usergroup , phone , address , UR.rolename FROM users U,user_roles UR WHERE U.login=UR.login ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		return prepareStatement;
+	}
+	
 	public  PreparedStatement setDeleteUser(Connection conn) throws SQLException
 	{
 		String query= "DELETE FROM users WHERE login=? ";
@@ -162,6 +181,7 @@ public class User {
 		prepareStatement.setString(1, login);
 		return prepareStatement;
 	}
-	public  PreparedStatement setUpdateRole(Connection statement) throws SQLException{return null;}
+	public  abstract PreparedStatement setUpdateRole(Connection statement) throws SQLException;
+	public abstract UserType getRole();
 		
 }	

@@ -77,7 +77,7 @@ public class DbManager {
 				"KEY `Type` (`type`)) " +
 				"ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(instruments); 
-		String users= "CREATE TABLE `users` (`login` varchar(30) NOT NULL,`password` varchar(32) NOT NULL,`name` varchar(50) NOT NULL,`permission` text,`group` varchar(50) NOT NULL,`phone` varchar(15) DEFAULT NULL,`address` varchar(50) DEFAULT NULL,`photo` blob,PRIMARY KEY (`login`),KEY `group` (`group`),KEY `name` (`name`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		String users= "CREATE TABLE `users` (`login` varchar(30) NOT NULL,`password` varchar(32) NOT NULL,`name` varchar(50) NOT NULL,`permission` text,`usergroup` varchar(50) NOT NULL,`phone` varchar(15) DEFAULT NULL,`address` varchar(50) DEFAULT NULL,`photo` blob,PRIMARY KEY (`login`),KEY `group` (`group`),KEY `name` (`name`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(users); 
 		String reservations= "CREATE TABLE `reservations` (`instid` bigint(20) unsigned NOT NULL,`year` int(11) NOT NULL,`month` int(11) NOT NULL,`day` int(11) NOT NULL,`slotbegin` int(11) NOT NULL,`slotend` int(11) NOT NULL,PRIMARY KEY (`instid`,`year`,`month`,`day`,`slotbegin`),UNIQUE KEY `Instrument` (`instid`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		 statment.executeUpdate(reservations); 

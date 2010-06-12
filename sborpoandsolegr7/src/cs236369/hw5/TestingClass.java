@@ -2,10 +2,10 @@ package cs236369.hw5;
 
 import java.sql.SQLException;
 
+import cs236369.hw5.User.UserType;
 import cs236369.hw5.db.DbManager;
 import cs236369.hw5.users.UserManager;
 import cs236369.hw5.users.UserManager.UserExists;
-import cs236369.hw5.users.UserManager.UserType;
 
 public class TestingClass {
 
@@ -26,12 +26,15 @@ public class TestingClass {
 //				}
 //				System.out.println();
 //			}
-		UserManager.AddUser("stam1", "abc", "asf", "asf", "safasf", "", "", null, UserType.ADMIN);
+		//UserManager.AddUser("stam1", "abc", "asf", "asf", "safasf", "", "", null, UserType.ADMIN);
+			for (User user : UserManager.getUsers()) {
+				System.out.println(user.getName());
+			}
 		}
-		catch (UserExists e)
-		{
-			System.out.println("user already exists");
-		}
+//		catch (UserExists e)
+//		{
+//			System.out.println("user already exists");
+//		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
