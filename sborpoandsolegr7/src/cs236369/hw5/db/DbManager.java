@@ -18,7 +18,18 @@ public class DbManager {
 		private String url;
 		private static DbConnections connection;
 		
-		
+		public static enum SqlError {
+			PRIMARY_KEY_ERROR(1062); 
+			
+			private int errorNum;
+			SqlError(int value)
+			{errorNum=value;}
+			
+			public int errorNumber()
+			{
+				return errorNum;
+			}
+		}
 		public void setDbName(String dbName) {
 			this.dbName = dbName;
 		}
