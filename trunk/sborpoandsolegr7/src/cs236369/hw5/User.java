@@ -1,6 +1,11 @@
 package cs236369.hw5;
 
 import java.awt.Image;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+
 
 /**
  * Each user has the following properties:
@@ -20,15 +25,14 @@ import java.awt.Image;
  */
 public class User {
 	
-	private String login;
-	private String password;
-	private String name;
-	private String premissions;
-	private String group;
-	private String phoneNumber;
-	private String active;
-	private String address;
-	private Image  photo;
+	protected String login;
+	protected String password;
+	protected String name;
+	protected String premissions;
+	protected String group;
+	protected String phoneNumber;
+	protected String address;
+	protected byte[]  photo;
 	
 	/**
 	 * create a user with given parameters
@@ -38,13 +42,12 @@ public class User {
 	 * @param premissions
 	 * @param group
 	 * @param phoneNumber
-	 * @param active
 	 * @param address
 	 * @param photo
 	 */
 	public User(String login, String password, String name, String premissions,
-			String group, String phoneNumber, String active, String address,
-			Image photo) {
+			String group, String phoneNumber, String address,
+			byte[] photo) {
 		super();
 		this.login = login;
 		this.password = password;
@@ -52,7 +55,6 @@ public class User {
 		this.premissions = premissions;
 		this.group = group;
 		this.phoneNumber = phoneNumber;
-		this.active = active;
 		this.address = address;
 		this.photo = photo;
 	}
@@ -68,15 +70,14 @@ public class User {
 	
 	
 	updateUser(String login, String password, String name, String premissions,
-			String group, String phoneNumber, String active, String address,
-			Image photo) {
+			String group, String phoneNumber, String address,
+			byte[] photo) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
 		this.premissions = premissions;
 		this.group = group;
 		this.phoneNumber = phoneNumber;
-		this.active = active;
 		this.address = address;
 		this.photo = photo;
 	}
@@ -125,12 +126,7 @@ public class User {
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	/**
-	 * @return the active
-	 */
-	public String getActive() {
-		return active;
-	}
+
 	/**
 	 * @return the address
 	 */
@@ -140,9 +136,32 @@ public class User {
 	/**
 	 * @return the photo
 	 */
-	public Image getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 	
+	public PreparedStatement setInsertUser(Connection conn) throws SQLException
+	{
+		//TODO: handle BLOB
+		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`group`,`phone`,`address`,`photo`) VALUES(?,?,?,?,?,?,?,NULL)";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, login);
+		prepareStatement.setString(2,password);
+		prepareStatement.setString(3,name);
+		prepareStatement.setString(4,premissions);
+		prepareStatement.setString(5,group);
+		prepareStatement.setString(6,phoneNumber);
+		prepareStatement.setString(7,address);
+		return prepareStatement;
+	}
 	
-}
+	public  PreparedStatement setDeleteUser(Connection conn) throws SQLException
+	{
+		String query= "DELETE FROM users WHERE login=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, login);
+		return prepareStatement;
+	}
+	public  PreparedStatement setUpdateRole(Connection statement) throws SQLException{return null;}
+		
+}	
