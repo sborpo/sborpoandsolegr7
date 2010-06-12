@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
+
 public class Administrator extends User{
 
 	
@@ -29,6 +30,11 @@ public class Administrator extends User{
 		prepareStatement.setString(1,login);
 		prepareStatement.setString(2,"admin");
 		return prepareStatement;
+	}
+
+	@Override
+	public UserType getRole() {
+		return UserType.ADMIN;
 	}
 
 

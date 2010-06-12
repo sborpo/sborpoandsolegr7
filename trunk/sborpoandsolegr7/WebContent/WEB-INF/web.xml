@@ -38,10 +38,17 @@
     <servlet-name>TestServlet</servlet-name>
     <url-pattern>/TestServlet</url-pattern>
   </servlet-mapping>
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/errorPages/notFound.html</location>
+  </error-page><error-page>
+  	<error-code>500</error-code>
+  	<location>/errorPages/internalError.html</location>
+  </error-page>
   <security-constraint>
   	<web-resource-collection>
-  		<web-resource-name>sborpoandsolegr7</web-resource-name>
-  		<url-pattern>/*</url-pattern>
+  		<web-resource-name>viewReservations.jsp</web-resource-name>
+  		<url-pattern>/viewReservations.jsp</url-pattern>
   		<http-method>GET</http-method>
   		<http-method>POST</http-method>
   		<http-method>PUT</http-method>
@@ -59,4 +66,6 @@
   <security-role>
   	<role-name>admin</role-name>
   </security-role>
+  
+  
 </web-app>

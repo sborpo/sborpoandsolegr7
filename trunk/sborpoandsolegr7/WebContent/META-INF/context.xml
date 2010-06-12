@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
- <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
+
+ <!-- Default set of monitored resources -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+	
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+
+    <!-- Uncomment this to enable Comet connection tacking (provides events
+         on session expiration as well as webapp lifecycle) -->
+    <!--
+    <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
+    -->
+
+
+
+  <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
       driverName="com.mysql.jdbc.Driver"
    connectionURL="jdbc:mysql://localhost/labdb"
     connectionName="root" connectionPassword="123456"
        userTable="users" userNameCol="login" userCredCol="password"
-   userRoleTable="user_roles" roleNameCol="rolename"/> 
+   userRoleTable="user_roles" roleNameCol="rolename"/>
 </Context>
