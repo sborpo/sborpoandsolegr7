@@ -39,33 +39,44 @@
     <url-pattern>/TestServlet</url-pattern>
   </servlet-mapping>
   <error-page>
-  	<error-code>404</error-code>
-  	<location>/errorPages/notFound.html</location>
-  </error-page><error-page>
-  	<error-code>500</error-code>
-  	<location>/errorPages/internalError.html</location>
+    <error-code>404</error-code>
+    <location>/errorPages/notFound.html</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/errorPages/internalError.html</location>
   </error-page>
   <security-constraint>
-  	<web-resource-collection>
-  		<web-resource-name>viewReservations.jsp</web-resource-name>
-  		<url-pattern>/viewReservations.jsp</url-pattern>
-  		<http-method>GET</http-method>
-  		<http-method>POST</http-method>
-  		<http-method>PUT</http-method>
-  		<http-method>DELETE</http-method>
-  	</web-resource-collection>
-  	<auth-constraint>
-  		<role-name>admin</role-name></auth-constraint>
+    <web-resource-collection>
+      <web-resource-name>viewReservations.jsp</web-resource-name>
+      <url-pattern>/viewReservations.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
   </security-constraint>
   <login-config>
-  	<auth-method>FORM</auth-method>
-  	<form-login-config>
-  		<form-login-page>/login.html</form-login-page>
-  		<form-error-page>/authenticationError.html</form-error-page>
-  	</form-login-config></login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/login.html</form-login-page>
+      <form-error-page>/authenticationError.html</form-error-page>
+    </form-login-config>
+  </login-config>
   <security-role>
-  	<role-name>admin</role-name>
+    <role-name>admin</role-name>
   </security-role>
-  
-  
+  <servlet>
+    <description></description>
+    <display-name>ErrorServlet</display-name>
+    <servlet-name>ErrorServlet</servlet-name>
+    <servlet-class>cs236369.hw5.ErrorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ErrorServlet</servlet-name>
+    <url-pattern>/ErrorServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
