@@ -13,5 +13,9 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/filters-2.0.235.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcaptcha-2.0-alpha-1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcaptcha-integration-simple-servlet-2.0-alpha-1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcaptcha-api-1.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
