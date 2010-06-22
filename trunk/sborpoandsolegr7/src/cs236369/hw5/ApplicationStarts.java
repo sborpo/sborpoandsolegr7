@@ -1,7 +1,5 @@
 package cs236369.hw5;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import javax.servlet.ServletContextEvent;
