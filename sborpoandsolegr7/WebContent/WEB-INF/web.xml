@@ -90,11 +90,21 @@
     <url-pattern>/AddNewUser</url-pattern>
   </servlet-mapping>
   <servlet>
-        <servlet-name>jcaptcha</servlet-name>
-        <servlet-class>com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-        <servlet-name>jcaptcha</servlet-name>
-        <url-pattern>/jcaptcha.jpg</url-pattern>
-</servlet-mapping>
+    <servlet-name>jcaptcha</servlet-name>
+    <servlet-class>com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jcaptcha</servlet-name>
+    <url-pattern>/jcaptcha.jpg</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ImageGetter</display-name>
+    <servlet-name>ImageGetter</servlet-name>
+    <servlet-class>cs236369.hw5.ImageGetter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ImageGetter</servlet-name>
+    <url-pattern>/ImageGetter</url-pattern>
+  </servlet-mapping>
 </web-app>

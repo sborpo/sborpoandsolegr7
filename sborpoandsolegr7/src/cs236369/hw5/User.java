@@ -169,6 +169,15 @@ public abstract class User {
 		return prepareStatement;
 	}
 	
+	public static PreparedStatement getUserPicture(Connection conn,String username) throws SQLException
+	{
+
+		String query= "SELECT photo FROM users  WHERE login=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, username);
+		return prepareStatement;
+	}
+	
 	public static PreparedStatement getAllUsersNoPicture(Connection conn) throws SQLException
 	{
 
