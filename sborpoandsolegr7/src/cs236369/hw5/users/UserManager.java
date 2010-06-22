@@ -16,7 +16,12 @@ import cs236369.hw5.db.DbManager;
 import cs236369.hw5.db.DbManager.DbConnections.SqlError;
 
 public class UserManager {
-	public static class UserExists extends Exception{}
+	public static class UserExists extends Exception{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6539550792386539805L;}
 	public static String Usern="username";
 	public static String Password="password";
 	public static String PassConfirm="c_password";
