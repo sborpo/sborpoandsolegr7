@@ -1,5 +1,6 @@
 package cs236369.hw5;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,8 +14,8 @@ public class Administrator extends User{
 
 	public Administrator(String login, String password, String name,
 			String premissions, String group, String phoneNumber,
-			String address, byte[] photo) {
-		super(login, password, name, premissions, group, phoneNumber, address, photo);
+			String address, InputStream stream) {
+		super(login, password, name, premissions, group, phoneNumber, address, stream);
 
 	}
 

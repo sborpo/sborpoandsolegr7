@@ -2,6 +2,8 @@ package cs236369.hw5.users;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
+
+import cs236369.hw5.User.UserType;
+import cs236369.hw5.users.UserManager.UserExists;
 
 /**
  * Servlet implementation class AddNewUser
@@ -44,8 +49,8 @@ public class AddNewUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ServletFileUpload upload = new ServletFileUpload();
-
 		// Parse the request
+		HashMap<String, String> params = new HashMap<String, String>();
 		try{
 		FileItemIterator iter = upload.getItemIterator(request);
 		while (iter.hasNext()) {
@@ -53,20 +58,26 @@ public class AddNewUser extends HttpServlet {
 		    String name = item.getFieldName();
 		    InputStream stream = item.openStream();
 		    if (item.isFormField()) {
-		        System.out.println("Form field " + name + " with value "
-		            + Streams.asString(stream) + " detected.");
+		    		params.put(name,  Streams.asString(stream));
 		    } else {
 		        System.out.println("File field " + name + " with file name "
 		            + item.getName() + " detected.");
 		        // Process the input stream
+		        UserManager.AddUser("asfs", "asf", "saf", "asf", "asf", "asf", "safas", stream, UserType.ADMIN);
 		        
-		    }
+		    } 
 		}
 		}
 		catch (FileUploadException ex)
 		{
 			//TODO: problem with file upload
 			ex.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UserExists e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		
