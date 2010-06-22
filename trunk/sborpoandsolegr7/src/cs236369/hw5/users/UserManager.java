@@ -45,7 +45,7 @@ public class UserManager {
 			}
 			int length  = (int) b.length();
 			byte[] array = new byte[length];
-			array = b.getBytes(0,length);
+			array = b.getBytes(1,length);
 			return array;
 		 }
 		return null;
