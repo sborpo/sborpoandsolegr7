@@ -2,10 +2,8 @@ package cs236369.hw5;
 
 import java.sql.SQLException;
 
-import cs236369.hw5.User.UserType;
 import cs236369.hw5.db.DbManager;
 import cs236369.hw5.users.UserManager;
-import cs236369.hw5.users.UserManager.UserExists;
 
 public class TestingClass {
 

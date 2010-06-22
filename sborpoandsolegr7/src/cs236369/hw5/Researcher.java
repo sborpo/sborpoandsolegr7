@@ -1,16 +1,10 @@
 package cs236369.hw5;
 
-import java.awt.Image;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.LinkedList;
-
-import cs236369.hw5.db.DbManager;
 
 public class Researcher extends User {
 
