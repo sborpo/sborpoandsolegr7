@@ -1,5 +1,6 @@
 package cs236369.hw5;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -47,7 +48,7 @@ public abstract class User {
 	protected String group;
 	protected String phoneNumber;
 	protected String address;
-	protected byte[]  photo;
+	protected InputStream  photo;
 	
 	/**
 	 * create a user with given parameters
@@ -58,11 +59,11 @@ public abstract class User {
 	 * @param group
 	 * @param phoneNumber
 	 * @param address
-	 * @param photo
+	 * @param stream
 	 */
 	public User(String login, String password, String name, String premissions,
 			String group, String phoneNumber, String address,
-			byte[] photo) {
+			InputStream stream) {
 		super();
 		this.login = login;
 		this.password = password;
@@ -71,7 +72,7 @@ public abstract class User {
 		this.group = group;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
-		this.photo = photo;
+		this.photo = stream;
 	}
 	public User()
 	{
@@ -82,7 +83,7 @@ public abstract class User {
 	public void
 	updateUser(String login, String password, String name, String premissions,
 			String group, String phoneNumber, String address,
-			byte[] photo) {
+			InputStream photo) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
@@ -147,14 +148,14 @@ public abstract class User {
 	/**
 	 * @return the photo
 	 */
-	public byte[] getPhoto() {
+	public InputStream getPhoto() {
 		return photo;
 	}
 	
 	public PreparedStatement setInsertUser(Connection conn) throws SQLException
 	{
 		//TODO: handle BLOB
-		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`) VALUES(?,?,?,?,?,?,?,NULL)";
+		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`) VALUES(?,?,?,?,?,?,?,?)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, login);
 		prepareStatement.setString(2,password);
@@ -163,13 +164,14 @@ public abstract class User {
 		prepareStatement.setString(5,group);
 		prepareStatement.setString(6,phoneNumber);
 		prepareStatement.setString(7,address);
+		prepareStatement.setBlob(8, photo);
 		return prepareStatement;
 	}
 	
 	public static PreparedStatement getAllUsersNoPicture(Connection conn) throws SQLException
 	{
 
-		String query= "SELECT U.login , password , name ,permission, usergroup , phone , address , UR.rolename FROM users U,user_roles UR WHERE U.login=UR.login ";
+		String query= "SELECT U.login , password , name ,permission, usergroup , phone , address ,photo, UR.rolename FROM users U,user_roles UR WHERE U.login=UR.login ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		return prepareStatement;
 	}
