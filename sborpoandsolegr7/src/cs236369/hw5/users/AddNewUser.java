@@ -1,5 +1,7 @@
 package cs236369.hw5.users;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -9,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
@@ -50,6 +53,7 @@ public class AddNewUser extends HttpServlet {
 
 		ServletFileUpload upload = new ServletFileUpload();
 		// Parse the request
+		SerialBlob imageBlob=null;
 		HashMap<String, String> params = new HashMap<String, String>();
 		try{
 		FileItemIterator iter = upload.getItemIterator(request);
@@ -58,15 +62,33 @@ public class AddNewUser extends HttpServlet {
 		    String name = item.getFieldName();
 		    InputStream stream = item.openStream();
 		    if (item.isFormField()) {
-		    		params.put(name,  Streams.asString(stream));
+		    	String str=Streams.asString(stream);
+		    	System.out.println(str);
+		    		params.put(name, str );
 		    } else {
-		        System.out.println("File field " + name + " with file name "
-		            + item.getName() + " detected.");
 		        // Process the input stream
-		        UserManager.AddUser("asfs", "asf", "saf", "asf", "asf", "asf", "safas", stream, UserType.ADMIN);
+		        ByteArrayOutputStream byteStream= new ByteArrayOutputStream();
+		        int c;
+		        while ((c = stream.read()) != -1) {
+		        	byteStream.write((char) c);
+		        	}
+		        byte [] image= byteStream.toByteArray();
+		        imageBlob= new SerialBlob(image);
+		        
 		        
 		    } 
 		}
+		UserType databaseUserType;
+		if (params.get(UserManager.UserTypen).equals("Administrator"))
+		{
+			databaseUserType=UserType.ADMIN;
+		}
+		else
+		{
+			databaseUserType=UserType.REASEARCHER;
+		}
+		UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
+		
 		}
 		catch (FileUploadException ex)
 		{
@@ -81,7 +103,7 @@ public class AddNewUser extends HttpServlet {
 		}
 		
 		
-		String userCaptchaResponse = request.getParameter("jcaptcha");
+		String userCaptchaResponse = params.get(UserManager.Captcha);
 		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, userCaptchaResponse);
 		if(captchaPassed){
 			response.getWriter().println("Corret");

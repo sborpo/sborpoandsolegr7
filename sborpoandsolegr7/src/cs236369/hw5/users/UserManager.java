@@ -30,7 +30,7 @@ public class UserManager {
 	
 	
 	
-	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,InputStream stream,UserType type) throws SQLException, UserExists
+	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type) throws SQLException, UserExists
 	{
 		User user= null;
 		if (type.equals(UserType.ADMIN))

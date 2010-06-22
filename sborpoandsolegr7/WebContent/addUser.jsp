@@ -27,7 +27,7 @@ User Type : <select name="<%=UserManager.UserTypen %>">
 Picture (Max Size: 300 Kb) :<input type="hidden" name="MAX_FILE_SIZE" value="300" />
 <input type="file" name="userpicture" />
 <br/><br/>
-<img src="jcaptcha.jpg" /> <input type="text" name="jcaptcha" value="" />
+<img src="jcaptcha.jpg" /> <input type="text" name="<%=UserManager.Captcha %>" value="" />
 <br/><br/>
 
 

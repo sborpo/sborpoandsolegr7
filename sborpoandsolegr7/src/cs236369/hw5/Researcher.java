@@ -2,6 +2,7 @@ package cs236369.hw5;
 
 import java.awt.Image;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ public class Researcher extends User {
 	
 
 	public Researcher(String login, String password, String name,
-			String premissions, String group, String phoneNumber, String address, InputStream stream) {
+			String premissions, String group, String phoneNumber, String address, Blob stream) {
 		super(login, password, name, premissions, group, phoneNumber,address,
 				stream);
 		// TODO Auto-generated constructor stub
