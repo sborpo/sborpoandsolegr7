@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-
 import cs236369.hw5.db.DbManager;
 
 public  class ReservationManager {
