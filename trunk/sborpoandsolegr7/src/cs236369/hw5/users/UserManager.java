@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import javax.sql.rowset.serial.SerialBlob;
+
 import cs236369.hw5.Administrator;
 import cs236369.hw5.Researcher;
 import cs236369.hw5.User;
@@ -16,12 +18,7 @@ import cs236369.hw5.db.DbManager;
 import cs236369.hw5.db.DbManager.DbConnections.SqlError;
 
 public class UserManager {
-	public static class UserExists extends Exception{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -6539550792386539805L;}
+	public static class UserExists extends Exception{}
 	public static String Usern="username";
 	public static String Password="password";
 	public static String PassConfirm="c_password";
@@ -34,6 +31,25 @@ public class UserManager {
 	public static String Captcha="jcaptcha";
 	
 	
+	public static byte[] getPhoto(String username) throws SQLException
+	{
+		 Connection conn=DbManager.DbConnections.getInstance().getConnection();
+		 PreparedStatement statementUsers= User.getUserPicture(conn,username);
+		 ResultSet set= statementUsers.executeQuery();
+		 if (set.next())
+		 {
+			Blob b= set.getBlob("photo");
+			if (set.wasNull())
+			{
+				return null;
+			}
+			int length  = (int) b.length();
+			byte[] array = new byte[length];
+			array = b.getBytes(0,length);
+			return array;
+		 }
+		return null;
+	}
 	
 	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type) throws SQLException, UserExists
 	{
@@ -73,6 +89,8 @@ public class UserManager {
 			}
 		}
 	}
+	
+	
 	
 	public static LinkedList<User> getUsers() throws SQLException{ 
 		Connection conn=null;ResultSet set=null;
