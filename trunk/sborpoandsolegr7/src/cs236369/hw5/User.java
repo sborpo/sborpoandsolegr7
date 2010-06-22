@@ -1,6 +1,7 @@
 package cs236369.hw5;
 
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -48,7 +49,7 @@ public abstract class User {
 	protected String group;
 	protected String phoneNumber;
 	protected String address;
-	protected InputStream  photo;
+	protected Blob  photo;
 	
 	/**
 	 * create a user with given parameters
@@ -63,7 +64,7 @@ public abstract class User {
 	 */
 	public User(String login, String password, String name, String premissions,
 			String group, String phoneNumber, String address,
-			InputStream stream) {
+			Blob stream) {
 		super();
 		this.login = login;
 		this.password = password;
@@ -83,7 +84,7 @@ public abstract class User {
 	public void
 	updateUser(String login, String password, String name, String premissions,
 			String group, String phoneNumber, String address,
-			InputStream photo) {
+			Blob photo) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
@@ -148,7 +149,7 @@ public abstract class User {
 	/**
 	 * @return the photo
 	 */
-	public InputStream getPhoto() {
+	public Blob getPhoto() {
 		return photo;
 	}
 	
@@ -164,7 +165,7 @@ public abstract class User {
 		prepareStatement.setString(5,group);
 		prepareStatement.setString(6,phoneNumber);
 		prepareStatement.setString(7,address);
-		prepareStatement.setBlob(8, photo);
+		prepareStatement.setBlob(8, photo.getBinaryStream());
 		return prepareStatement;
 	}
 	
