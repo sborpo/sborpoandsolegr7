@@ -178,6 +178,15 @@ public abstract class User {
 		return prepareStatement;
 	}
 	
+	public static PreparedStatement getUserDetails(Connection conn,String username) throws SQLException
+	{
+
+		String query= "SELECT U.login,password,name,permission,usergroup,phone,address,UR.rolename FROM users U,user_roles UR WHERE U.login=UR.login AND U.login=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, username);
+		return prepareStatement;
+	}
+	
 	public static PreparedStatement getAllUsersNoPicture(Connection conn) throws SQLException
 	{
 

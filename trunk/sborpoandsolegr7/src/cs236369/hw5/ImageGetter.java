@@ -44,6 +44,7 @@ public class ImageGetter extends HttpServlet {
 		  {
 			  return;
 		  }
+		  
 	      OutputStream out=response.getOutputStream();
 	      out.write(photo, 0, photo.length);
 	      out.flush();
