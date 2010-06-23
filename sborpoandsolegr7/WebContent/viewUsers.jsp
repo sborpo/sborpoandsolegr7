@@ -43,7 +43,7 @@ int i=1;
 LinkedList<User> users= UserManager.getUsers();
 for ( User user : users ){ if (!user.getRole().equals(User.UserType.REASEARCHER)){continue;}%>
 <tr>
-<td><%=i %></td><td><%=user.getLogin() %></td><td><%=user.getName() %></td><td><%=user.getGroup() %></td><td><%=user.getPremissions() %></td>
+<td><%=i %></td><td><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getGroup() %></td><td><%=user.getPremissions() %></td>
 </tr>
 <%i++;} %>
 <tr class="userTypesRow">
@@ -51,7 +51,7 @@ for ( User user : users ){ if (!user.getRole().equals(User.UserType.REASEARCHER)
 </tr>
 <%for ( User user : users ){ if (!user.getRole().equals(User.UserType.ADMIN)){continue;}%>
 <tr>
-<td><%=i %></td><td><%=user.getLogin() %></td><td><%=user.getName() %></td><td><%=user.getGroup() %></td><td><%=user.getPremissions() %></td>
+<td><%=i %></td><td><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getGroup() %></td><td><%=user.getPremissions() %></td>
 </tr>
 <%i++;} %>
 </table>

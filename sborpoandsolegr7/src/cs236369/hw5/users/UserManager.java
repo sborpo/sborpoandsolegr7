@@ -90,7 +90,45 @@ public class UserManager {
 		}
 	}
 	
+	private static User setUserFromRow(ResultSet set) throws SQLException
+	{
+		User user=null;
+		 if (set.getString("rolename").equals(UserType.ADMIN.toString()))
+		 {
+			 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),null);
+		 }
+		 else
+		 {
+			 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),null);
+		 }
+		 return user;
+	}
 	
+	public static User getUserDetails(String username) throws SQLException
+	{
+		Connection conn=null;ResultSet set=null;
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		 PreparedStatement statementUsers= User.getUserDetails(conn, username);
+		 set= statementUsers.executeQuery();
+		 User user=null;
+		 if (set.next())
+		 {
+			user=setUserFromRow(set);
+		 }
+		 return user;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+	}
 	
 	public static LinkedList<User> getUsers() throws SQLException{ 
 		Connection conn=null;ResultSet set=null;
@@ -111,16 +149,7 @@ public class UserManager {
 				System.out.println(b.length());
 			}
 			 User user=null;
-			 if (set.getString("rolename").equals(UserType.ADMIN.toString()))
-			 {
-				 
-				 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),null);
-			 }
-			 else
-			 {
-
-				 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),null);
-			 }
+			 user=setUserFromRow(set);
 			 usersList.add(user);
 		 }
 		 return usersList;
