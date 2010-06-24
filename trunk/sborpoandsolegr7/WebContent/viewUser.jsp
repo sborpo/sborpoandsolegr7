@@ -8,8 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="defualtCss.css" />
 </head>
-
+<jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
 <body>
 <% String login = request.getParameter("username"); User user=UserManager.getUserDetails(login); %>
 <h1>User Details</h1><br/><br/>

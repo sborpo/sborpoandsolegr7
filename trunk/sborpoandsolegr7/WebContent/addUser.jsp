@@ -6,8 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add User</title>
+<link rel="stylesheet" type="text/css" href="defualtCss.css" />
 </head>
 <%@page import="cs236369.hw5.*" %>
+<jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
 <body>
 <h1>Please Your Details:</h1><br/><br/>
 <form  action="AddNewUser" ENCTYPE="multipart/form-data"
