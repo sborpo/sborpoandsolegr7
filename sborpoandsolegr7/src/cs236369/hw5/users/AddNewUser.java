@@ -79,7 +79,7 @@ public class AddNewUser extends HttpServlet {
 		    } 
 		}
 		UserType databaseUserType;
-		if (params.get(UserManager.UserTypen).equals("Administrator"))
+		if (params.get(UserManager.UserTypen).equals("Admin"))
 		{
 			databaseUserType=UserType.ADMIN;
 		}
