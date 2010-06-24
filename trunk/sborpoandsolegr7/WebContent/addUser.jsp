@@ -12,29 +12,30 @@
 <jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
 <body>
 <h1>Please Your Details:</h1><br/><br/>
+
 <form  action="AddNewUser" ENCTYPE="multipart/form-data"
       method="post">
-Username : <input type="text" size="15" maxlength="25" name="<%=UserManager.Usern %>"><br/><br/>
-Password : <input type="password" size="15" maxlength="25" name="<%=UserManager.Password %>"><br/><br/>
-Confirm Password : <input type="password" size="15" maxlength="25" name="<%=UserManager.PassConfirm %>"><br/><br/>
-Name : <input type="text" size="15" maxlength="25" name="<%=UserManager.Name %>"><br/><br/>
-Group: <input type="text" size="15" maxlength="25" name="<%=UserManager.Group %>"><br/><br/>
-Address : <input type="text" size="15" maxlength="25" name="<%=UserManager.Address %>"><br/><br/>
-Phone Number : <input type="text" size="15" maxlength="25" name="<%=UserManager.PhoneNumber %>"><br/><br/>
-User Type : <select name="<%=UserManager.UserTypen %>">
+<table>
+<tr><td>Username : </td><td><input type="text" size="15" maxlength="25" name="<%=UserManager.Usern %>"></td><td>Name :</td><td> <input type="text" size="15" maxlength="25" name="<%=UserManager.Name %>"></td></tr>
+<tr><td>Password : </td><td><input type="password" size="15" maxlength="25" name="<%=UserManager.Password %>"></td><td>Confirm Password : </td><td><input type="password" size="15" maxlength="25" name="<%=UserManager.PassConfirm %>"></td></tr>
+
+<tr><td>Address :</td><td> <input type="text" size="15" maxlength="25" name="<%=UserManager.Address %>"></td><td>  Phone Number :</td><td><input type="text" size="15" maxlength="25" name="<%=UserManager.PhoneNumber %>"></td></tr>
+<tr><td>Group:</td><td> <input type="text" size="15" maxlength="25" name="<%=UserManager.Group %>"></td>
+<td>User Type : </td><td><select name="<%=UserManager.UserTypen %>">
 <option value="Researcher" selected="selected">Researcher</option>
 <option value="Admin">Administrator</option>
 </select>
-<br/><br/>
-Picture (Max Size: 300 Kb) :<input type="hidden" name="MAX_FILE_SIZE" value="300" />
+</td></tr>
+<tr><td colspan="2">Picture (Max Size: 300 Kb) :</td><td colspan="2"><input type="hidden" name="MAX_FILE_SIZE" value="300" />
 <input type="file" name="userpicture" />
-<br/><br/>
-<img src="jcaptcha.jpg" /> <input type="text" name="<%=UserManager.Captcha %>" value="" />
-<br/><br/>
+</td></tr>
+<tr><td colspan="4">Captcha</td></tr>
+<tr><td colspan="2"><img src="jcaptcha.jpg" /></td><td colspan="2"> <input type="text" name="<%=UserManager.Captcha %>" value="" /></td></tr>
 
-
-
+</table>
+<br/>
 <input value="AddUser" type="submit">&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset">
 </form>
+
 </body>
 </html>
