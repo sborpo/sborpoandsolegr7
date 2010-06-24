@@ -11,7 +11,7 @@
 <%@page import="cs236369.hw5.*" %>
 <jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
 <body>
-<h1>Please Your Details:</h1><br/><br/>
+<h1>Please enter your details:</h1><br/><br/>
 
 <form  action="AddNewUser" ENCTYPE="multipart/form-data"
       method="post">
@@ -30,7 +30,8 @@
 <input type="file" name="userpicture" />
 </td></tr>
 <tr><td colspan="4">Captcha</td></tr>
-<tr><td colspan="2"><img src="jcaptcha.jpg" /></td><td colspan="2"> <input type="text" name="<%=UserManager.Captcha %>" value="" /></td></tr>
+<tr><td colspan="4"><img src="jcaptcha.jpg" /></td></tr>
+<tr><td colspan="4">Please enter the word which is presented in the picture: <input type="text" name="<%=UserManager.Captcha %>" value="" /></td></tr>
 
 </table>
 <br/>

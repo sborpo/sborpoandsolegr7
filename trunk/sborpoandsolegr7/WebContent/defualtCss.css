@@ -26,3 +26,10 @@ body {background: #f9fee8;margin: 0; padding: 20px; text-align:left; font-family
   height: 1px -solid;
   color: #666666;
   }
+  
+input
+{
+color: green;
+background: white;
+border: 1px solid #000000
+}

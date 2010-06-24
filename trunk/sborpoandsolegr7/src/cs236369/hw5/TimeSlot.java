@@ -3,6 +3,8 @@ package cs236369.hw5;
 public class TimeSlot {
 	public TimeSlot(int year, int slotNumber) {
 		super();
+		if (slotNumber>numberOfTimeSlotsInAYear)
+		{}
 		this.year = year;
 		this.month = (slotNumber-1)/(numOfSlotsInDay()*30)+1;
 		this.day = ((slotNumber-1) %(numOfSlotsInDay()*30))/numOfSlotsInDay()+1;
