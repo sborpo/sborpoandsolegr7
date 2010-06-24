@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>See Available Reservations</title>
+<link rel="stylesheet" type="text/css" href="defualtCss.css" />
 <style type="text/css">
 table
 {
@@ -27,7 +28,9 @@ td.notAvailible {background-color:red;}
 td.taken {background-color:yellow;}
 td.available {background-color:lightgreen;}
 </style>
+
 </head>
+<jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
 <body>
 
 <%@page import="cs236369.hw5.*" %>

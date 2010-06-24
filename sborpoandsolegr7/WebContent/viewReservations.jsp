@@ -5,7 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="defualtCss.css" />
 </head>
+<jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
 <body>
 <form method="GET" action="/sborpoandsolegr7/displayResvTimeline.jsp">
 Instrument Type : <input type="text" size="15" maxlength="25" name="type"><br><br>
