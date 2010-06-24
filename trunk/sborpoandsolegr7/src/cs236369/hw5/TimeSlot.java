@@ -4,11 +4,22 @@ public class TimeSlot {
 	public TimeSlot(int year, int slotNumber) {
 		super();
 		if (slotNumber>numberOfTimeSlotsInAYear)
-		{}
-		this.year = year;
-		this.month = (slotNumber-1)/(numOfSlotsInDay()*30)+1;
-		this.day = ((slotNumber-1) %(numOfSlotsInDay()*30))/numOfSlotsInDay()+1;
-		this.slotNumber= slotNumber;
+		{
+			this.year=year+1;
+			this.slotNumber=slotNumber-numberOfTimeSlotsInAYear;
+		}
+		else if (slotNumber<1)
+		{
+			this.year=year-1;
+			this.slotNumber=numberOfTimeSlotsInAYear+slotNumber;
+		}
+		else
+		{
+			this.year = year;
+			this.slotNumber=slotNumber;
+		}
+		this.month = (this.slotNumber-1)/(numOfSlotsInDay()*30)+1;
+		this.day = ((this.slotNumber-1) %(numOfSlotsInDay()*30))/numOfSlotsInDay()+1;
 	}
 	public static int slotSizeInMinutes;
 	public static int numberOfTimeSlotsInAYear ;

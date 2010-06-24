@@ -26,6 +26,18 @@ public class ApplicationStarts implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
+     try {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+	} catch (InstantiationException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	} catch (IllegalAccessException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	} catch (ClassNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
       DbManager.DbConnections.getInstance().setUrl( arg0.getServletContext().getInitParameter("db-server"));
       DbManager.DbConnections.getInstance().setUserName( arg0.getServletContext().getInitParameter("db-user"));
       DbManager.DbConnections.getInstance().setPassword( arg0.getServletContext().getInitParameter("db-password"));
@@ -33,7 +45,7 @@ public class ApplicationStarts implements ServletContextListener {
       try {
 		DbManager.constructTables();
 	} catch (SQLException e) {
-		// TODO Handle Table Construction SQL Problem
+		e.printStackTrace();
 	}
     }
 

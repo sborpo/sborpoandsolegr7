@@ -11,6 +11,10 @@ public class DbManager {
 	
 	public static class DbConnections
 	{
+		public String getDbName() {
+			return dbName;
+		}
+
 		private String dbName ; 
 		private String userName;
 		private String password;
@@ -53,17 +57,36 @@ public class DbManager {
 		{
 				return DriverManager.getConnection (url+"/"+dbName, userName, password); 
 		}
+		
+		public Connection getNoDbConnection() throws SQLException
+		{
+			return DriverManager.getConnection (url, userName, password); 
+		}
 	}
 	
+	private static void createDb() throws SQLException {
+		Connection conn=DbConnections.getInstance().getNoDbConnection();
+		Statement statment=null;
+		try{
+			statment= conn.createStatement(); 
+			String db= "CREATE SCHEMA IF NOT EXISTS `labdb` ;";	
+			statment.executeUpdate(db); 
+		}
+		finally
+		{
+			if (conn!=null){conn.close();}
+		}
+	}
 	
 	public static void  constructTables() throws SQLException
 	{
+		createDb();
 		Connection conn=DbConnections.getInstance().getConnection();
 		Statement statment=null;
 		conn.setAutoCommit(false);
 		try{
 		statment= conn.createStatement(); 
-		String db= "CREATE SCHEMA IF NOT EXISTS `labdb` ;";	
+		String db= "CREATE SCHEMA IF NOT EXISTS `"+DbConnections.getInstance().getDbName()+"` ;";	
 		statment.executeUpdate(db); 
 		String instruments="CREATE TABLE `instruments` (`id` bigint(20) NOT NULL,`type` varchar(30) NOT NULL,`permission` int(11) NOT NULL,`timeslot` int(11) NOT NULL,`description` text NOT NULL,PRIMARY KEY (`id`),KEY `Permission` (`permission`),KEY `Type` (`type`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(instruments); 

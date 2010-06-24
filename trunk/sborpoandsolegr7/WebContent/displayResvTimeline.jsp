@@ -11,14 +11,17 @@ table
 {
 border-collapse:collapse;
 width:90%;
+border-top: none;
 }
 th
 {
 height:50px;
+text-align:center;
 }
 td
 {
 padding:15px;
+text-align:center;
 }
 table,th, td
 {
@@ -43,14 +46,15 @@ td.available {background-color:lightgreen;}
 	String[][] arr= new ReservationManager.ReservationTable(year,month,day,k,type).getReservationTable();
 	TimeSlot weekEnd=new TimeSlot(year,new TimeSlot(year,month,day).getSlotNumber()+TimeSlot.numOfSlotsInDay()*6);
 	TimeSlot nextWeek=new TimeSlot(year,new TimeSlot(year,month,day).getSlotNumber()+TimeSlot.numOfSlotsInDay()*7);
+	TimeSlot prevWeek=new TimeSlot(year,new TimeSlot(year,month,day).getSlotNumber()-TimeSlot.numOfSlotsInDay()*7);
 %>
 <h3>You can see the reservations scheduale on the week between: <%=day%>/<%=month%>/<%=year%> to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth() %>/<%=weekEnd.getYear() %></h3>
 <br></br>
 <br></br>
-<h1>Moving To next week press <a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=nextWeek.getYear()%>&month=<%=nextWeek.getMonth()%>&day=<%=nextWeek.getDay()%>&type=<%=type%>&slotSequence=<%=k%>>here.</a>  </h1>
-<br></br>
-<br></br>
 <table>
+<tr style="border: none">
+<td colspan="4" style="text-align: left;border: none"><a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=prevWeek.getYear()%>&month=<%=prevWeek.getMonth()%>&day=<%=prevWeek.getDay()%>&type=<%=type%>&slotSequence=<%=k%>>&lt;&lt;</a> Previous Week</td><td colspan="4" style="text-align:right;border: none">Next Week  <a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=nextWeek.getYear()%>&month=<%=nextWeek.getMonth()%>&day=<%=nextWeek.getDay()%>&type=<%=type%>&slotSequence=<%=k%>> &gt;&gt;</a></td>
+</tr>
 <tr>
 <%for (int j=0; j<8; j++){%>
  <th><%=arr[0][j] %></th>
