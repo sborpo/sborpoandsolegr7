@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import org.apache.commons.fileupload.util.Streams;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
+import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.users.UserManager.UserExists;
 
@@ -87,8 +89,22 @@ public class AddNewUser extends HttpServlet {
 		{
 			databaseUserType=UserType.REASEARCHER;
 		}
-		UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
 		
+		String userCaptchaResponse = params.get(UserManager.Captcha);
+		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, userCaptchaResponse);
+		if(!captchaPassed)
+		{
+			ErrorInfoBean err = new ErrorInfoBean();
+			err.setErrorString("Catchpa Error");
+			err.setReason("The string that you have typed in the catchpa text box is wrong");
+			err.setLinkStr("try agin");
+			err.setLink("addUser.jsp");
+			request.setAttribute("ErrorInfoBean", err);
+			RequestDispatcher rd = request.getRequestDispatcher("/errorPages/errorPage.jsp");
+			rd.forward(request, response);
+		}
+		UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
+		response.getWriter().println("Success");
 		}
 		catch (FileUploadException ex)
 		{
@@ -103,13 +119,7 @@ public class AddNewUser extends HttpServlet {
 		}
 		
 		
-		String userCaptchaResponse = params.get(UserManager.Captcha);
-		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, userCaptchaResponse);
-		if(captchaPassed){
-			response.getWriter().println("Corret");
-		}else{
-			response.getWriter().println("wrong");
-		}
+		
 	}
 
 }

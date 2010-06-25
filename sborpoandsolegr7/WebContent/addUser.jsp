@@ -7,6 +7,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add User</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
+<style type="text/css">
+table
+{
+border-collapse:collapse;
+width:50%;
+}
+td
+{
+padding:0.7em;
+text-align:left;
+}
+tr
+{
+border: 1px solid black;
+}
+</style>
 </head>
 <%@page import="cs236369.hw5.*" %>
 <jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
