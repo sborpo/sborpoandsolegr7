@@ -15,12 +15,12 @@ border-top: none;
 }
 th
 {
-height:50px;
+height:3em;
 text-align:center;
 }
 td
 {
-padding:15px;
+padding:1em;
 text-align:center;
 }
 table,th, td

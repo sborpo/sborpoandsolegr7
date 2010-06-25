@@ -1,7 +1,7 @@
-body {background: #f9fee8;margin: 0; padding: 20px; text-align:left; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#666666;}
+body {background: #f9fee8;margin: 0; padding: 1em; text-align:left; font-family:Arial, Helvetica, sans-serif; font-size:0.875em; color:#666666;}
 		 {width: 600px; padding: 50px; margin: auto;}
-		 h1 {margin: 20px 0 0;}
-		 p {margin: 10px 0; padding: 0;}		
+		 h1 {margin: 1em 0 0;}
+		 p {margin: 0.75em 0; padding: 0;}		
 		a {color: #9caa6d; text-decoration:none;}
 		a:hover {color: #9caa6d; text-decoration:underline;}
   div.transbox
@@ -26,7 +26,11 @@ body {background: #f9fee8;margin: 0; padding: 20px; text-align:left; font-family
   height: 1px -solid;
   color: #666666;
   }
-  
+
+
+
+
+
 input
 {
 color: green;
