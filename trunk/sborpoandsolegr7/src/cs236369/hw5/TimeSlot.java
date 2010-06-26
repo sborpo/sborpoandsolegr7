@@ -121,4 +121,6 @@ public class TimeSlot {
 		return hourStr+String.valueOf(thehour)+":"+minuteStr+String.valueOf(quarter*slotSizeInMinutes);
 		
 	}
+	
+	
 }
