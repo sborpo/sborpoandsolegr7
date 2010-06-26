@@ -6,6 +6,82 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>See Available Reservations</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
+
+  <script type="text/javascript">
+
+function poorman_close(id)
+{
+	var tr = document.getElementById(id);
+	if (tr==null) { return; }
+	tr.style.display =  'none' ;
+}
+
+function poorman_open(id)
+{
+	var tr = document.getElementById(id);
+	if (tr==null) { return; }
+	tr.style.display =  '' ;
+}
+
+function setFrom(s,lastIndex)
+{
+	var val=parseInt(s);
+	var ToHour = document.getElementById('toHour');
+	var idx= ToHour.selectedIndex;
+	var FromHour = document.getElementById('fromHour');
+	var ToVal= parseInt(ToHour.options[idx].value);
+	if (val >ToVal	)
+	{
+		FromHour.selectedIndex = parseInt(document.getElementById('fromHourPrev').value)-1;
+		alert('You cannot set the From hour to be after the To hour');
+		return;
+	}
+	document.getElementById('fromHourPrev').value=val;
+	updateRows(val,ToVal,lastIndex);
+}
+
+function setTo(s,lastIndex)
+{
+	var val=parseInt(s);
+	var FromHour = document.getElementById('fromHour');
+	var idx= FromHour.selectedIndex;
+	var FromHour = document.getElementById('toHour');
+	var FromVal= parseInt(FromHour.options[idx].value);
+	if (val < FromVal	)
+	{
+		FromHour.selectedIndex = parseInt(document.getElementById('toHourPrev').value)-1;
+		alert('You cannot set the To hour to be before the From hour');
+		return;
+	}
+	document.getElementById('toHourPrev').value=val;
+	updateRows(FromVal,val,lastIndex);
+}
+
+
+function updateRows(from,to,lastIndex)
+{
+	var i;
+	for (i=1;i<from;i++)
+	{
+		poorman_close(i);
+	}
+	for (i=from;i<=to;i++)
+	{
+		poorman_open(i);
+	}
+	for (i=to+1; i<lastIndex; i++)
+	{
+		poorman_close(i);
+	}
+	
+}
+
+
+
+
+
+</script>
+
 <style type="text/css">
 table
 {
@@ -30,11 +106,16 @@ border: 1px solid black;
 td.notAvailible {background-color:red;}
 td.taken {background-color:yellow;}
 td.available {background-color:lightgreen;}
+
+div.hours
+{
+text-align:center;
+}
 </style>
 
 </head>
 <jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
-<body>
+
 
 <%@page import="cs236369.hw5.*" %>
 <%
@@ -48,8 +129,16 @@ td.available {background-color:lightgreen;}
 	TimeSlot nextWeek=new TimeSlot(year,new TimeSlot(year,month,day).getSlotNumber()+TimeSlot.numOfSlotsInDay()*7);
 	TimeSlot prevWeek=new TimeSlot(year,new TimeSlot(year,month,day).getSlotNumber()-TimeSlot.numOfSlotsInDay()*7);
 %>
+<body onload="javascript: updateRows(<%=TimeSlot.numOfSlotsInHour()*8+1 %>,<%= TimeSlot.numOfSlotsInHour()* 12 +1%>,<%=arr.length %>);">
 <h3>You can see the reservations scheduale on the week between: <%=day%>/<%=month%>/<%=year%> to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth() %>/<%=weekEnd.getYear() %></h3>
 <br></br>
+<div class="hours">
+Display Hours: From:&nbsp;&nbsp;<input type="hidden" id="fromHourPrev" value="<%=TimeSlot.numOfSlotsInHour()*8+1 %>"><select id="fromHour"  onchange="javascript:setFrom(value,<%=arr.length %>)"><%for (int i=1; i<arr.length; i++) { %><option value="<%=i %>" <%if (i==TimeSlot.numOfSlotsInHour()*8+1) { %>selected="selected"<%} %>><%=arr[i][0]%></option><%} %></select>&nbsp;&nbsp;To:&nbsp;&nbsp;<input type="hidden" id="toHourPrev" value="<%=TimeSlot.numOfSlotsInHour()*12 +1 %>"><select id="toHour" onchange="javascript:setTo(value,<%=arr.length %>)">
+<%for (int i=1; i<arr.length; i++) { %>
+	<option value="<%=i %>" <%if (i==TimeSlot.numOfSlotsInHour()*12 +1) { %>selected="selected"<%} %>><%=arr[i][0]%></option>
+<%} %>
+</select>
+</div>
 <br></br>
 <table>
 <tr style="border: none">
@@ -61,7 +150,7 @@ td.available {background-color:lightgreen;}
  <%} %>
  </tr>
  <%for (int i=1; i<arr.length; i++){ %>
-<tr>
+<tr id="<%=i %>" onclick="javascript:poorman_toggle('<%=i %>');">
 <%for (int j=0; j<arr[i].length; j++) {
 	if (j!=0){
 	String classcolor=null;
