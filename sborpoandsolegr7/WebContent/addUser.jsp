@@ -42,7 +42,7 @@ border: 1px solid black;
 <option value="Admin">Administrator</option>
 </select>
 </td></tr>
-<tr><td colspan="2">Picture (Max Size: 300 Kb) :</td><td colspan="2"><input type="hidden" name="MAX_FILE_SIZE" value="300" />
+<tr><td colspan="2">Picture (Max Size: 300 Kb) :</td><td colspan="2"><input type="hidden" name="MAX_FILE_SIZE" value="<%=UserManager.FileSizeInBytes/1000%>" />
 <input type="file" name="userpicture" />
 </td></tr>
 <tr><td colspan="4">Captcha</td></tr>
