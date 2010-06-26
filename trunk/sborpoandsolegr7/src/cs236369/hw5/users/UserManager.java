@@ -29,6 +29,8 @@ public class UserManager {
 	public static String Photo="userpicture";
 	public static String UserTypen="usertpe";
 	public static String Captcha="jcaptcha";
+	public static int FileSizeInBytes=300000;
+	public static String NotSpecified="Not Specified";
 	
 	
 	public static byte[] getPhoto(String username) throws SQLException
