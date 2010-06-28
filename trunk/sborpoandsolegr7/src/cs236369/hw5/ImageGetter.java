@@ -1,9 +1,7 @@
 package cs236369.hw5;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;

@@ -1,14 +1,11 @@
 package cs236369.hw5.users;
 
-import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
-
-import javax.sql.rowset.serial.SerialBlob;
 
 import cs236369.hw5.Administrator;
 import cs236369.hw5.Researcher;

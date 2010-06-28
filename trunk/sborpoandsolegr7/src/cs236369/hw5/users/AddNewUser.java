@@ -1,6 +1,5 @@
 package cs236369.hw5.users;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
