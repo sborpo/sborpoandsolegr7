@@ -101,7 +101,7 @@ public  class ReservationManager {
 	}
 	
 	
-	private static ResultSet executeOccupiedSlotsQuery(Connection conn,TimeSlot initialeSlot,String type) throws SQLException
+	private static ResultSet executeOccupiedSlotsQuery(Connection conn,TimeSlot initialeSlot,String type, int k) throws SQLException
 	{
 		String query= "SELECT id,year,slotbegin,slotend FROM instruments I LEFT OUTER JOIN reservations R" +
 		" ON ((R.slotbegin>=? AND R.year=?) OR (R.slotbegin<=? AND R.year=?)) AND I.id=R.instid AND I.type=?" +
@@ -109,7 +109,7 @@ public  class ReservationManager {
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setInt(1, initialeSlot.getSlotNumber());
 		prepareStatement.setInt(2, initialeSlot.getYear());
-		int slotNumberWeekLater=(initialeSlot.getSlotNumber()+TimeSlot.numOfSlotInWeek()-1);
+		int slotNumberWeekLater=(initialeSlot.getSlotNumber()+TimeSlot.numOfSlotInWeek()+k-1);
 		if (slotNumberWeekLater>TimeSlot.numberOfTimeSlotsInAYear)
 		{
 			prepareStatement.setInt(3,slotNumberWeekLater-TimeSlot.numberOfTimeSlotsInAYear);
@@ -143,13 +143,13 @@ public  class ReservationManager {
 	
 	}
 	
-	public static LinkedList<InstrumentAvilability> getOccupiedSlotsFromDatabase(TimeSlot initialeSlot,String type) throws SQLException
+	public static LinkedList<InstrumentAvilability> getOccupiedSlotsFromDatabase(TimeSlot initialeSlot,String type, int k) throws SQLException
 	{
 		
 		ResultSet set=null;Connection conn=null;
 		try{
 		 conn=DbManager.DbConnections.getInstance().getConnection();
-		 set= executeOccupiedSlotsQuery(conn,initialeSlot,type);
+		 set= executeOccupiedSlotsQuery(conn,initialeSlot,type,k);
 		LinkedList<InstrumentAvilability> availibilityArrs = new LinkedList<InstrumentAvilability>();
 		int flag=1,i=0;
 		long currentInst=-1,nextInst;
@@ -164,7 +164,7 @@ public  class ReservationManager {
 			if (currentInst!=nextInst)
 			{
 				
-				arr = new Avilability[TimeSlot.numOfSlotInWeek()];
+				arr = new Avilability[TimeSlot.numOfSlotInWeek()+k];
 				i=0;
 			}
 			currentInst=nextInst;
@@ -173,20 +173,26 @@ public  class ReservationManager {
 			set.getInt("slotbegin");
 			if (!set.wasNull())
 			{
+				int offset=0;
+				if (set.getInt("year")!=initialeSlot.getYear())
+				{
+					offset=TimeSlot.numberOfTimeSlotsInAYear;
+				}
 				//The instrument has hours where he is not availible
-				for (;(i+initialeSlot.getSlotNumber()<set.getInt("slotbegin"))&&(i<TimeSlot.numOfSlotInWeek()); i++)
+				for (;(i+initialeSlot.getSlotNumber()<(offset+set.getInt("slotbegin")))&&(i<(TimeSlot.numOfSlotInWeek()+k)); i++)
 				{
-						arr[i]=Avilability.TAKEN;
+					arr[i]=Avilability.TAKEN;
 				}
-				for (; (i+initialeSlot.getSlotNumber()<set.getInt("slotend"))&&(i<TimeSlot.numOfSlotInWeek()); i++)
+				for (; (i+initialeSlot.getSlotNumber()<(offset+set.getInt("slotend")))&&(i<(TimeSlot.numOfSlotInWeek()+k)); i++)
 				{
-						arr[i]=Avilability.NOT_AVAILABLE;
+					arr[i]=Avilability.NOT_AVAILABLE;
 				}
+		
 			}
 			if (set.next()==false)
 			{
 					flag=1;
-					for (;i<TimeSlot.numOfSlotInWeek(); i++)
+					for (;i<TimeSlot.numOfSlotInWeek()+k; i++)
 					{
 						arr[i]=Avilability.TAKEN;
 					}
@@ -195,7 +201,7 @@ public  class ReservationManager {
 			}
 			if (set.getLong("id")!=currentInst)
 			{
-				for (;i<TimeSlot.numOfSlotInWeek(); i++)
+				for (;i<TimeSlot.numOfSlotInWeek()+k; i++)
 				{
 					arr[i]=Avilability.TAKEN;
 				}
@@ -222,11 +228,9 @@ public  class ReservationManager {
 	}
 
 	public static AvailabilityResult[] Search(TimeSlot slot, int k, String type) throws SQLException {
-		AvailabilityResult[] totalAvialableSlots = initializeTotalAvailableResults(TimeSlot.numOfSlotInWeek()); // init
-																												// to
-																												// -1
+		AvailabilityResult[] totalAvialableSlots = initializeTotalAvailableResults(TimeSlot.numOfSlotInWeek()+k); 
 		Avilability[] occupiedSlotsForCurrInstrument = null;
-		LinkedList<InstrumentAvilability> list= getOccupiedSlotsFromDatabase(slot, type);
+		LinkedList<InstrumentAvilability> list= getOccupiedSlotsFromDatabase(slot, type,k);
 		for (InstrumentAvilability avilabitly : list) {
 			mergeCurrInstrument(k, totalAvialableSlots,
 					avilabitly.getAvilibilityArr(), avilabitly.getInstId());
@@ -268,8 +272,8 @@ public  class ReservationManager {
 	}
 
 	private static AvailabilityResult[] initializeTotalAvailableResults(
-			int numberOfTimeSlotsInAYear) {
-		AvailabilityResult[] temp = new AvailabilityResult[numberOfTimeSlotsInAYear];
+			int numOfSlots) {
+		AvailabilityResult[] temp = new AvailabilityResult[numOfSlots];
 		for (int i = 0; i < temp.length; i++) {
 			temp[i] = new AvailabilityResult();
 			temp[i].setAvilability(Avilability.NOT_AVAILABLE);

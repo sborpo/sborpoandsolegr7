@@ -117,4 +117,14 @@
     <servlet-name>Logout</servlet-name>
     <url-pattern>/Logout</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ReservationTimesSaver</display-name>
+    <servlet-name>ReservationTimesSaver</servlet-name>
+    <servlet-class>cs236369.hw5.ReservationTimesSaver</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReservationTimesSaver</servlet-name>
+    <url-pattern>/ReservationTimesSaver</url-pattern>
+  </servlet-mapping>
 </web-app>

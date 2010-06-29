@@ -23,6 +23,12 @@ function poorman_open(id)
 	tr.style.display =  '' ;
 }
 
+function saveHourToServer(from,to) {
+	var request = new XMLHttpRequest();
+	request.open("GET", "ReservationTimesSaver?fromHour="+from+"&toHour="+to, false);
+	request.send(null);
+}
+
 function setFrom(s,lastIndex)
 {
 	var val=parseInt(s);
@@ -38,6 +44,9 @@ function setFrom(s,lastIndex)
 	}
 	document.getElementById('fromHourPrev').value=val;
 	updateRows(val,ToVal,lastIndex);
+	saveHourToServer(val,ToVal);
+	
+	
 }
 
 function setTo(s,lastIndex)
@@ -55,6 +64,7 @@ function setTo(s,lastIndex)
 	}
 	document.getElementById('toHourPrev').value=val;
 	updateRows(FromVal,val,lastIndex);
+	saveHourToServer(FromVal,val);
 }
 
 
@@ -128,14 +138,18 @@ text-align:center;
 	TimeSlot weekEnd=new TimeSlot(year,new TimeSlot(year,month,day).getSlotNumber()+TimeSlot.numOfSlotsInDay()*6);
 	TimeSlot nextWeek=new TimeSlot(year,new TimeSlot(year,month,day).getSlotNumber()+TimeSlot.numOfSlotsInDay()*7);
 	TimeSlot prevWeek=new TimeSlot(year,new TimeSlot(year,month,day).getSlotNumber()-TimeSlot.numOfSlotsInDay()*7);
+	Integer startHourTime= (Integer)request.getSession(true).getAttribute("fromHour");
+	Integer endHourTime= (Integer)request.getSession(true).getAttribute("toHour");
+	Integer startTime= (startHourTime!=null)? startHourTime : TimeSlot.numOfSlotsInHour()*8+1;
+	Integer endTime= (startHourTime!=null)? endHourTime : TimeSlot.numOfSlotsInHour()* 12 +1;
 %>
-<body onload="javascript: updateRows(<%=TimeSlot.numOfSlotsInHour()*8+1 %>,<%= TimeSlot.numOfSlotsInHour()* 12 +1%>,<%=arr.length %>);">
+<body onload="javascript: updateRows(<%= startTime %>,<%= endTime%>,<%=arr.length %>);">
 <h3>You can see the reservations scheduale on the week between: <%=day%>/<%=month%>/<%=year%> to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth() %>/<%=weekEnd.getYear() %></h3>
 <br></br>
 <div class="hours">
-Display Hours: From:&nbsp;&nbsp;<input type="hidden" id="fromHourPrev" value="<%=TimeSlot.numOfSlotsInHour()*8+1 %>"><select id="fromHour"  onchange="javascript:setFrom(value,<%=arr.length %>)"><%for (int i=1; i<arr.length; i++) { %><option value="<%=i %>" <%if (i==TimeSlot.numOfSlotsInHour()*8+1) { %>selected="selected"<%} %>><%=arr[i][0]%></option><%} %></select>&nbsp;&nbsp;To:&nbsp;&nbsp;<input type="hidden" id="toHourPrev" value="<%=TimeSlot.numOfSlotsInHour()*12 +1 %>"><select id="toHour" onchange="javascript:setTo(value,<%=arr.length %>)">
+Display Hours: From:&nbsp;&nbsp;<input type="hidden" id="fromHourPrev" value="<%=startTime %>"><select id="fromHour"  onchange="javascript:setFrom(value,<%=arr.length %>)"><%for (int i=1; i<arr.length; i++) { %><option value="<%=i %>" <%if (i==startTime) { %>selected="selected"<%} %>><%=arr[i][0]%></option><%} %></select>&nbsp;&nbsp;To:&nbsp;&nbsp;<input type="hidden" id="toHourPrev" value="<%=endTime %>"><select id="toHour" onchange="javascript:setTo(value,<%=arr.length %>)">
 <%for (int i=1; i<arr.length; i++) { %>
-	<option value="<%=i %>" <%if (i==TimeSlot.numOfSlotsInHour()*12 +1) { %>selected="selected"<%} %>><%=arr[i][0]%></option>
+	<option value="<%=i %>" <%if (i==endTime) { %>selected="selected"<%} %>><%=arr[i][0]%></option>
 <%} %>
 </select>
 </div>
