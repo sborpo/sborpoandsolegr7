@@ -36,6 +36,7 @@ public class Administrator extends User{
 	@Override
 	public UserType getRole() {
 		return UserType.ADMIN;
+		
 	}
 
 
