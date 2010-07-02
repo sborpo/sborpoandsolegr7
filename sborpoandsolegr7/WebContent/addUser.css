@@ -2,7 +2,7 @@
 
 * { margin: 0; padding: 0; }
 
-body, input, select, textarea { font-family: verdana, arial, helvetica, sans-serif; font-size: 11px; }
+body, input, select, textarea { font-family: verdana, arial, helvetica, sans-serif; font-size: 0.7em; }
 body { color: #333;  background-color: #fff; text-align: center; }
 
 a:link { color:#0060BF; text-decoration: underline; }
@@ -11,7 +11,7 @@ a:active { color:#0060BF; text-decoration: underline; }
 a:hover { color:#000000; text-decoration: underline; }
     
 h1, h2, h3, h4, h5, h6 { font-family: "Lucida Grande", "Lucida Sans Unicode", geneva, verdana, arial, helvetica, sans-serif; font-weight: bold; color: #666; }
-h1 { font-size: 1.8em; margin: 0em 0em 0.6em 0em; color: #EC5800; }
+h1 { font-size: 1.8em; margin: 0em 0em 0.6em 0em; color: #EC5800; position:center; text-align: cetner;}
 h2 { font-size: 1.5em; margin: 1.2em 0em 0.4em 0em; }
 h3 { font-size: 1.4em; margin: 1.2em 0em 0.4em 0em; color: #EC5800; }
 h4 { font-size: 1.2em; margin: 1.2em 0em 0.4em 0em; }
@@ -29,8 +29,8 @@ strong, b { font-weight: bold; }
 
 /* Content */
 
-#content { margin: 0em auto; width: 765px; padding: 10px 0 10px 0; text-align: left; /* Win IE5 */ }
-.content { margin-left: 4.5em; margin-right: 4.5em; }
+#content { margin: 0em auto; width: 95%; padding: 10px 0 10px 0; text-align: left; /* Win IE5 */ }
+.content { margin-left: 2em; margin-right: 2em; }
 .content ol, .content ul, .content li { font-size: 1.0em; line-height: 1.3em; margin: 0.2em 0 0.1em 1.5em; }
 .content ol.terms li { margin-bottom: 1em; }
 
@@ -56,8 +56,9 @@ table.tabbedtable label { text-align: right; padding-right: 9px; }
 #signuptab {
   float:left;
   width:100%;
-  background:#fff url("http://jquery.bassistance.de/validate/demo/images/bg.gif") repeat-x bottom;
+  background:#fff url("images/bg.gif") repeat-x bottom;
   font-size: 1.0em;
+  color:white;
   line-height: normal;
 }
 #signuptab ul {
@@ -93,6 +94,7 @@ table.tabbedtable label { text-align: right; padding-right: 9px; }
 #signuptab #signupcurrent {
   background-position:0 -150px;
   border-width:0;
+  text-align: center;
 }
 #signuptab #signupcurrent a {
   background-position:100% -150px;
@@ -116,10 +118,10 @@ table.tabbedtable label { text-align: right; padding-right: 9px; }
 }
 
 #signupwrap {
-  border: 1px solid #CACACA;
+  border: 1px solid green;
   border-top: 0;
   text-align: left;
-  padding: 35px 10px 20px 30px;
+  padding: 1.5em 0.6em 1.12em 2em;
   clear: both;
 }
 
@@ -143,6 +145,7 @@ table.tabbedtable label { text-align: right; padding-right: 9px; }
   border-spacing: 0px;
   border-collapse: collapse;
   empty-cells: show;
+  /*width: 100%;*/
 }
 
 #signupform .label {
@@ -163,8 +166,9 @@ table.tabbedtable label { text-align: right; padding-right: 9px; }
   padding-top: 2px;
   padding-left: 8px;
   vertical-align: top;
-  width: 246px;
+  width: 200px;
   white-space: nowrap;
+  
 }
 
 #signupform .textfield {

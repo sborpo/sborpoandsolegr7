@@ -164,7 +164,14 @@ public abstract class User {
 		prepareStatement.setString(5,group);
 		prepareStatement.setString(6,phoneNumber);
 		prepareStatement.setString(7,address);
-		prepareStatement.setBlob(8, photo.getBinaryStream());
+		if (photo!=null)
+		{
+			prepareStatement.setBlob(8, photo.getBinaryStream());
+		}
+		else
+		{
+			prepareStatement.setNull(8, java.sql.Types.BLOB);
+		}
 		return prepareStatement;
 	}
 	
@@ -180,7 +187,7 @@ public abstract class User {
 	public static PreparedStatement getUserDetails(Connection conn,String username) throws SQLException
 	{
 
-		String query= "SELECT U.login,password,name,permission,usergroup,phone,address,UR.rolename FROM users U,user_roles UR WHERE U.login=UR.login AND U.login=? ";
+		String query= "SELECT U.login,password,name,permission,usergroup,phone,address,U.photo, UR.rolename FROM users U,user_roles UR WHERE U.login=UR.login AND U.login=? ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, username);
 		return prepareStatement;

@@ -10,7 +10,10 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
 </head>
-<jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
+
+<jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
+
+
 <body>
 <% String login = request.getParameter("username"); User user=UserManager.getUserDetails(login); %>
 <h1>User Details</h1><br/><br/>
@@ -27,5 +30,9 @@
 
 </table>
 <img src="ImageGetter?username=<%=login%>" />
+<br/>
+<br/>
+<%if ((request.getUserPrincipal()!=null) && (request.getUserPrincipal().getName().equals(request.getParameter("username")))){%>
+	<a href=updateUser.jsp?username=<%=login%>>Updated Profile Details</a><%}%>
 </body>
 </html>

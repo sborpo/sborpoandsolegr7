@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import javax.sql.rowset.serial.SerialBlob;
+
 import cs236369.hw5.Administrator;
 import cs236369.hw5.Researcher;
 import cs236369.hw5.User;
@@ -92,13 +94,23 @@ public class UserManager {
 	private static User setUserFromRow(ResultSet set) throws SQLException
 	{
 		User user=null;
-		 if (set.getString("rolename").equals(UserType.ADMIN.toString()))
+		 Blob b=new SerialBlob(new byte[0]); 
+		 set.getBlob("photo");
+		 if (set.wasNull())
 		 {
-			 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),null);
+			b=null;
+		 }
+		
+		 if (set.getString("rolename").equals(UserType.REASEARCHER.toString()))
+		 {
+			
+			 
+			 
+			 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b);
 		 }
 		 else
 		 {
-			 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),null);
+			 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b);
 		 }
 		 return user;
 	}

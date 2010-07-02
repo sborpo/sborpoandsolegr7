@@ -93,7 +93,14 @@ public class AddNewUser extends HttpServlet {
 		        	length++;
 		        	}
 		        byte [] image= byteStream.toByteArray();
-		        imageBlob= new SerialBlob(image);
+		        if (image.length==0)
+		        {
+		        	imageBlob=null;
+		        }
+		        else
+		        {
+		        	imageBlob= new SerialBlob(image);
+		        }
 		    } 
 		}
 		checkParameters(params,err);

@@ -127,4 +127,14 @@
     <servlet-name>ReservationTimesSaver</servlet-name>
     <url-pattern>/ReservationTimesSaver</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateUser</display-name>
+    <servlet-name>UpdateUser</servlet-name>
+    <servlet-class>cs236369.hw5.users.UpdateUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateUser</servlet-name>
+    <url-pattern>/UpdateUser</url-pattern>
+  </servlet-mapping>
 </web-app>

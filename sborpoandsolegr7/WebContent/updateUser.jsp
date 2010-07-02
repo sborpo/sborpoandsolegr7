@@ -4,16 +4,17 @@
 <%@page import="cs236369.hw5.users.UserManager"%>
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
-<%String decision="add";%>
+<%String decision="update";%>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> 
 
-<title>Add User</title> 
+<title>Update User</title> 
  
 
-<link rel="stylesheet" type="text/css" media="screen" href="addUser.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="defualtCss.css" />   
+<link rel="stylesheet" type="text/css" media="screen" href="addUser.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="defualtCss.css" />  
 <link rel="stylesheet" type="text/css" media="screen" href="http://jquery.bassistance.de/validate/demo/css/chili.css" /> 
- 
+
 <script src="http://jquery.bassistance.de/validate/lib/jquery.js" type="text/javascript"></script> 
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js" type="text/javascript"></script> 
  
@@ -21,13 +22,13 @@
 	pre { text-align: left; }
 </style> 
  
-<script src="dynamicTestForAddUser.js" type="text/javascript"></script> 
+<script src="dynamicTestForUpdateUser.js" type="text/javascript"></script> 
  
 </head>
 <%@page import="cs236369.hw5.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <body> 
-<h1 id="banner">Add User</h1> 
+<h1 id="banner">Update User</h1> 
 <div id="main"> 
  
 <div id="content"> 
@@ -39,17 +40,17 @@
     <div id="signupbox"> 
        <div id="signuptab"> 
         <ul> 
-          <li id="signupcurrent">Signup</li> 
+          <li id="signupcurrent">Update Details</li> 
         </ul> 
       </div> 
       <div id="signupwrap"> 
-      		<form id="signupform" action="AddNewUser" enctype="multipart/form-data" method="post" action=""> 
+      		<form id="signupform" action="UpdateUser" enctype="multipart/form-data" method="post" action=""> 
       		<!-- form  action="AddNewUser" ENCTYPE="multipart/form-data" method="post"/> -->
 	  		 <jsp:include page="userInputForms.jsp">
 	  		 	<jsp:param value="<%=decision %>" name="decision"/>
 	  		 </jsp:include>
 <br/>
-			<input value="AddUser" type="submit"/>&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset"/>
+			<input value="Update User" type="submit"/>&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset"/>
 </form>
       </div> 
     </div> 
