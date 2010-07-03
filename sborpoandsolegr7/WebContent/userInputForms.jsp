@@ -5,17 +5,19 @@
 User user=null;
 if (des.equals("update")){String login = request.getParameter("username");  user=UserManager.getUserDetails(login); } %>
 <table> 
+			
+			 <tr> 
+	  			<td class="label"><label id="lusername" for="username">Username</label></td> 
+	  			<td class="field"><input id="username" type="text" value=""  maxlength="50" <% if (!des.equals("add")){ %> readonly="readonly"<%} %> name="<%=UserManager.Usern%>" /></td> 
+	  			<td class="status"></td> 
+	  		  </tr> 
 	  		  <tr> 
 	  		  	<td class="label"><label id="lname" for="name">Name</label></td> 
 	  		  	<td class="field"><input id="name"  type="text" value="<%=(user!=null)? user.getName() : "" %>" maxlength="100" name="<%=UserManager.Name %>" /></td> 
 	  		  	<td class="status"></td> 
 	  		  </tr>
 	  		  <% if (des.equals("add")){ %> 
-	  		  <tr> 
-	  			<td class="label"><label id="lusername" for="username">Username</label></td> 
-	  			<td class="field"><input id="username" type="text" value=""  maxlength="50" name="<%=UserManager.Usern%>" /></td> 
-	  			<td class="status"></td> 
-	  		  </tr> 
+	  		 
 	  		
 	  		  <tr> 
 	  			<td class="label"><label id="lpassword" for="password">Password</label></td> 

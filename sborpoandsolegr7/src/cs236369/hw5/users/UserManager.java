@@ -18,6 +18,7 @@ import cs236369.hw5.db.DbManager.DbConnections.SqlError;
 
 public class UserManager {
 	public static class UserExists extends Exception{}
+	public static class UserNotExists extends Exception{}
 	public static String Usern="username";
 	public static String Password="password";
 	public static String PassConfirm="c_password";
@@ -52,6 +53,60 @@ public class UserManager {
 		return null;
 	}
 	
+	public static void updateUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type) throws SQLException, UserNotExists
+	{
+		User user= null;
+		if (type.equals(UserType.ADMIN))
+		{
+			user = new Administrator(login,pass,name,permission,group,phone,address,stream);
+		}
+		else
+		{
+			user = new Researcher(login,pass,name,permission,group,phone,address,stream);
+		}
+		Connection conn=null;
+		ResultSet set=null;
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		//TODO: verify this is the needed isolation level.
+		//When we read data , we don't aquire locks , so we don't care if someone has deleted
+		//the row or change it. Becuase update is done only on existing rows. (the admin could have been deleted the
+		//user after he changed his details.
+		conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+		conn.setAutoCommit(false);
+		 PreparedStatement userExists= User.getUserDetails(conn, login);
+		 set= userExists.executeQuery();
+		 if (!set.next())
+		 {
+			throw new UserNotExists();
+		 }
+		 PreparedStatement statementUsers= user.setUpdateUserDet(conn);
+		 PreparedStatement statementRoles = user.setUpdateRole(conn);
+		 statementUsers.execute();
+		 statementRoles.execute();
+		 conn.commit();
+		}
+		catch (UserNotExists ex)
+		{
+			conn.rollback();
+			throw ex;
+		}
+		catch (SQLException ex)
+		{
+			conn.rollback();
+			throw ex;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+	}
 	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type) throws SQLException, UserExists
 	{
 		User user= null;

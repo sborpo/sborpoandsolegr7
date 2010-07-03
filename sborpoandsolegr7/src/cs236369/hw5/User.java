@@ -152,9 +152,64 @@ public abstract class User {
 		return photo;
 	}
 	
+	
+	
+	public PreparedStatement setUpdateUserDet(Connection conn) throws SQLException
+	{
+		String isPhotoUpdate=((photo!=null)? " photo=?" :"");
+		String isPermissionUpdate=((premissions !=null)? " permission=?," :"");
+		String query= "UPDATE users SET name=?, usergroup=?, phone=?, address=?,"+isPermissionUpdate+isPhotoUpdate+ "WHERE login=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1,name);
+		prepareStatement.setString(2,group);
+		if (phoneNumber!=null)
+		{
+			prepareStatement.setString(3,phoneNumber);
+		}
+		else
+		{
+			prepareStatement.setNull(3, java.sql.Types.VARCHAR);
+		}
+		if (address!=null)
+		{
+			prepareStatement.setString(4,address);
+		}
+		else
+		{
+			prepareStatement.setNull(4, java.sql.Types.VARCHAR);
+		}
+		if (premissions!=null)
+		{
+			prepareStatement.setString(5, premissions);
+			if (photo!=null)
+			{
+				prepareStatement.setBlob(6, photo.getBinaryStream());
+				prepareStatement.setString(7, login);
+			}
+			else
+			{
+				prepareStatement.setString(6, login);
+			}
+		}
+		else
+		{
+			if (photo!=null)
+			{
+				prepareStatement.setBlob(5, photo.getBinaryStream());
+				prepareStatement.setString(6, login);
+			}
+			else
+			{
+				prepareStatement.setString(5, login);
+			}
+		}
+		
+		return prepareStatement;
+	}
+	
 	public PreparedStatement setInsertUser(Connection conn) throws SQLException
 	{
-		//TODO: handle BLOB
+	
 		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`) VALUES(?,?,?,?,?,?,?,?)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, login);
@@ -162,8 +217,22 @@ public abstract class User {
 		prepareStatement.setString(3,name);
 		prepareStatement.setString(4,premissions);
 		prepareStatement.setString(5,group);
-		prepareStatement.setString(6,phoneNumber);
-		prepareStatement.setString(7,address);
+		if (phoneNumber!=null)
+		{
+			prepareStatement.setString(6,phoneNumber);
+		}
+		else
+		{
+			prepareStatement.setNull(6, java.sql.Types.VARCHAR);
+		}
+		if (address!=null)
+		{
+			prepareStatement.setString(7,address);
+		}
+		else
+		{
+			prepareStatement.setNull(7, java.sql.Types.VARCHAR);
+		}
 		if (photo!=null)
 		{
 			prepareStatement.setBlob(8, photo.getBinaryStream());
@@ -183,6 +252,8 @@ public abstract class User {
 		prepareStatement.setString(1, username);
 		return prepareStatement;
 	}
+	
+	
 	
 	public static PreparedStatement getUserDetails(Connection conn,String username) throws SQLException
 	{
@@ -209,6 +280,7 @@ public abstract class User {
 		return prepareStatement;
 	}
 	public  abstract PreparedStatement setUpdateRole(Connection statement) throws SQLException;
+	public  abstract PreparedStatement setInsertRole(Connection statement) throws SQLException;
 	public abstract UserType getRole();
 		
 }	

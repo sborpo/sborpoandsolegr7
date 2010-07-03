@@ -27,7 +27,7 @@ public class Researcher extends User {
 	}
 
 	@Override
-	public PreparedStatement setUpdateRole(Connection conn) throws SQLException {
+	public PreparedStatement setInsertRole(Connection conn) throws SQLException {
 		String query= "INSERT INTO user_roles VALUES(?,?);";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1,login);
@@ -39,6 +39,16 @@ public class Researcher extends User {
 	@Override
 	public UserType getRole() {
 		return UserType.REASEARCHER;
+	}
+
+	@Override
+	public PreparedStatement setUpdateRole(Connection conn)
+			throws SQLException {
+		String query= "UPDATE user_roles SET rolename=? WHERE login=?";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1,"researcher");
+		prepareStatement.setString(2,login);
+		return prepareStatement;
 	}
 
 
