@@ -3,7 +3,6 @@ package cs236369.hw5.users;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -24,7 +23,6 @@ import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.User;
-import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
@@ -71,7 +69,7 @@ public class UserUtils {
 	}
 	
 	
-	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException
+	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,UserManipulator manipulator) throws IOException
 	{
 		SerialBlob imageBlob=null;
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -88,7 +86,7 @@ public class UserUtils {
 		if(captchaPassed){
 		
 			//UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
-				manipulator.manipulate(params,(Blob) imageBlob,(UserType) databaseUserType);
+			manipulator.manipulate(params, imageBlob, databaseUserType);
 			response.getWriter().println("Success");
 			return;
 		}
@@ -121,6 +119,29 @@ public class UserUtils {
 			
 		}
 		UserUtils.forwardToErrorPage(err,request,response);
+	}
+	
+	public static void forwardToSuccessPage(String link,HttpServletRequest request,HttpServletResponse response)
+	{
+		request.setAttribute("successPage", link);
+		RequestDispatcher rd = request.getRequestDispatcher("successPage.jsp");
+		try {
+			rd.forward(request, response);
+		} catch (ServletException e) {
+			try {
+				response.sendError(500);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch (IOException e) {
+			try {
+				response.sendError(500);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 	}
 	public static void forwardToErrorPage(ErrorInfoBean err,HttpServletRequest request,HttpServletResponse response) {
 

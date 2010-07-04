@@ -15,9 +15,7 @@
 
 
 <body>
-<%
-	String login = request.getParameter("username"); User user=UserManager.getUserDetails(login);
-%>
+<% String login = request.getParameter("username"); User user=UserManager.getUserDetails(login); %>
 <h1>User Details</h1><br/><br/>
 <table>
 <tr>
@@ -34,7 +32,8 @@
 <img src="ImageGetter?username=<%=login%>" />
 <br/>
 <br/>
-<%if ((request.getUserPrincipal()!=null) && (request.getUserPrincipal().getName().equals(request.getParameter("username")))){%>
-	<a href=updateUser.jsp?username=<%=login%>>Updated Profile Details</a><%}%>
+<% boolean isAdmin= UserUtils.isAdmin(request);
+if (((request.getUserPrincipal()!=null) && (request.getUserPrincipal().getName().equals(request.getParameter("username")))) || isAdmin){%>
+	<a href=updateUser.jsp?username=<%=login%>>Updated Profile Details</a><%}%><%if (isAdmin){ %> || <a href="DeleteUser?username=<%=login %>"> remove User</a><%} %>
 </body>
 </html>
