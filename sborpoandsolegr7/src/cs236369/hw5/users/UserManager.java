@@ -26,6 +26,7 @@ public class UserManager {
 	public static String Group="group";
 	public static String Address="address";
 	public static String PhoneNumber="phonenumber";
+	public static String Permission="permission";
 	public static String Photo="userpicture";
 	public static String UserTypen="usertpe";
 	public static String Captcha="jcaptcha";

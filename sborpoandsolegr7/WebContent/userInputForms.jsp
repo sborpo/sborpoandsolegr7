@@ -3,12 +3,14 @@
 <%@page import="cs236369.hw5.User.*"%>
 <%String des=request.getParameter("decision");
 User user=null;
-if (des.equals("update")){String login = request.getParameter("username");  user=UserManager.getUserDetails(login); } %>
+String login=null;
+boolean isAdmin= UserUtils.isAdmin(request);
+if (des.equals("update")){login = request.getParameter("username");  user=UserManager.getUserDetails(login); } %>
 <table> 
 			
 			 <tr> 
 	  			<td class="label"><label id="lusername" for="username">Username</label></td> 
-	  			<td class="field"><input id="username" type="text" value=""  maxlength="50" <% if (!des.equals("add")){ %> readonly="readonly"<%} %> name="<%=UserManager.Usern%>" /></td> 
+	  			<td class="field"><input id="username" type="text"   maxlength="50" <% if (!des.equals("add")){ %> readonly="readonly" value="<%=login %>" <%} %> name="<%=UserManager.Usern%>" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 	  		  <tr> 
@@ -17,8 +19,6 @@ if (des.equals("update")){String login = request.getParameter("username");  user
 	  		  	<td class="status"></td> 
 	  		  </tr>
 	  		  <% if (des.equals("add")){ %> 
-	  		 
-	  		
 	  		  <tr> 
 	  			<td class="label"><label id="lpassword" for="password">Password</label></td> 
 	  			<td class="field"><input id="password" type="password" maxlength="50" value="" name="<%=UserManager.Password %>"/></td> 
@@ -44,7 +44,14 @@ if (des.equals("update")){String login = request.getParameter("username");  user
 	  			<td class="label"><label id="lgroup" for="group">Group</label></td> 
 	  			<td class="field"><input id="group" name="<%=UserManager.Group %>" type="text" value="<%=(user!=null)? user.getGroup() : "" %>" maxlength="150" /></td> 
 	  			<td class="status"></td> 
-	  		  </tr> 
+	  		  </tr>
+	  		  <%if (isAdmin){ %>
+	  		    <tr> 
+	  			<td class="label"><label id="lperm" for="permission">Permissions<br/>(seperated by commas)</label></td> 
+	  			<td class="field"><input id="perm" name="<%=UserManager.Permission%>" type="text" value="<%=(user!=null)? user.getPremissions() : "" %>" maxlength="150" /></td> 
+	  			<td class="status"></td> 
+	  		  </tr>  
+	  		  <%} %>
 			  <tr> 
 	  			<td class="label"><label id="lusertype" for="usertype">User Type</label></td>
 				<%if ((user!=null)&&((user.getRole()).equals(UserType.ADMIN))){ %> 

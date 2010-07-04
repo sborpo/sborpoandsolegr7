@@ -3,6 +3,7 @@ package cs236369.hw5.users;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -25,6 +26,8 @@ import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.users.UserManager.UserExists;
+import cs236369.hw5.users.UserManager.UserNotExists;
+import cs236369.hw5.users.UserUtils.ParametersExp;
 
 /**
  * Servlet implementation class AddNewUser
@@ -54,49 +57,30 @@ public class AddNewUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		SerialBlob imageBlob=null;
-		HashMap<String, String> params = new HashMap<String, String>();
-		ErrorInfoBean err = new ErrorInfoBean();
-		err.setLink("addUser.jsp"); err.setLinkStr("Try again");
-		try{
-		UserUtils.handleParameters(request, params, imageBlob);
-		addUserCheckParameters(params,err);
-		UserType databaseUserType=UserUtils.determineUserType(params);
-		String userCaptchaResponse = params.get(UserManager.Captcha);
-		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, userCaptchaResponse);
-		if(captchaPassed){
-		
-			UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
-			response.getWriter().println("Success");
-			return;
-		}
-		err.setErrorString("Catchpa Error");
-		err.setReason("The string that you have typed in the catchpa text box is wrong");
-		}
-		catch (UserUtils.FileTooBigExp ex)
-		{
-    		err.setErrorString("File Uploading Error");
-    		err.setReason("The file that you have tried to upload is biggger than "+UserManager.FileSizeInBytes/1000+" KB");
-    		UserUtils.forwardToErrorPage(err,request,response);
-		}
-		catch (FileUploadException ex)
-		{
-			err.setErrorString("File Uploading Error");
-    		err.setReason("There was a problem uploading you file");
-			ex.printStackTrace();
-		} catch (SQLException e) {
-			err.setErrorString("Database Error");
-			err.setReason("There was a problem accessing the database.");
-			e.printStackTrace();
-		} catch (UserExists e) {
-			err.setErrorString("User Error");
-			err.setReason("The username that you have tried to add already <br/> exists in the system.");
-		} catch (UserUtils.ParametersExp e) {
+		UserManipulator manipulator = new UserManipulator() {
 			
-		}
-		UserUtils.forwardToErrorPage(err,request,response);
+			@Override
+			public void paramsChecker(HashMap<String, String> params, ErrorInfoBean err)
+					throws ParametersExp {
+				addUserCheckParameters(params,err);
+				
+			}
+			
+			@Override
+			public void manipulate(HashMap<String, String> params, Blob imageBlob,
+					UserType databaseUserType) throws UserExists, UserNotExists, SQLException {
+				UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
+				
+			}
 
-		
+			@Override
+			public void returnLinkSetter(ErrorInfoBean err) {
+				err.setLink("addUser.jsp"); err.setLinkStr("Try again");
+				
+			}
+		};
+		UserUtils.manipulateUser(request, response, manipulator);
+
 	}
 	
 
