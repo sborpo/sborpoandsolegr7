@@ -42,7 +42,7 @@ public class DeleteUser extends HttpServlet {
 		err.setLink("viewUser.jsp?username="+username);
 		try {
 			UserManager.removeUser(username);
-			
+			UserUtils.forwardToSuccessPage("viewUsers.jsp", request, response);
 		} catch (UserNotExists e) {
 			err.setErrorString("User Error");
 			err.setReason("The username that you tried to remove doesn't exists");
