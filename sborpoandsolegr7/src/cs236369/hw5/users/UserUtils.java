@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.util.Streams;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
+import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.User;
 import cs236369.hw5.User.UserType;
@@ -69,7 +70,7 @@ public class UserUtils {
 	}
 	
 	
-	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,UserManipulator manipulator) throws IOException
+	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException
 	{
 		SerialBlob imageBlob=null;
 		HashMap<String, String> params = new HashMap<String, String>();
