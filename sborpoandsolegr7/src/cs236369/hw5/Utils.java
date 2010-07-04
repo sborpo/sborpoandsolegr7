@@ -2,7 +2,7 @@ package cs236369.hw5;
 
 public class Utils {
 	
-	public static final int successRedirectDelay =3;
+	public static final int successRedirectDelay =5;
 	public static ErrorInfoBean notSupported()
 	{   ErrorInfoBean err = new ErrorInfoBean();
 		err.setLink("javascript:history.back(1);"); 

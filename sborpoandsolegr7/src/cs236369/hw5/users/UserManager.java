@@ -116,6 +116,7 @@ public class UserManager {
 		 ResultSet set= null;
 		try{
 		conn=DbManager.DbConnections.getInstance().getConnection();
+		conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 		conn.setAutoCommit(false);
 		PreparedStatement userExists= User.getUserDetails(conn, login);
 		set= userExists.executeQuery();
