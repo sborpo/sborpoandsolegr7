@@ -88,7 +88,7 @@ public class UserUtils {
 		
 			//UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
 			manipulator.manipulate(params, imageBlob, databaseUserType);
-			response.getWriter().println("Success");
+			UserUtils.forwardToSuccessPage("viewUsers.jsp", request, response);
 			return;
 		}
 		err.setErrorString("Catchpa Error");
@@ -124,7 +124,7 @@ public class UserUtils {
 	
 	public static void forwardToSuccessPage(String link,HttpServletRequest request,HttpServletResponse response)
 	{
-		request.setAttribute("successPage", link);
+		request.getSession().setAttribute("successPage", link);
 		RequestDispatcher rd = request.getRequestDispatcher("successPage.jsp");
 		try {
 			rd.forward(request, response);

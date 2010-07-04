@@ -99,7 +99,7 @@ public abstract class User {
 	 * @param login
 	 */
 	public User(String login) {
-		// TODO add DB call here
+		this.login=login;
 	}
 	
 	/**
@@ -281,7 +281,7 @@ public abstract class User {
 	}
 	public  PreparedStatement setDeleteUserRole(Connection conn) throws SQLException
 	{
-		String query= "DELETE FROM role_names WHERE login=? ";
+		String query= "DELETE  FROM user_roles WHERE login=? ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, login);
 		return prepareStatement;
