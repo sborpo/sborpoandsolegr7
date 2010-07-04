@@ -18,12 +18,12 @@ $(document).ready(function() {
 				equalTo: "#password"
 			},
 			address: {
-				required: true,
+				required: false,
 				minlength: 5
 			//	remote: "emails.php"
 			},
 			phonenumber : {
-				required: true,
+				required: false,
 				minlength: 9,
 				number: true
 			},

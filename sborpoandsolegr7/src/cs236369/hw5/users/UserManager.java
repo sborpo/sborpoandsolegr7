@@ -125,7 +125,7 @@ public class UserManager {
 		conn=DbManager.DbConnections.getInstance().getConnection();
 		conn.setAutoCommit(false);
 		 PreparedStatement statementUsers= user.setInsertUser(conn);
-		 PreparedStatement statementRoles = user.setUpdateRole(conn);
+		 PreparedStatement statementRoles = user.setInsertRole(conn);
 		 statementUsers.execute();
 		 statementRoles.execute();
 		 conn.commit();
