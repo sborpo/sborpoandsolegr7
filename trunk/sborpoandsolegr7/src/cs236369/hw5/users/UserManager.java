@@ -19,6 +19,7 @@ import cs236369.hw5.db.DbManager.DbConnections.SqlError;
 public class UserManager {
 	public static class UserExists extends Exception{}
 	public static class UserNotExists extends Exception{}
+	public static class TryDeleteAdmin extends Exception{}
 	public static String Usern="username";
 	public static String Password="password";
 	public static String PassConfirm="c_password";
@@ -107,6 +108,53 @@ public class UserManager {
 				conn.close();
 			}
 		}
+	}
+	
+	public static void removeUser(String login) throws UserNotExists, SQLException, TryDeleteAdmin
+	{
+		Connection conn=null;
+		 ResultSet set= null;
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		conn.setAutoCommit(false);
+		PreparedStatement userExists= User.getUserDetails(conn, login);
+		set= userExists.executeQuery();
+		if (!set.next())
+		{
+				throw new UserNotExists();
+		}
+		else
+		{
+			User user=UserManager.setUserFromRow(set);
+			if (user.getRole().equals(UserType.ADMIN))
+			{
+				throw new TryDeleteAdmin();
+			}
+		}
+
+		User user= new Researcher(login);
+		 PreparedStatement statementUsers= user.setDeleteUser(conn);
+		 PreparedStatement statementRoles = user.setDeleteUserRole(conn);
+		 statementUsers.execute();
+		 statementRoles.execute();
+		 conn.commit();
+		}
+		catch (SQLException ex)
+		{
+			conn.rollback();
+			throw  ex;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+		 
 	}
 	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type) throws SQLException, UserExists
 	{

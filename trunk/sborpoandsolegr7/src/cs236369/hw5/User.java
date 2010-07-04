@@ -279,6 +279,14 @@ public abstract class User {
 		prepareStatement.setString(1, login);
 		return prepareStatement;
 	}
+	public  PreparedStatement setDeleteUserRole(Connection conn) throws SQLException
+	{
+		String query= "DELETE FROM role_names WHERE login=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, login);
+		return prepareStatement;
+	}
+	
 	public  abstract PreparedStatement setUpdateRole(Connection statement) throws SQLException;
 	public  abstract PreparedStatement setInsertRole(Connection statement) throws SQLException;
 	public abstract UserType getRole();
