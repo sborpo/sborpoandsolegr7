@@ -15,7 +15,9 @@
 
 
 <body>
-<% String login = request.getParameter("username"); User user=UserManager.getUserDetails(login); %>
+<%
+	String login = request.getParameter("username"); User user=UserManager.getUserDetails(login);
+%>
 <h1>User Details</h1><br/><br/>
 <table>
 <tr>

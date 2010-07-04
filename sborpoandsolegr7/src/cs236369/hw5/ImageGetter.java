@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.users.UserManager;
 
+
 /**
  * Servlet implementation class ImageGetter
  */

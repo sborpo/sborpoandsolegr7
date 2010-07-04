@@ -1,5 +1,8 @@
 package cs236369.hw5;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 /**
  * ID - Identifies the instrument, in the lab.
 Type - The type of the instrument (e.g., MRI, NMR, etc.)
@@ -63,6 +66,16 @@ public class Instrument {
 
 	public String getType() {
 		return type;
+	}
+
+	public static PreparedStatement getDetails(Connection conn, int id2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public PreparedStatement setUpdateInstDet(Connection conn) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

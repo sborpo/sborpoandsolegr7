@@ -44,9 +44,10 @@ td.userTypesRow {background-color:yellow;}
 <td colspan="5">Researchers</td>
 </tr>
 <%
-int i=1;
+	int i=1;
 LinkedList<User> users= UserManager.getUsers();
-for ( User user : users ){ if (!user.getRole().equals(User.UserType.REASEARCHER)){continue;}%>
+for ( User user : users ){ if (!user.getRole().equals(User.UserType.REASEARCHER)){continue;}
+%>
 <tr>
 <td><%=i %></td><td><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getGroup() %></td><td><%=user.getPremissions() %></td>
 </tr>
