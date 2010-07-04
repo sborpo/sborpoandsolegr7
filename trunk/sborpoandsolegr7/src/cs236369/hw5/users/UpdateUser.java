@@ -16,6 +16,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
 import cs236369.hw5.ErrorInfoBean;
+import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.users.UserManager.UserExists;
@@ -50,7 +51,7 @@ public class UpdateUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//TODO: admin update
 		//check if user tries to change it's data , and not someone else
-		UserManipulator manipulator = new UserManipulator() {
+		DeafaultManipulator manipulator = new DeafaultManipulator() {
 			
 			@Override
 			public void paramsChecker(HashMap<String, String> params, ErrorInfoBean err)
@@ -60,9 +61,9 @@ public class UpdateUser extends HttpServlet {
 			}
 			
 			@Override
-			public void manipulate(HashMap<String, String> params, Blob imageBlob,
-					UserType databaseUserType) throws UserExists, UserNotExists, SQLException {
-				UserManager.updateUser(params.get(UserManager.Usern), null, params.get(UserManager.Group), null, params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
+			public void manipulate(HashMap<String, String> params, Object imageBlob,
+					Object databaseUserType) throws UserExists, UserNotExists, SQLException {
+				UserManager.updateUser(params.get(UserManager.Usern), null, params.get(UserManager.Group), null, params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob, (UserType)databaseUserType);
 				
 			}
 

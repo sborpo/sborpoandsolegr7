@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.ErrorInfoBean;
+import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.users.UserManager.UserExists;
@@ -45,7 +46,7 @@ public class AddNewUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		UserManipulator manipulator = new UserManipulator() {
+		DeafaultManipulator manipulator = new DeafaultManipulator() {
 			
 			@Override
 			public void paramsChecker(HashMap<String, String> params, ErrorInfoBean err)
@@ -55,9 +56,9 @@ public class AddNewUser extends HttpServlet {
 			}
 			
 			@Override
-			public void manipulate(HashMap<String, String> params, Blob imageBlob,
-					UserType databaseUserType) throws UserExists, UserNotExists, SQLException {
-				UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
+			public void manipulate(HashMap<String, String> params, Object imageBlob,
+					Object databaseUserType) throws UserExists, UserNotExists, SQLException {
+				UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob,(UserType) databaseUserType);
 				
 			}
 
