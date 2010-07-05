@@ -57,6 +57,8 @@
 </div> 
  
 </div> 
+<br/>
+<a href="passReseter.jsp?username=<%=request.getParameter("username")%>">Reset Password</a>
  
 </div> 
  

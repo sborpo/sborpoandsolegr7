@@ -61,6 +61,7 @@
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
+      <role-name>researcher</role-name>
     </auth-constraint>
   </security-constraint>
   <login-config>
@@ -160,5 +161,15 @@
   <servlet-mapping>
     <servlet-name>PasswordRecovery</servlet-name>
     <url-pattern>/PasswordRecovery</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ResetPassword</display-name>
+    <servlet-name>ResetPassword</servlet-name>
+    <servlet-class>cs236369.hw5.users.ResetPassword</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResetPassword</servlet-name>
+    <url-pattern>/ResetPassword</url-pattern>
   </servlet-mapping>
 </web-app>
