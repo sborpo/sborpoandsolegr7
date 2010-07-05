@@ -31,6 +31,7 @@ public class UserManager {
 	public static String Photo="userpicture";
 	public static String UserTypen="usertpe";
 	public static String Captcha="jcaptcha";
+	public static String Email="email";
 	public static int FileSizeInBytes=300000;
 	public static String NotSpecified="Not Specified";
 	
@@ -55,16 +56,16 @@ public class UserManager {
 		return null;
 	}
 	
-	public static void updateUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type) throws SQLException, UserNotExists
+	public static void updateUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type,String email) throws SQLException, UserNotExists
 	{
 		User user= null;
 		if (type.equals(UserType.ADMIN))
 		{
-			user = new Administrator(login,pass,name,permission,group,phone,address,stream);
+			user = new Administrator(login,pass,name,permission,group,phone,address,stream,email);
 		}
 		else
 		{
-			user = new Researcher(login,pass,name,permission,group,phone,address,stream);
+			user = new Researcher(login,pass,name,permission,group,phone,address,stream,email);
 		}
 		Connection conn=null;
 		ResultSet set=null;
@@ -157,16 +158,16 @@ public class UserManager {
 		}
 		 
 	}
-	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type) throws SQLException, UserExists
+	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type,String email) throws SQLException, UserExists
 	{
 		User user= null;
 		if (type.equals(UserType.ADMIN))
 		{
-			user = new Administrator(login,pass,name,permission,group,phone,address,stream);
+			user = new Administrator(login,pass,name,permission,group,phone,address,stream,email);
 		}
 		else
 		{
-			user = new Researcher(login,pass,name,permission,group,phone,address,stream);
+			user = new Researcher(login,pass,name,permission,group,phone,address,stream,email);
 		}
 		Connection conn=null;
 		 
@@ -211,11 +212,11 @@ public class UserManager {
 			
 			 
 			 
-			 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b);
+			 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b,set.getString("email"));
 		 }
 		 else
 		 {
-			 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b);
+			 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b,set.getString("email"));
 		 }
 		 return user;
 	}

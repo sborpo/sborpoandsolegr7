@@ -6,7 +6,6 @@ $(document).ready(function() {
 			username: {
 				required: true,
 				minlength: 2
-			//	remote: "users.php"
 			},
 			password: {
 				required: true,
@@ -17,10 +16,13 @@ $(document).ready(function() {
 				minlength: 5,
 				equalTo: "#password"
 			},
+			email: {
+				required: true,
+				email: true
+			},
 			address: {
 				required: true,
 				minlength: 5
-			//	remote: "emails.php"
 			},
 			phonenumber : {
 				required: true,
@@ -76,13 +78,5 @@ $(document).ready(function() {
 		}
 	});
 	
-	// propose username by combining first- and lastname
-	//$("#username").focus(function() {
-	//	var name = $("#name").val();
-	//	var lastname = $("#lastname").val();
-	//	if(name && lastname && !this.value) {
-	//		this.value = name + "." + lastname;
-	//	}
-//	});
  
 });

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,6 +39,18 @@ public class UserUtils {
 		bean=err;
 	}
 		public ErrorInfoBean getError(){return bean;}
+	}
+	
+	
+	public static boolean isValidEmail(String email)
+	{
+	      Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+	      Matcher m = p.matcher(email);
+	      boolean matchFound = m.matches();
+	      if (matchFound){
+	        return true;
+	      }
+	      return false;
 	}
 	public static UserType determineUserType(HashMap<String, String> params)
 	{
