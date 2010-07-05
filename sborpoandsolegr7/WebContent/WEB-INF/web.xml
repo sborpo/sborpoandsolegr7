@@ -46,6 +46,10 @@
     <error-code>500</error-code>
     <location>/errorPages/internalError.html</location>
   </error-page>
+  <error-page>
+    <error-code>501</error-code>
+    <location>/errorPages/unauthorized.html</location>
+  </error-page>
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>viewReservations.jsp</web-resource-name>
@@ -146,5 +150,15 @@
   <servlet-mapping>
     <servlet-name>DeleteUser</servlet-name>
     <url-pattern>/DeleteUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PasswordRecovery</display-name>
+    <servlet-name>PasswordRecovery</servlet-name>
+    <servlet-class>cs236369.hw5.users.PasswordRecovery</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PasswordRecovery</servlet-name>
+    <url-pattern>/PasswordRecovery</url-pattern>
   </servlet-mapping>
 </web-app>

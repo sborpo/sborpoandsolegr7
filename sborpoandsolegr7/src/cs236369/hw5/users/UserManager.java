@@ -15,6 +15,7 @@ import cs236369.hw5.User;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.db.DbManager;
 import cs236369.hw5.db.DbManager.DbConnections.SqlError;
+import cs236369.hw5.users.SendMail.SendingMailError;
 
 public class UserManager {
 	public static class UserExists extends Exception{}
@@ -282,5 +283,49 @@ public class UserManager {
 			}
 		
 		}
+	}
+
+	public static void recoverPassword(String login,String newPass) throws UserNotExists, SQLException, SendingMailError {
+		Connection conn=null;
+		 ResultSet set= null;
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+		conn.setAutoCommit(false);
+		PreparedStatement userExists= User.getUserDetails(conn, login);
+		set= userExists.executeQuery();
+	
+		if (!set.next())
+		{
+				throw new UserNotExists();
+				
+		}
+		//send the mail
+		String  email=setUserFromRow(set).getEmail();
+		SendMail mail = new SendMail(email,login,newPass);
+		mail.send();
+		//update the database (if the mail delivered fine )
+		User user= new Researcher(login);
+		user.setPassword(newPass);
+		PreparedStatement statementUsers= user.setUpdatePassword(conn);
+		statementUsers.execute();
+		conn.commit();
+		}
+		catch (SQLException ex)
+		{
+			conn.rollback();
+			throw  ex;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+		
 	}
 }

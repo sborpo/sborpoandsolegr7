@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +53,8 @@ public class UserUtils {
 	      }
 	      return false;
 	}
+	
+	
 	public static UserType determineUserType(HashMap<String, String> params)
 	{
 		if (params.get(UserManager.UserTypen).equals("Admin"))
