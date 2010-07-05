@@ -14,10 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.Utils;
+import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.User.UserType;
+import cs236369.hw5.Utils.ParametersExp;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
-import cs236369.hw5.users.UserUtils.ParametersExp;
 
 /**
  * Servlet implementation class AddNewUser
@@ -38,7 +39,7 @@ public class AddNewUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ErrorInfoBean err= Utils.notSupported();
-		UserUtils.forwardToErrorPage(err,request,response);
+		Utils.forwardToErrorPage(err,request,response);
 		
 	}
 
@@ -69,7 +70,18 @@ public class AddNewUser extends HttpServlet {
 				
 			}
 		};
-		UserUtils.manipulateUser(request, response, manipulator);
+		try {
+			UserUtils.manipulateUser(request, response, manipulator);
+		} catch (InstrumentExists e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (cs236369.hw5.users.UserUtils.ParametersExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParametersExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	
@@ -87,27 +99,27 @@ public class AddNewUser extends HttpServlet {
 		return required;
 	}
 
-	private void addUserCheckParameters(HashMap<String, String> params,ErrorInfoBean err) throws UserUtils.ParametersExp {
+	private void addUserCheckParameters(HashMap<String, String> params,ErrorInfoBean err) throws Utils.ParametersExp {
 		 ArrayList<String> requiered = requiredFieldsToAddUser();
 		 for (String field : requiered) {
 			if (!params.containsKey(field))
 			{
 				err.setErrorString("Parameters Error");
 				err.setReason("You must fill the mandatory fields");
-				throw new UserUtils.ParametersExp(err);
+				throw new Utils.ParametersExp(err);
 			}
 		}
 		if (!(params.get(UserManager.Password).equals(params.get(UserManager.PassConfirm))))
 			{
 				err.setErrorString("Password Error");
 				err.setReason("The password and the confirmation password don't match");
-				throw new UserUtils.ParametersExp(err);
+				throw new Utils.ParametersExp(err);
 			}
 		if (!UserUtils.isValidEmail(params.get(UserManager.Email)))
 		{
 			err.setErrorString("Email Error");
 			err.setReason("The email that you specified is not a valid one");
-			throw new UserUtils.ParametersExp(err);
+			throw new Utils.ParametersExp(err);
 		}
 		if (params.containsKey(UserManager.PhoneNumber))
 		{
@@ -115,7 +127,7 @@ public class AddNewUser extends HttpServlet {
 			{
 				err.setErrorString("Phone Number Error");
 				err.setReason("The phone number should contain only numbers");
-				throw new UserUtils.ParametersExp(err);
+				throw new Utils.ParametersExp(err);
 			}
 		}
 		else
@@ -130,7 +142,7 @@ public class AddNewUser extends HttpServlet {
 		{
 			err.setErrorString("User Type Error");
 			err.setReason("The user type should be only Reasearcher or Admin");
-			throw new UserUtils.ParametersExp(err);
+			throw new Utils.ParametersExp(err);
 		}
 		//TODO : check if group leader is on
 		

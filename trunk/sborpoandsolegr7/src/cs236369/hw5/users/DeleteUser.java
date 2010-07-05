@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.ErrorInfoBean;
+import cs236369.hw5.Utils;
 import cs236369.hw5.users.UserManager.TryDeleteAdmin;
 import cs236369.hw5.users.UserManager.UserNotExists;
 
@@ -42,7 +43,7 @@ public class DeleteUser extends HttpServlet {
 		err.setLink("viewUser.jsp?username="+username);
 		try {
 			UserManager.removeUser(username);
-			UserUtils.forwardToSuccessPage("viewUsers.jsp", request, response);
+			Utils.forwardToSuccessPage("viewUsers.jsp", request, response);
 			return;
 		} catch (UserNotExists e) {
 			err.setErrorString("User Error");
@@ -55,7 +56,7 @@ public class DeleteUser extends HttpServlet {
 			err.setErrorString("Permission Error");
 			err.setReason("You don't have the permission to delete an administrator");
 		}
-		UserUtils.forwardToErrorPage(err,request,response);
+		Utils.forwardToErrorPage(err,request,response);
 		
 		
 		

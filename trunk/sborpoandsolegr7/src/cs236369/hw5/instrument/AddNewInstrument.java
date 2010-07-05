@@ -1,9 +1,6 @@
 package cs236369.hw5.instrument;
 
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -12,122 +9,102 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
-
-import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
-
-import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.DeafaultManipulator;
+import cs236369.hw5.ErrorInfoBean;
+import cs236369.hw5.InstrumentManager;
 import cs236369.hw5.Utils;
-import cs236369.hw5.User.UserType;
-import cs236369.hw5.users.UserManager;
-import cs236369.hw5.users.UserUtils;
-import cs236369.hw5.users.UserManager.UserExists;
-import cs236369.hw5.users.UserManager.UserNotExists;
-import cs236369.hw5.users.UserUtils.ParametersExp;
+import cs236369.hw5.InstrumentManager.InstrumentExists;
+import cs236369.hw5.Utils.ParametersExp;
 
 /**
  * Servlet implementation class AddNewUser
  */
 public class AddNewInstrument extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddNewInstrument() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ErrorInfoBean err= Utils.notSupported();
-		UserUtils.forwardToErrorPage(err,request,response);
-		
+	public AddNewInstrument() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		ErrorInfoBean err = Utils.notSupported();
+		Utils.forwardToErrorPage(err, request, response);
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		DeafaultManipulator manipulator = new DeafaultManipulator() {
-			
+
 			@Override
-			public void paramsChecker(HashMap<String, String> params, ErrorInfoBean err)
-					throws ParametersExp {
-				addUserCheckParameters(params,err);
-				
+			public void paramsChecker(HashMap<String, String> params,
+					ErrorInfoBean err) throws ParametersExp {
+				addInstrumentCheckParameters(params, err);
+
 			}
-			
-			
 
 			@Override
 			public void returnLinkSetter(ErrorInfoBean err) {
-				err.setLink("AddInstrument.jsp"); err.setLinkStr("Try again");
-				
+				err.setLink("AddInstrument.jsp");
+				err.setLinkStr("Try again");
+
 			}
-
-
 
 			@Override
 			public void manipulate(HashMap<String, String> params,
-					Object image, Object type) throws UserExists,
-					UserNotExists, SQLException {
-				//UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) image,(UserType) type);
-				
+					Object image, Object type) throws SQLException,
+					InstrumentExists {
+				InstrumentManager.addInstrument(params
+						.get(InstrumentManager.ID), params
+						.get(InstrumentManager.Description), params
+						.get(InstrumentManager.Location), params
+						.get(InstrumentManager.Premission), params
+						.get(InstrumentManager.TimeSlot), params
+						.get(InstrumentManager.Type));
+
 			}
 		};
-		UserUtils.manipulateUser(request, response, manipulator);
+		try {
+			Utils.manipulateInstrument(request, response, manipulator);
+		} catch (InstrumentExists e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParametersExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (cs236369.hw5.users.UserUtils.ParametersExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
-	
 
-
-	private void addUserCheckParameters(HashMap<String, String> params,ErrorInfoBean err) throws UserUtils.ParametersExp {
-		if (!(params.containsKey(UserManager.Usern)&&params.containsKey(UserManager.Password)&&params.containsKey(UserManager.PassConfirm)&&params.containsKey(UserManager.Group)&&params.containsKey(UserManager.UserTypen)&&params.containsKey(UserManager.Name)&&params.containsKey(UserManager.Captcha)))
-		{
+	protected void addInstrumentCheckParameters(HashMap<String, String> params,
+			ErrorInfoBean err) throws cs236369.hw5.Utils.ParametersExp {
+		if (!(params.containsKey(InstrumentManager.ID)
+				&& params.containsKey(InstrumentManager.Description)
+				&& params.containsKey(InstrumentManager.Location)
+				&& params.containsKey(InstrumentManager.Premission)
+				&& params.containsKey(InstrumentManager.TimeSlot) && params
+				.containsKey(InstrumentManager.Type))) {
 			err.setErrorString("Parameters Error");
 			err.setReason("You must fill the mandatory fields");
-			throw new UserUtils.ParametersExp(err);
+			throw new Utils.ParametersExp(err);
 		}
-		if (!(params.get(UserManager.Password).equals(params.get(UserManager.PassConfirm))))
-			{
-				err.setErrorString("Password Error");
-				err.setReason("The password and the confirmation password don't match");
-				throw new UserUtils.ParametersExp(err);
-			}
-		if (params.containsKey(UserManager.PhoneNumber))
-		{
-			if (!(UserUtils.containsOnlyNumbers(params.get(UserManager.PhoneNumber))))
-			{
-				err.setErrorString("Phone Number Error");
-				err.setReason("The phone number should contain only numbers");
-				throw new UserUtils.ParametersExp(err);
-			}
-		}
-		else
-		{
-			params.put(UserManager.PhoneNumber, null);
-		}
-		if (!params.containsKey(UserManager.Address))
-		{
-			params.put(UserManager.Address, null);
-		}
-		if ((!(params.get(UserManager.UserTypen).equals("Admin"))) && (!(params.get(UserManager.UserTypen).equals("Researcher"))))
-		{
-			err.setErrorString("User Type Error");
-			err.setReason("The user type should be only Reasearcher or Admin");
-			throw new UserUtils.ParametersExp(err);
-		}
-		
 
 	}
 
