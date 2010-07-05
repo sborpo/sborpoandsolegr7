@@ -328,4 +328,42 @@ public class UserManager {
 		}
 		
 	}
+
+	public static void resetPassword(String login, String newPass) throws UserNotExists, SQLException {
+		Connection conn=null;
+		 ResultSet set= null;
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+		conn.setAutoCommit(false);
+		PreparedStatement userExists= User.getUserDetails(conn, login);
+		set= userExists.executeQuery();
+		if (!set.next())
+		{
+				throw new UserNotExists();
+				
+		}
+		User user= new Researcher(login);
+		user.setPassword(newPass);
+		PreparedStatement statementUsers= user.setUpdatePassword(conn);
+		statementUsers.execute();
+		conn.commit();
+		}
+		catch (SQLException ex)
+		{
+			conn.rollback();
+			throw  ex;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+		
+	}
 }
