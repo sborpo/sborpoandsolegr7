@@ -81,7 +81,7 @@ public class AddNewInstrument extends HttpServlet {
 			public void manipulate(HashMap<String, String> params,
 					Object image, Object type) throws UserExists,
 					UserNotExists, SQLException {
-				UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) image,(UserType) type);
+				//UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) image,(UserType) type);
 				
 			}
 		};

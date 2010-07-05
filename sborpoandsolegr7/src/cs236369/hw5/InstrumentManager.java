@@ -102,11 +102,11 @@ public class InstrumentManager {
 		User user= null;
 		if (type.equals(UserType.ADMIN))
 		{
-			user = new Administrator(login,pass,name,permission,group,phone,address,stream);
+	//		user = new Administrator(login,pass,name,permission,group,phone,address,stream);
 		}
 		else
 		{
-			user = new Researcher(login,pass,name,permission,group,phone,address,stream);
+		//	user = new Researcher(login,pass,name,permission,group,phone,address,stream);
 		}
 		Connection conn=null;
 		 
@@ -151,11 +151,11 @@ public class InstrumentManager {
 			
 			 
 			 
-			 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b);
+	//		 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b);
 		 }
 		 else
 		 {
-			 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b);
+		//	 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b);
 		 }
 		 return user;
 	}

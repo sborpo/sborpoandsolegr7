@@ -14,8 +14,8 @@ public class Administrator extends User{
 
 	public Administrator(String login, String password, String name,
 			String premissions, String group, String phoneNumber,
-			String address, Blob stream) {
-		super(login, password, name, premissions, group, phoneNumber, address, stream);
+			String address, Blob stream,String email) {
+		super(login, password, name, premissions, group, phoneNumber, address, stream,email);
 
 	}
 

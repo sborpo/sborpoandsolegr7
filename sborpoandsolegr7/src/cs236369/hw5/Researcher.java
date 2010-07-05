@@ -10,9 +10,9 @@ public class Researcher extends User {
 	
 
 	public Researcher(String login, String password, String name,
-			String premissions, String group, String phoneNumber, String address, Blob stream) {
+			String premissions, String group, String phoneNumber, String address, Blob stream,String email) {
 		super(login, password, name, premissions, group, phoneNumber,address,
-				stream);
+				stream,email);
 		// TODO Auto-generated constructor stub
 	}
 	

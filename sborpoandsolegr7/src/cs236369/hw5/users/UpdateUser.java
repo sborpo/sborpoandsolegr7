@@ -3,6 +3,7 @@ package cs236369.hw5.users;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -63,7 +64,7 @@ public class UpdateUser extends HttpServlet {
 			@Override
 			public void manipulate(HashMap<String, String> params, Object imageBlob,
 					Object databaseUserType) throws UserExists, UserNotExists, SQLException {
-				UserManager.updateUser(params.get(UserManager.Usern), null, params.get(UserManager.Group), null, params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob, (UserType)databaseUserType);
+				UserManager.updateUser(params.get(UserManager.Usern), null, params.get(UserManager.Group), null, params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob, (UserType)databaseUserType,params.get(UserManager.Email));
 				
 			}
 
@@ -75,15 +76,37 @@ public class UpdateUser extends HttpServlet {
 		};
 		UserUtils.manipulateUser(request, response, manipulator);
 	}
+	
+	private ArrayList<String> requiredFieldsToUpdateUser()
+	{
+		ArrayList<String> required = new ArrayList<String>();
+		required.add(UserManager.Usern);
+		required.add(UserManager.Group);
+		required.add(UserManager.UserTypen);
+		required.add(UserManager.Name);
+		required.add(UserManager.Captcha);
+		required.add(UserManager.Email);
+		return required;
+	}
 
 	private void updateUserCheckParameters(HashMap<String, String> params,
 			ErrorInfoBean err) throws cs236369.hw5.users.UserUtils.ParametersExp {
-		if (!(params.containsKey(UserManager.Group)&&params.containsKey(UserManager.UserTypen)&&params.containsKey(UserManager.Name)&&params.containsKey(UserManager.Captcha)))
-		{
-			err.setErrorString("Parameters Error");
-			err.setReason("The mandatory fields should be filled");
-			throw new UserUtils.ParametersExp(err);
+		
+		 ArrayList<String> requiered = requiredFieldsToUpdateUser();
+		 for (String field : requiered) {
+			if (!params.containsKey(field))
+			{
+				err.setErrorString("Parameters Error");
+				err.setReason("You must fill the mandatory fields");
+				throw new UserUtils.ParametersExp(err);
+			}
 		}
+		if (!UserUtils.isValidEmail(params.get(UserManager.Email)))
+			{
+				err.setErrorString("Email Error");
+				err.setReason("The email that you specified is not a valid one");
+				throw new UserUtils.ParametersExp(err);
+			}
 		if (params.containsKey(UserManager.PhoneNumber))
 		{
 			if (!(UserUtils.containsOnlyNumbers(params.get(UserManager.PhoneNumber))))

@@ -90,7 +90,7 @@ public class DbManager {
 		statment.executeUpdate(db); 
 		String instruments="CREATE TABLE IF NOT EXISTS `instruments` (`id` bigint(20) NOT NULL,`type` varchar(30) NOT NULL,`permission` int(11) NOT NULL,`timeslot` int(11) NOT NULL,`description` text NOT NULL,PRIMARY KEY (`id`),KEY `Permission` (`permission`),KEY `Type` (`type`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(instruments); 
-		String users= "CREATE TABLE `users` IF NOT EXISTS (  `login` varchar(30) NOT NULL,  `password` varchar(32) NOT NULL,  `name` varchar(50) NOT NULL,  `permission` text,  `usergroup` varchar(50) NOT NULL,  `phone` varchar(15) DEFAULT NULL,  `address` varchar(50) DEFAULT NULL,  `photo` blob,  PRIMARY KEY (`login`),  KEY `name` (`name`),  KEY `group` (`usergroup`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		String users= "CREATE TABLE IF NOT EXISTS `users` ( `login` varchar(30) NOT NULL, `password` varchar(32) NOT NULL, `name` varchar(50) NOT NULL, `permission` text,`usergroup` varchar(50) NOT NULL, `phone` varchar(15) DEFAULT NULL,`address` varchar(50) DEFAULT NULL,`photo` blob,`email` varchar(100) NOT NULL, PRIMARY KEY (`login`), KEY `name` (`name`),KEY `group` (`usergroup`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(users); 
 		String reservations= "CREATE TABLE `reservations` IF NOT EXISTS (`instid` bigint(20) unsigned NOT NULL,`year` int(11) NOT NULL,`month` int(11) NOT NULL,`day` int(11) NOT NULL,`slotbegin` int(11) NOT NULL,`slotend` int(11) NOT NULL,PRIMARY KEY (`instid`,`year`,`month`,`day`,`slotbegin`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		 statment.executeUpdate(reservations); 

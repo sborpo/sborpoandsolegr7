@@ -27,6 +27,23 @@ import java.sql.SQLException;
  */
 public abstract class User {
 	
+	
+
+
+	public User(String login, String password, String name, String premissions,
+			String group, String phoneNumber, String address, Blob photo,
+			String email) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.name = name;
+		this.premissions = premissions;
+		this.group = group;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.photo = photo;
+		this.email = email;
+	}
 	public static enum UserType { ADMIN,REASEARCHER;
 	
 	public String toString()
@@ -49,31 +66,10 @@ public abstract class User {
 	protected String phoneNumber;
 	protected String address;
 	protected Blob  photo;
+	protected String email;
+
 	
-	/**
-	 * create a user with given parameters
-	 * @param login
-	 * @param password
-	 * @param name
-	 * @param premissions
-	 * @param group
-	 * @param phoneNumber
-	 * @param address
-	 * @param stream
-	 */
-	public User(String login, String password, String name, String premissions,
-			String group, String phoneNumber, String address,
-			Blob stream) {
-		super();
-		this.login = login;
-		this.password = password;
-		this.name = name;
-		this.premissions = premissions;
-		this.group = group;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.photo = stream;
-	}
+	
 	public User()
 	{
 		
@@ -101,6 +97,12 @@ public abstract class User {
 	public User(String login) {
 		this.login=login;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	
 	
 	/**
 	 * @return the login
@@ -158,29 +160,42 @@ public abstract class User {
 	{
 		String isPhotoUpdate=((photo!=null)? " , photo=? " :"");
 		String isPermissionUpdate=((premissions !=null)? " , permission=?," :"");
-		String query= "UPDATE users SET name=?, usergroup=?, phone=?, address=?"+isPermissionUpdate+isPhotoUpdate+ " WHERE login=? ";
+		String query= "UPDATE users SET name=?, usergroup=?,email=?, phone=?, address=?"+isPermissionUpdate+isPhotoUpdate+ " WHERE login=? ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1,name);
 		prepareStatement.setString(2,group);
+		prepareStatement.setString(3,email);
 		if (phoneNumber!=null)
 		{
-			prepareStatement.setString(3,phoneNumber);
-		}
-		else
-		{
-			prepareStatement.setNull(3, java.sql.Types.VARCHAR);
-		}
-		if (address!=null)
-		{
-			prepareStatement.setString(4,address);
+			prepareStatement.setString(4,phoneNumber);
 		}
 		else
 		{
 			prepareStatement.setNull(4, java.sql.Types.VARCHAR);
 		}
+		if (address!=null)
+		{
+			prepareStatement.setString(5,address);
+		}
+		else
+		{
+			prepareStatement.setNull(5, java.sql.Types.VARCHAR);
+		}
 		if (premissions!=null)
 		{
-			prepareStatement.setString(5, premissions);
+			prepareStatement.setString(6, premissions);
+			if (photo!=null)
+			{
+				prepareStatement.setBlob(7, photo.getBinaryStream());
+				prepareStatement.setString(8, login);
+			}
+			else
+			{
+				prepareStatement.setString(7, login);
+			}
+		}
+		else
+		{
 			if (photo!=null)
 			{
 				prepareStatement.setBlob(6, photo.getBinaryStream());
@@ -191,18 +206,6 @@ public abstract class User {
 				prepareStatement.setString(6, login);
 			}
 		}
-		else
-		{
-			if (photo!=null)
-			{
-				prepareStatement.setBlob(5, photo.getBinaryStream());
-				prepareStatement.setString(6, login);
-			}
-			else
-			{
-				prepareStatement.setString(5, login);
-			}
-		}
 		
 		return prepareStatement;
 	}
@@ -210,7 +213,7 @@ public abstract class User {
 	public PreparedStatement setInsertUser(Connection conn) throws SQLException
 	{
 	
-		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`) VALUES(?,?,?,?,?,?,?,?)";
+		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`,`email`) VALUES(?,?,?,?,?,?,?,?)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, login);
 		prepareStatement.setString(2,password);
@@ -241,6 +244,7 @@ public abstract class User {
 		{
 			prepareStatement.setNull(8, java.sql.Types.BLOB);
 		}
+		prepareStatement.setString(9,email);
 		return prepareStatement;
 	}
 	
@@ -258,7 +262,7 @@ public abstract class User {
 	public static PreparedStatement getUserDetails(Connection conn,String username) throws SQLException
 	{
 
-		String query= "SELECT U.login,password,name,permission,usergroup,phone,address,U.photo, UR.rolename FROM users U,user_roles UR WHERE U.login=UR.login AND U.login=? ";
+		String query= "SELECT U.login,password,name,permission,usergroup,phone,address,U.photo, UR.rolename,email FROM users U,user_roles UR WHERE U.login=UR.login AND U.login=? ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, username);
 		return prepareStatement;
@@ -267,7 +271,7 @@ public abstract class User {
 	public static PreparedStatement getAllUsersNoPicture(Connection conn) throws SQLException
 	{
 
-		String query= "SELECT U.login , password , name ,permission, usergroup , phone , address ,photo, UR.rolename FROM users U,user_roles UR WHERE U.login=UR.login ";
+		String query= "SELECT U.login , password , name ,permission, usergroup , phone , address ,photo, UR.rolename,email FROM users U,user_roles UR WHERE U.login=UR.login ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		return prepareStatement;
 	}
