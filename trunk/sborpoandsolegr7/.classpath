@@ -17,5 +17,11 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcaptcha-2.0-alpha-1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcaptcha-integration-simple-servlet-2.0-alpha-1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcaptcha-api-1.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dsn.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/imap.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mail.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/pop3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/smtp.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

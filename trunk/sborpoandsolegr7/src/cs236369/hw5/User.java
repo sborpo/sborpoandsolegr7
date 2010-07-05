@@ -30,6 +30,11 @@ public abstract class User {
 	
 
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
 	public User(String login, String password, String name, String premissions,
 			String group, String phoneNumber, String address, Blob photo,
 			String email) {
@@ -213,7 +218,7 @@ public abstract class User {
 	public PreparedStatement setInsertUser(Connection conn) throws SQLException
 	{
 	
-		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`,`email`) VALUES(?,?,?,?,?,?,?,?)";
+		String query= "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`,`email`) VALUES(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, login);
 		prepareStatement.setString(2,password);
@@ -288,6 +293,15 @@ public abstract class User {
 		String query= "DELETE  FROM user_roles WHERE login=? ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1, login);
+		return prepareStatement;
+	}
+	
+	public  PreparedStatement setUpdatePassword(Connection conn) throws SQLException
+	{
+		String query= "UPDATE users SET password=? WHERE login=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, password);
+		prepareStatement.setString(2, login);
 		return prepareStatement;
 	}
 	

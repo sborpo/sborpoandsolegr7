@@ -37,8 +37,8 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
  	  		    	}
  	  		    %>
  	  		  <tr> 
-	  			<td class="label"><label id="lemail" for="email">Address</label></td> 
-	  			<td class="field"><input id="email" name="<%=UserManager.Email%>" type="text" value="<%=(user!=null)? user.getAddress() : ""%>" maxlength="150" /></td> 
+	  			<td class="label"><label id="lemail" for="email">Email</label></td> 
+	  			<td class="field"><input id="email" name="<%=UserManager.Email%>" type="text" value="<%=(user!=null)? user.getEmail() : ""%>" maxlength="150" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr>
 	  		  <tr> 
