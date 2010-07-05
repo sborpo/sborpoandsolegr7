@@ -27,6 +27,8 @@ import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.User;
+import cs236369.hw5.Utils;
+import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
@@ -87,7 +89,7 @@ public class UserUtils {
 	}
 	
 	
-	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException
+	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException, ParametersExp, InstrumentExists, Utils.ParametersExp
 	{
 		SerialBlob imageBlob=null;
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -105,7 +107,7 @@ public class UserUtils {
 		
 			//UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
 			manipulator.manipulate(params, imageBlob, databaseUserType);
-			UserUtils.forwardToSuccessPage("viewUsers.jsp", request, response);
+			Utils.forwardToSuccessPage("viewUsers.jsp", request, response);
 			return;
 		}
 		err.setErrorString("Catchpa Error");
@@ -115,7 +117,7 @@ public class UserUtils {
 		{
     		err.setErrorString("File Uploading Error");
     		err.setReason("The file that you have tried to upload is biggger than "+UserManager.FileSizeInBytes/1000+" KB");
-    		UserUtils.forwardToErrorPage(err,request,response);
+    		Utils.forwardToErrorPage(err,request,response);
 		}
 		catch (FileUploadException ex)
 		{
@@ -133,57 +135,11 @@ public class UserUtils {
 		}catch (UserNotExists e) {
 		err.setErrorString("User Error");
 		err.setReason("The username that you have tried to add already <br/> exists in the system.");
-		}catch (UserUtils.ParametersExp e) {
-			
 		}
-		UserUtils.forwardToErrorPage(err,request,response);
+		Utils.forwardToErrorPage(err,request,response);
 	}
 	
-	public static void forwardToSuccessPage(String link,HttpServletRequest request,HttpServletResponse response)
-	{
-		request.getSession().setAttribute("successPage", link);
-		RequestDispatcher rd = request.getRequestDispatcher("successPage.jsp");
-		try {
-			rd.forward(request, response);
-		} catch (ServletException e) {
-			try {
-				response.sendError(500);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} catch (IOException e) {
-			try {
-				response.sendError(500);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-	}
-	public static void forwardToErrorPage(ErrorInfoBean err,HttpServletRequest request,HttpServletResponse response) {
-
-		request.setAttribute("ErrorInfoBean", err);
-		RequestDispatcher rd = request.getRequestDispatcher("/errorPages/errorPage.jsp");
-		try {
-			rd.forward(request, response);
-		} catch (ServletException e) {
-			try {
-				response.sendError(500);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} catch (IOException e) {
-			try {
-				response.sendError(500);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-		
-	}
+	
 	
 	 public static boolean containsOnlyNumbers(String str) {
 	        

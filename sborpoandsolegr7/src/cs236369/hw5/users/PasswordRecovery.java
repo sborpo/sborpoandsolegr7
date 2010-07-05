@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.ErrorInfoBean;
+import cs236369.hw5.Utils;
 import cs236369.hw5.users.SendMail.SendingMailError;
 import cs236369.hw5.users.UserManager.TryDeleteAdmin;
 import cs236369.hw5.users.UserManager.UserNotExists;
@@ -64,7 +65,7 @@ public class PasswordRecovery extends HttpServlet {
 		try {
 			String newpass= generatePasswordRecoveryPass();
 			UserManager.recoverPassword(username,newpass);
-			UserUtils.forwardToSuccessPage("index.jsp", request, response);
+			Utils.forwardToSuccessPage("index.jsp", request, response);
 			return;
 		} catch (UserNotExists e) {
 			err.setErrorString("User Error");
@@ -78,7 +79,7 @@ public class PasswordRecovery extends HttpServlet {
 		err.setReason("An error occured when trying to send a recovery email.");
 			e.printStackTrace();
 		}
-	UserUtils.forwardToErrorPage(err,request,response);
+	Utils.forwardToErrorPage(err,request,response);
 
 	}
 }

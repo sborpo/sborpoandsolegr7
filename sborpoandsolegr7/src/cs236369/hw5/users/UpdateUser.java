@@ -19,6 +19,7 @@ import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.Utils;
+import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
@@ -43,7 +44,7 @@ public class UpdateUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ErrorInfoBean err= Utils.notSupported();
-		UserUtils.forwardToErrorPage(err,request,response);
+		Utils.forwardToErrorPage(err,request,response);
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class UpdateUser extends HttpServlet {
 			
 			@Override
 			public void paramsChecker(HashMap<String, String> params, ErrorInfoBean err)
-					throws ParametersExp {
+					throws Utils.ParametersExp, ParametersExp {
 				updateUserCheckParameters(params,err);
 				
 			}
@@ -74,7 +75,18 @@ public class UpdateUser extends HttpServlet {
 				
 			}
 		};
-		UserUtils.manipulateUser(request, response, manipulator);
+		try {
+			UserUtils.manipulateUser(request, response, manipulator);
+		} catch (ParametersExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstrumentExists e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (cs236369.hw5.Utils.ParametersExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private ArrayList<String> requiredFieldsToUpdateUser()

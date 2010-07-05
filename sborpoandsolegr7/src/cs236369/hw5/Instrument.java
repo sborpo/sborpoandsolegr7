@@ -2,6 +2,8 @@ package cs236369.hw5;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * ID - Identifies the instrument, in the lab.
@@ -16,11 +18,13 @@ Instruments may have additional properties according to your choice.
 
 public class Instrument {
 	
-
+	private static AtomicInteger idGenerator = new AtomicInteger(-1);
 	private String description = null;
 	private long id = -1;
 	private Integer timeSlot = null;
 	private String type = null;
+	private Integer premission = null;
+	private String location = null;
 	
 	/**
 	 * create an Instrument using given parameters
@@ -29,19 +33,47 @@ public class Instrument {
 	 * @param timeSlot
 	 * @param type
 	 */
-	public Instrument(String description, long id, Integer timeSlot, String type) {
+	public Instrument(String description, Integer timeSlot, String type, Integer premission, String location) {
 		super();
 		this.description = description;
-		this.id = id;
+		this.id = idGenerator.addAndGet(1);
 		this.timeSlot = timeSlot;
 		this.type = type;
+		this.premission = premission;
+		this.location = location;
+	}
+	public Instrument(int id,String description, Integer timeSlot, Integer premission, String type,  String location) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.id = idGenerator.addAndGet(1);
+		this.timeSlot = timeSlot;
+		this.type = type;
+		this.premission = premission;
+		this.location = location;
 	}
 	
-	public void UpdateInstrument(String description, long id, Integer timeSlot, String type) {
+	public void UpdateInstrument(String description, Integer timeSlot, String type, Integer premission, String location) {
 		this.description = description;
-		this.id = id;
 		this.timeSlot = timeSlot;
 		this.type = type;
+		this.premission = premission;
+		this.location = location;
+	}
+	
+	public PreparedStatement setInsertInstrument(Connection conn) throws SQLException
+	{
+	
+		String query= "INSERT INTO instruments (`id`,`type`,`premission`,`timeslot`,`description`,`location`) VALUES(?,?,?,?,?,?)";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1,Integer.toString((int) id));
+		prepareStatement.setString(2,type);
+		prepareStatement.setInt(3,premission);
+		prepareStatement.setLong(4,timeSlot);
+		prepareStatement.setString(5,description);
+		prepareStatement.setString(6,location);
+
+		return prepareStatement;
 	}
 	
 	/**
@@ -74,6 +106,25 @@ public class Instrument {
 	}
 
 	public PreparedStatement setUpdateInstDet(Connection conn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @return the premission
+	 */
+	public Integer getPremission() {
+		return premission;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	public static PreparedStatement getAllInstrumentsNoPicture(Connection conn) {
 		// TODO Auto-generated method stub
 		return null;
 	}
