@@ -25,6 +25,18 @@
     <param-name>db-dbname</param-name>
     <param-value>labdb</param-value>
   </context-param>
+   <context-param>
+    <param-name>labSupportMail</param-name>
+    <param-value>lab.supp@gmail.com</param-value>
+  </context-param>
+   <context-param>
+    <param-name>successRedirectDelay</param-name>
+    <param-value>5</param-value>
+  </context-param>
+   <context-param>
+    <param-name>authKey</param-name>
+    <param-value>111</param-value>
+  </context-param>
   <listener>
     <listener-class>cs236369.hw5.ApplicationStarts</listener-class>
   </listener>

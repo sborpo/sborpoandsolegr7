@@ -1,6 +1,43 @@
 package cs236369.hw5;
 
 public class TimeSlot {
+	@Override
+	public String toString() {
+		return "("+year+","+month+","+day+","+new Integer(slotNumberInDay()).toString()+")";
+	}
+	public int slotNumberInDay()
+	{
+		return ((slotNumber-1)%numOfSlotsInDay()+1);
+	}
+	public boolean isLessOrEqualThen(TimeSlot second)
+	{
+		if (year<second.year)
+		{
+			return true;
+		}
+		if (year>second.year)
+		{
+			return false;
+		}
+		if (month<second.month)
+		{
+			return true;
+		}
+		if (month>second.month)
+		{
+			return false;
+		}
+		if (day<second.day)
+		{
+			return true;
+		}
+		if (day>second.day)
+		{
+			return false;
+		}
+		return slotNumberInDay()<=second.slotNumberInDay();
+		
+	}
 	public TimeSlot(int year, int slotNumber) {
 		super();
 		if (slotNumber>numberOfTimeSlotsInAYear)
@@ -103,6 +140,8 @@ public class TimeSlot {
 		this.day=day;
 		slotNumber=30*numOfSlotsInDay()*(month-1)+(day-1)*numOfSlotsInDay()+1;
 	}
+	
+	
 	public static String getSlotTime(int slotNumber)
 	{
 		slotNumber=slotNumber-1;

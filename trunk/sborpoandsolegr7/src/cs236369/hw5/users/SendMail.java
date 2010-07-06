@@ -24,7 +24,7 @@ public class SendMail {
 	private String text;
 	
 	public SendMail( String to,String username,String newPass){
-		this.from = Utils.labSupportMail;
+		this.from = Utils.supportMail;
 		this.to = to;
 		this.subject ="no-reply : Lab Support - password recovery";
 		this.text = "Hello "+username+"\n Your new password is: "+newPass+"\n You can try to log in with this password now.";

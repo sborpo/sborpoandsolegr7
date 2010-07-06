@@ -72,7 +72,7 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 				<%
 					if ((user!=null)&&((user.getRole()).equals(UserType.ADMIN))){
 				%> 
-	  			<td class="field"><select id="usertype" name="<%=UserManager.UserTypen%>">
+	  			<td class="field"><select id="usertype" name="<%=UserManager.UserTypen%>" onchange="javascript:toggeleAdminAuth()">
 						<option value="Researcher" >Researcher</option>
 						<option value="Admin" selected="selected">Administrator</option>
 					</select>
@@ -80,7 +80,7 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 				<%
 					} else{
 				%>
-				<td class="field"><select id="usertype" name="<%=UserManager.UserTypen%>">
+				<td class="field"><select id="usertype" name="<%=UserManager.UserTypen%>" onchange="javascript:toggeleAdminAuth()">
 						<option value="Researcher" selected="selected">Researcher</option>
 						<option value="Admin">Administrator</option>
 					</select>
@@ -90,6 +90,14 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 				%>
 	  			<td class="status"></td> 
 	  		  </tr> 
+	  		  
+	  		   <tr id="authentication_row">
+ 			  	<td class="label"><label id="ladminAuth" for="adminAuth">Admin Authentication Key:</label></td>
+ 			  	<td class="field"><input id="adminAuth" type="text" name="<%=UserManager.AdminAuth%>" value="" />
+				</td>
+				<td class="status"></td> 
+			  </tr>
+	  		  
  			  <tr>
  			  	<td class="label"><label id="lpicture" for="picture">Picture (Max Size: 300 Kb):</label></td>
  			  	<td class="field"><input id="picture" type="hidden" name="MAX_FILE_SIZE" value="<%=UserManager.FileSizeInBytes/1000%>" />

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -143,6 +144,199 @@ public  class ReservationManager {
 	
 	}
 	
+	
+	public static class Period
+	{
+		@Override
+		public String toString() {
+			return "Period [end=" + end + ", instId=" + instId + ", start="
+					+ start + "]";
+		}
+		public long getInstId() {
+			return instId;
+		}
+		public TimeSlot getStart() {
+			return start;
+		}
+		public TimeSlot getEnd() {
+			return end;
+		}
+		public Period(long instId, TimeSlot start, TimeSlot end) {
+			super();
+			this.instId = instId;
+			this.start = start;
+			this.end = end;
+		}
+		private long instId;
+		private TimeSlot start;
+		private TimeSlot end;
+		
+	}
+	public static HashMap<Long,Period> searchForSlotsAv(TimeSlot initialeTimeSlot,String [] descriptions , int k) throws SQLException
+	{
+		
+		ResultSet set=null;Connection conn=null;
+		StringBuilder keywordsStr = new StringBuilder();
+		for (String keyword : descriptions) {
+			keywordsStr.append(keyword+" ");
+		}
+		try{	
+		 conn=DbManager.DbConnections.getInstance().getConnection();
+		 conn.setAutoCommit(false);
+		 conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+		 set= executeAvailiablePeriods(conn,initialeTimeSlot,keywordsStr.toString(),k);
+		 HashMap<Long,TimeSlot> maxSlot=getLatestTimeSlot(conn,keywordsStr.toString(),initialeTimeSlot);
+		 HashMap<Long,Period> periodList= getShortestTimeSlot(conn,keywordsStr.toString(),initialeTimeSlot,k);
+		 long instId=-1;
+		 while (set.next())
+		 {
+			 if (set.getLong("instid")!=instId)
+			 {
+				 instId=set.getLong("instid");
+				 if (!periodList.containsKey(instId))
+				 {
+					 periodList.put(instId,new Period(instId, new TimeSlot(set.getInt("syear"),set.getInt("send")), new TimeSlot(set.getInt("eyear"),set.getInt("ebegin"))));
+				 }
+			 }
+		 }
+		conn.commit();
+		for (long inst : maxSlot.keySet()) {
+			if (!periodList.containsKey(inst))
+			{
+				periodList.put(inst, new Period(inst, maxSlot.get(inst), null));
+			}
+		}
+		return periodList;
+		}
+		finally
+		{
+			if (set!=null){set.close();}
+			if (conn!=null){conn.close();}
+		}
+	}
+	
+	
+	private static HashMap<Long,Period> getShortestTimeSlot(Connection conn,String keywords,TimeSlot initialeTimeSlot,int k) throws SQLException {
+		ResultSet set=null;
+		HashMap<Long,Period> slot= new HashMap<Long, Period>();
+		try{
+		String query= "SELECT INST.id , M2.* FROM labdb.instruments INST LEFT OUTER JOIN " +
+				"labdb.reservations M2 " +
+				" ON ((year>? ) OR ((year=?)AND (slotbegin>?))) AND (INST.id=M2.instid) AND (MATCH (INST.type,INST.description) AGAINST (?  IN BOOLEAN MODE)) " +
+				"ORDER BY INST.id  , M2.year ,M2.slotbegin  ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setInt(1, initialeTimeSlot.getYear());
+		prepareStatement.setInt(2, initialeTimeSlot.getYear());
+		prepareStatement.setInt(3, initialeTimeSlot.getSlotNumber());
+		prepareStatement.setString(4, keywords);
+		set= prepareStatement.executeQuery();
+		 long instId=-1;
+		while (set.next())
+		{
+			//check nullable , it means that there are no reservations after initiale time slot , so we can return the initiale time slot
+			set.getInt("slotbegin");
+			if (set.wasNull())
+			{
+				slot.put(set.getLong("id"),new Period(set.getLong("id"),initialeTimeSlot,null));
+				continue;
+			}
+			 if (set.getLong("instid")!=instId)
+			 {
+				 instId=set.getLong("instid");
+				 if (TimeSlot.addTimeSlot(initialeTimeSlot,k).isLessOrEqualThen(new TimeSlot(set.getInt("year"), set.getInt("slotbegin"))))
+				 {
+					 slot.put(instId,new Period(instId,initialeTimeSlot, new TimeSlot(set.getInt("year"), set.getInt("slotbegin"))));
+				 }
+				
+			 }
+		}
+		return slot;
+		}
+		finally
+		{
+			if (set!=null)
+			{
+				set.close();
+			}
+		}
+		
+	}
+	private static HashMap<Long,TimeSlot> getLatestTimeSlot(Connection conn,String keywords,TimeSlot initialeTimeSlot) throws SQLException {
+		ResultSet set=null;
+		HashMap<Long,TimeSlot> slot= new HashMap<Long, TimeSlot>();
+		try{
+		String query= "SELECT INST.id , M2.* FROM instruments INST LEFT OUTER JOIN " +
+				"reservations M2 " +
+				" ON ((year>? ) OR ((year=?)AND (slotbegin>?))) AND (INST.id=M2.instid) AND (MATCH (INST.type,INST.description) AGAINST (?  IN BOOLEAN MODE)) " +
+				"ORDER BY INST.id  , M2.year DESC,M2.slotbegin DESC ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setInt(1, initialeTimeSlot.getYear());
+		prepareStatement.setInt(2, initialeTimeSlot.getYear());
+		prepareStatement.setInt(3, initialeTimeSlot.getSlotNumber());
+		prepareStatement.setString(4, keywords);
+		set= prepareStatement.executeQuery();
+		 long instId=-1;
+		while (set.next())
+		{
+			//check nullable , it means that there are no reservations after initiale time slot , so we can return the initiale time slot
+			set.getInt("slotbegin");
+			if (set.wasNull())
+			{
+				continue;
+			}
+			 if (set.getLong("instid")!=instId)
+			 {
+				 instId=set.getLong("instid");
+				 if (set.getInt("slotbegin")<set.getInt("slotend"))
+					{
+						slot.put(set.getLong("instid"), new TimeSlot(set.getInt("year"), set.getInt("slotend")));
+					}
+					else
+					{
+						slot.put(set.getLong("instid"), new TimeSlot(set.getInt("year")+1, set.getInt("slotend")));
+					}
+			 }
+		}
+		return slot;
+		}
+		finally
+		{
+			if (set!=null)
+			{
+				set.close();
+			}
+		}
+		
+	}
+
+	private static ResultSet executeAvailiablePeriods(Connection conn,
+			TimeSlot initialeTimeSlot, String keywords, int k) throws SQLException {
+
+		//we are getting timeperiods were we have k slots.
+		String query= "SELECT S1.instid, S1.year AS syear, S1.slotbegin AS sbegin, S1.slotend AS send,S2.year AS eyear,S2.slotbegin AS ebegin, S2.slotend AS eend FROM reservations S1, reservations S2 ,instruments I " +
+			//get the instruments that match the keywords
+			" WHERE (I.id=S1.instid) AND (MATCH (type,description) AGAINST (?  IN BOOLEAN MODE)) "+
+			//handle the case that we are in the same year
+				" AND ((S1.year>?) OR ((S1.year=?) AND (S1.slotbegin>?)))" +
+				"   AND  (( (S1.year=S2.year) AND (S1.slotbegin<S1.slotend) AND ((S1.slotend+?)<=S2.slotbegin) AND ( S1.instid=S2.instid) AND (NOT EXISTS (SELECT * FROM reservations S3 WHERE (S3.year=S1.year) AND (S3.slotbegin>S1.slotbegin) AND (S3.slotbegin<S2.slotbegin) AND (S3.instid=S1.instid))) ) " +
+				" OR " +
+				//handle thae case that we are not in the same year
+				"    (   ((S1.year+1)=S2.year)  AND ( S1.instid=S2.instid) " +
+				"        AND ( ((S1.slotbegin<S1.slotend) AND ((S1.slotend+?)<=(?+S2.slotbegin))) OR ((S1.slotbegin>S1.slotend) AND ((S1.slotend+?)<=(S2.slotbegin))) ) " +
+				"        AND  (NOT EXISTS (SELECT * FROM reservations S3 WHERE (S3.instid=S1.instid) AND ((S3.year=S1.year) AND (S3.slotbegin>S1.slotbegin)) OR ((S3.year=S2.year) AND (S3.slotbegin<S2.slotbegin)))      )       ))" +
+				" ORDER BY syear,sbegin";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, keywords);
+		prepareStatement.setInt(2, initialeTimeSlot.getYear());
+		prepareStatement.setInt(3, initialeTimeSlot.getYear());
+		prepareStatement.setInt(4, initialeTimeSlot.getSlotNumber());
+		prepareStatement.setInt(5,k);
+		prepareStatement.setInt(6,k);
+		prepareStatement.setInt(7,TimeSlot.numberOfTimeSlotsInAYear);
+		prepareStatement.setInt(8,k);
+		return prepareStatement.executeQuery();
+	}
+
 	public static LinkedList<InstrumentAvilability> getOccupiedSlotsFromDatabase(TimeSlot initialeSlot,String type, int k) throws SQLException
 	{
 		
@@ -174,16 +368,23 @@ public  class ReservationManager {
 			if (!set.wasNull())
 			{
 				int offset=0;
+				//to the case that ----|endyear|---start---end---|endweek|----
 				if (set.getInt("year")!=initialeSlot.getYear())
 				{
 					offset=TimeSlot.numberOfTimeSlotsInAYear;
+				}
+				int endOffset=0;
+				//to the case that ----start---|endyear|---end-----
+				if (set.getInt("slotbegin")>set.getInt("slotend"))
+				{
+					endOffset=TimeSlot.numberOfTimeSlotsInAYear;
 				}
 				//The instrument has hours where he is not availible
 				for (;(i+initialeSlot.getSlotNumber()<(offset+set.getInt("slotbegin")))&&(i<(TimeSlot.numOfSlotInWeek()+k)); i++)
 				{
 					arr[i]=Avilability.TAKEN;
 				}
-				for (; (i+initialeSlot.getSlotNumber()<(offset+set.getInt("slotend")))&&(i<(TimeSlot.numOfSlotInWeek()+k)); i++)
+				for (; (i+initialeSlot.getSlotNumber()<(offset+endOffset+set.getInt("slotend")))&&(i<(TimeSlot.numOfSlotInWeek()+k)); i++)
 				{
 					arr[i]=Avilability.NOT_AVAILABLE;
 				}

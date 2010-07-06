@@ -31,6 +31,7 @@ public class UserManager {
 	public static String Permission="permission";
 	public static String Photo="userpicture";
 	public static String UserTypen="usertpe";
+	public static String AdminAuth="admin_auth";
 	public static String Captcha="jcaptcha";
 	public static String Email="email";
 	public static int FileSizeInBytes=300000;

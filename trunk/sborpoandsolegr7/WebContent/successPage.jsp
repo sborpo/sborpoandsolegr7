@@ -39,11 +39,11 @@ function delayer(){
 }
 </script>
 </head>
-<body onLoad="setTimeout('delayer()', <%=Utils.successRedirectDelay*1000 %>)">
+<body onLoad="setTimeout('delayer()', <%=Utils.redirectDelay*1000 %>)">
 <div class="transbox">
 <h2>Your Operation Was Completed Successfully!</h2>
 <br/><br/>
-<p>You are being redirected within <%=Utils.successRedirectDelay %> seconds...</p>
+<p>You are being redirected within <%=Utils.redirectDelay %> seconds...</p>
 <br/>
 <br/>
 </div>

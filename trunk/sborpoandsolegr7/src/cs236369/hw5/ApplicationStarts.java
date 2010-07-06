@@ -6,6 +6,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import cs236369.hw5.db.DbManager;
+import cs236369.hw5.users.UserUtils;
 
 /**
  * Application Lifecycle Listener implementation class ApplicationStarts
@@ -42,6 +43,9 @@ public class ApplicationStarts implements ServletContextListener {
       DbManager.DbConnections.getInstance().setUserName( arg0.getServletContext().getInitParameter("db-user"));
       DbManager.DbConnections.getInstance().setPassword( arg0.getServletContext().getInitParameter("db-password"));
       DbManager.DbConnections.getInstance().setDbName( arg0.getServletContext().getInitParameter("db-dbname"));
+      Utils.redirectDelay=Integer.parseInt(arg0.getServletContext().getInitParameter("successRedirectDelay"));
+      Utils.supportMail=arg0.getServletContext().getInitParameter("labSupportMail");
+      UserUtils.authorizationStr=arg0.getServletContext().getInitParameter("authKey");
       try {
 		DbManager.constructTables();
 	} catch (SQLException e) {
