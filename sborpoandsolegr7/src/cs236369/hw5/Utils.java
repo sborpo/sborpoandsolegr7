@@ -23,6 +23,7 @@ import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
 import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.User.UserType;
+import cs236369.hw5.db.DbManager.DbConnections;
 import cs236369.hw5.users.UserManager;
 import cs236369.hw5.users.UserUtils;
 import cs236369.hw5.users.UserManager.UserExists;
@@ -32,9 +33,12 @@ import cs236369.hw5.users.UserUtils.ParametersExp;
 
 public class Utils {
 
-	public static final int successRedirectDelay = 5;
-	public static final String labSupportMail = "lab.supp@gmail.com";
-
+	private static Utils utils;
+	public static  String supportMail;
+	public static int redirectDelay;
+	
+	
+	
 	public static ErrorInfoBean notSupported() {
 		ErrorInfoBean err = new ErrorInfoBean();
 		err.setLink("javascript:history.back(1);");
@@ -42,6 +46,16 @@ public class Utils {
 		err.setErrorString("Parameters Error");
 		err.setReason("You must fill the mandatory fields");
 		return err;
+	}
+	
+	
+	public static Utils getInstance()
+	{
+		if (utils==null)
+		{
+			utils = new Utils();
+		}
+		return utils;
 	}
 
 	public static class ParametersExp extends Exception {

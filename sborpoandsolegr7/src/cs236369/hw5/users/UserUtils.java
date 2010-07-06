@@ -34,7 +34,7 @@ import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
 
 public class UserUtils {
-
+	public static String authorizationStr;
 	public static class FileTooBigExp extends Exception{}
 	public static class ParametersExp extends Exception { 
 		ErrorInfoBean bean;

@@ -31,6 +31,9 @@ $(document).ready(function() {
 			},
 			group : {
 				required: true
+			},
+			admin_auth : {
+				required: true
 			}
 		},
 		messages: {
@@ -61,6 +64,10 @@ $(document).ready(function() {
 			group : {
 				required: "Enter your group"
 			}
+			,
+			admin_auth : {
+				required: "Enter the authentication key"
+			}
 		},
 		// the errorPlacement has to take the table layout into account
 		errorPlacement: function(error, element) {
@@ -80,3 +87,4 @@ $(document).ready(function() {
 	
  
 });
+

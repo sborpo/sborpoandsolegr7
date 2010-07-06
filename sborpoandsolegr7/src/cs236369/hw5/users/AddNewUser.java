@@ -138,6 +138,15 @@ public class AddNewUser extends HttpServlet {
 		{
 			params.put(UserManager.Address, null);
 		}
+		if (params.get(UserManager.UserTypen).equals("Admin"))
+		{
+			if ((!params.containsKey(UserManager.AdminAuth))|| (!(params.get(UserManager.AdminAuth).equals(UserUtils.authorizationStr))))
+			{
+				err.setErrorString("Authentication Key Error");
+				err.setReason("The authentication key was not supplied");
+				throw new Utils.ParametersExp(err);
+			}
+		}
 		if ((!(params.get(UserManager.UserTypen).equals("Admin"))) && (!(params.get(UserManager.UserTypen).equals("Researcher"))))
 		{
 			err.setErrorString("User Type Error");

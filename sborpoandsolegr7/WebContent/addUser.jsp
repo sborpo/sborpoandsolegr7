@@ -22,11 +22,41 @@
 </style> 
  
 <script src="dynamicTestForAddUser.js" type="text/javascript"></script> 
+ <script type="text/javascript"">
+function poorman_close(id)
+{
+	var tr = document.getElementById(id);
+	if (tr==null) { return; }
+	tr.style.display =  'none' ;
+}
+
+function poorman_open(id)
+{
+	var tr = document.getElementById(id);
+	if (tr==null) { return; }
+	tr.style.display =  '' ;
+}
+function toggeleAdminAuth()
+{
+	var selectedUserType = document.getElementById('usertype');
+	var val= selectedUserType.options[selectedUserType.selectedIndex].value;
+	if (val=="Admin")
+	{
+		document.getElementById('adminAuth').value="";
+		poorman_open('authentication_row');
+	}
+	else
+	{
+		document.getElementById('adminAuth').value="------";
+		poorman_close('authentication_row');
+	}
+}
+</script>
  
 </head>
 <%@page import="cs236369.hw5.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
-<body> 
+<body onload="javascript:toggeleAdminAuth()"> 
 <h1 id="banner">Add User</h1> 
 <div id="main"> 
  
