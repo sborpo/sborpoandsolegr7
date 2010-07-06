@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.ErrorInfoBean;
-import cs236369.hw5.users.SendMail.SendingMailError;
+import cs236369.hw5.Utils;
 import cs236369.hw5.users.UserManager.UserNotExists;
 import cs236369.hw5.users.UserUtils.ParametersExp;
 
@@ -51,7 +51,7 @@ public class ResetPassword extends HttpServlet {
 		}
 		err.setLinkStr("Back");
 		UserManager.resetPassword(username,newPass);
-		UserUtils.forwardToSuccessPage("updateUser.jsp?username="+username, request, response);
+		Utils.forwardToSuccessPage("updateUser.jsp?username="+username, request, response);
 			return;
 		} catch (UserNotExists e) {
 			err.setErrorString("User Error");
@@ -65,7 +65,7 @@ public class ResetPassword extends HttpServlet {
 			e.printStackTrace();
 		}
 	
-		UserUtils.forwardToErrorPage(err,request,response);
+		Utils.forwardToErrorPage(err,request,response);
     }
 
 	/**
