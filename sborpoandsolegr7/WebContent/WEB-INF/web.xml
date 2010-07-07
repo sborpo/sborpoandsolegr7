@@ -25,15 +25,15 @@
     <param-name>db-dbname</param-name>
     <param-value>labdb</param-value>
   </context-param>
-   <context-param>
+  <context-param>
     <param-name>labSupportMail</param-name>
     <param-value>lab.supp@gmail.com</param-value>
   </context-param>
-   <context-param>
+  <context-param>
     <param-name>successRedirectDelay</param-name>
     <param-value>5</param-value>
   </context-param>
-   <context-param>
+  <context-param>
     <param-name>authKey</param-name>
     <param-value>111</param-value>
   </context-param>
@@ -183,5 +183,32 @@
   <servlet-mapping>
     <servlet-name>ResetPassword</servlet-name>
     <url-pattern>/ResetPassword</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <display-name>Apache-Axis Servlet</display-name>
+    <servlet-name>AxisServlet</servlet-name>
+    <servlet-class>org.apache.axis2.transport.http.AxisServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AxisServlet</servlet-name>
+    <url-pattern>/servlet/AxisServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AxisServlet</servlet-name>
+    <url-pattern>*.jws</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AxisServlet</servlet-name>
+    <url-pattern>/services/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <display-name>Apache-Axis Admin Servlet Web Admin</display-name>
+    <servlet-name>AxisAdminServlet</servlet-name>
+    <servlet-class>org.apache.axis2.transport.http.AxisAdminServlet</servlet-class>
+    <load-on-startup>100</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AxisAdminServlet</servlet-name>
+    <url-pattern>/axis2-admin/*</url-pattern>
   </servlet-mapping>
 </web-app>
