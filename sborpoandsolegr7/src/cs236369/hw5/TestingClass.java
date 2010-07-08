@@ -42,7 +42,9 @@ public class TestingClass {
 		
 		try {
 			HashMap<Long, ReservationManager.Period> periods = ReservationManager.searchForSlotsAv(new TimeSlot(2009, 11, 2),new String[] { "abcdefg","stam"}, 8640);
-			for (Period per : periods.values()) {
+			searchWS sr = new searchWS();
+			String [] str =sr.search(new String[] { "abcdefg","stam"}, 8640);
+			for (String per :str) {
 				System.out.println(per);
 			}
 		} catch (SQLException e) {

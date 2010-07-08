@@ -1,7 +1,8 @@
-package cs236369.hw5;
+package cs236369.wsClients;
 
 import java.util.ArrayList;
 
+import cs236369.hw5.RegistrationServiceStub;
 import cs236369.hw5.RegistrationServiceStub.AddEndpoint;
 import cs236369.hw5.RegistrationServiceStub.AddEndpointResponse;
 import cs236369.hw5.RegistrationServiceStub.DeleteEndpoint;
@@ -16,9 +17,8 @@ public class YellowPagesRegistrator {
 	{
 		try{
 		RegistrationServiceStub stub = new RegistrationServiceStub();
-		//TODO: init the wsdl
 		AddEndpoint myAppWSDL= new AddEndpoint();
-		myAppWSDL.setUrl("checking");
+		myAppWSDL.setUrl("http://localhost:8080/sborpoandsolegr7/services/searchWS?wsdl");
 		AddEndpointResponse reponse=stub.addEndpoint(myAppWSDL);
 		System.out.println("This is the response: "+reponse.get_return()+".");
 		}

@@ -7,6 +7,8 @@ import javax.servlet.ServletContextListener;
 
 import cs236369.hw5.db.DbManager;
 import cs236369.hw5.users.UserUtils;
+import cs236369.wsClients.YellowPagesRegistrator;
+import cs236369.wsClients.YellowPagesRegistrator.YelloPageError;
 
 /**
  * Application Lifecycle Listener implementation class ApplicationStarts
@@ -51,13 +53,23 @@ public class ApplicationStarts implements ServletContextListener {
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
+	  try {
+		YellowPagesRegistrator.registerApplicationToYellow();
+	} catch (YelloPageError e) {
+		//cannot register
+		System.out.println("Cannot register application to yellow pages");
+	}
     }
 
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
-        // TODO Auto-generated method stub
+        try {
+			YellowPagesRegistrator.removeApplicationFromYellow();
+		} catch (YelloPageError e) {
+			System.out.println("Failed to remove application to yellow pages");
+		}
     }
 	
 }
