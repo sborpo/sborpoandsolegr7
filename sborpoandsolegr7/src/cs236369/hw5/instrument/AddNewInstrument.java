@@ -69,7 +69,6 @@ public class AddNewInstrument extends HttpServlet {
 					Object image, Object type) throws SQLException,
 					InstrumentExists {
 				InstrumentManager.addInstrument(params
-						.get(InstrumentManager.ID), params
 						.get(InstrumentManager.Description), params
 						.get(InstrumentManager.Location), params
 						.get(InstrumentManager.Premission), params
@@ -96,7 +95,7 @@ public class AddNewInstrument extends HttpServlet {
 	protected void addInstrumentCheckParameters(HashMap<String, String> params,
 			ErrorInfoBean err) throws cs236369.hw5.Utils.ParametersExp {
 		if (!(params.containsKey(InstrumentManager.ID)
-				&& params.containsKey(InstrumentManager.Description)
+		//		&& params.containsKey(InstrumentManager.Description)
 				&& params.containsKey(InstrumentManager.Location)
 				&& params.containsKey(InstrumentManager.Premission)
 				&& params.containsKey(InstrumentManager.TimeSlot) && params

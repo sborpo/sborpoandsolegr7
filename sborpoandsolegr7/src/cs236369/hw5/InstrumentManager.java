@@ -23,7 +23,7 @@ public class InstrumentManager {
 	public static final String Captcha = "captcha";
 	public static String ID = "instrumentID";
 	public static String Type = "type";
-	public static String Premission = "premission";
+	public static String Premission = "permission";
 	public static String TimeSlot = "timeslot";
 	public static String Description = "description";
 	public static String Location = "location";
@@ -72,15 +72,17 @@ public class InstrumentManager {
 		}
 	}
 
-	public static void addInstrument(String id, String description,
+	public static void addInstrument(String description,
 			String location, String permission, String timeslot, String type)
 			throws SQLException, InstrumentExists {
 		Instrument instrument = null;
 		try {
 			instrument = new Instrument(description,
-					Integer.parseInt(timeslot), type, Integer.parseInt(permission), location);
+					Integer.parseInt(timeslot), type, Integer
+							.parseInt(permission), location);
 		} catch (NumberFormatException e) {
 			// TODO: add error here
+			e.printStackTrace();
 		}
 
 		Connection conn = null;
@@ -110,7 +112,8 @@ public class InstrumentManager {
 		ResultSet set = null;
 		try {
 			conn = DbManager.DbConnections.getInstance().getConnection();
-			PreparedStatement statementInstruments = Instrument.getDetails(conn, id);
+			PreparedStatement statementInstruments = Instrument.getDetails(
+					conn, id);
 			set = statementInstruments.executeQuery();
 			Instrument instrument = null;
 			if (set.next()) {
@@ -133,15 +136,11 @@ public class InstrumentManager {
 		LinkedList<Instrument> instrumentsList = new LinkedList<Instrument>();
 		try {
 			conn = DbManager.DbConnections.getInstance().getConnection();
-			PreparedStatement statementUsers = Instrument.getAllInstrumentsNoPicture(conn);
+			PreparedStatement statementUsers = Instrument
+					.getAllInstrumentsNoPicture(conn);
 			set = statementUsers.executeQuery();
 			while (set.next()) {
-				Blob b = set.getBlob("photo");
-				if (set.wasNull()) {
-					System.out.println("NULL");
-				} else {
-					System.out.println(b.length());
-				}
+
 				Instrument instrument = null;
 				instrument = setInstrumentFromRow(set);
 				instrumentsList.add(instrument);
@@ -158,9 +157,12 @@ public class InstrumentManager {
 		}
 	}
 
-	private static Instrument setInstrumentFromRow(ResultSet set) throws SQLException {
+	private static Instrument setInstrumentFromRow(ResultSet set)
+			throws SQLException {
 		if (!set.wasNull()) {
-			return new Instrument(set.getInt("id"),set.getString("type"),set.getInt("permission"),set.getInt("timeslot"),set.getString("description"),set.getString("location"));
+			return new Instrument(set.getInt("id"), set.getString("type"), set
+					.getInt("permission"), set.getInt("timeslot"), set
+					.getString("description"), set.getString("location"));
 		}
 		return null;
 	}

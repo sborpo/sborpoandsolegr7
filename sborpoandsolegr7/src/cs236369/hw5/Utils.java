@@ -1,6 +1,5 @@
 package cs236369.hw5;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -10,7 +9,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.apache.commons.fileupload.FileItemIterator;
@@ -23,13 +21,11 @@ import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
 import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.User.UserType;
-import cs236369.hw5.db.DbManager.DbConnections;
 import cs236369.hw5.users.UserManager;
 import cs236369.hw5.users.UserUtils;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
 import cs236369.hw5.users.UserUtils.FileTooBigExp;
-import cs236369.hw5.users.UserUtils.ParametersExp;
 
 public class Utils {
 
