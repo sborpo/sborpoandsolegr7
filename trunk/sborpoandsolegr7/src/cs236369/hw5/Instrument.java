@@ -17,7 +17,7 @@ Instruments may have additional properties according to your choice.
  */
 
 public class Instrument {
-	
+
 	private static AtomicInteger idGenerator = new AtomicInteger(-1);
 	private String description = null;
 	private long id = -1;
@@ -25,7 +25,7 @@ public class Instrument {
 	private String type = null;
 	private Integer premission = null;
 	private String location = null;
-	
+
 	/**
 	 * create an Instrument using given parameters
 	 * @param description
@@ -52,7 +52,7 @@ public class Instrument {
 		this.premission = premission;
 		this.location = location;
 	}
-	
+
 	public void UpdateInstrument(String description, Integer timeSlot, String type, Integer premission, String location) {
 		this.description = description;
 		this.timeSlot = timeSlot;
@@ -60,22 +60,27 @@ public class Instrument {
 		this.premission = premission;
 		this.location = location;
 	}
-	
+
 	public PreparedStatement setInsertInstrument(Connection conn) throws SQLException
 	{
-	
+
 		String query= "INSERT INTO instruments (`id`,`type`,`premission`,`timeslot`,`description`,`location`) VALUES(?,?,?,?,?,?)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1,Integer.toString((int) id));
 		prepareStatement.setString(2,type);
 		prepareStatement.setInt(3,premission);
 		prepareStatement.setLong(4,timeSlot);
-		prepareStatement.setString(5,description);
+		if (description != null) {
+			prepareStatement.setString(5,description);
+		}
+		else {
+			prepareStatement.setNull(5, java.sql.Types.VARCHAR);
+		}
 		prepareStatement.setString(6,location);
 
 		return prepareStatement;
 	}
-	
+
 	/**
 	 * create Instrument form a given DB entry
 	 * @param id
@@ -83,13 +88,19 @@ public class Instrument {
 	public Instrument(long id) {
 		// TODO search Instrument in db.
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
 
 	public long getId() {
-			return id;
+		return id;
+	}
+	
+	public static int getGenID () {
+		int real = idGenerator.addAndGet(1);
+		idGenerator.addAndGet(-1);
+		return real;
 	}
 
 	public int getTimeSlot() {
@@ -129,5 +140,5 @@ public class Instrument {
 		return null;
 	}
 
-	
+
 }
