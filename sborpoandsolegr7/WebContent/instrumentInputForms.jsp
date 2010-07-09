@@ -1,4 +1,6 @@
-<%@page import="cs236369.hw5.instrument.*" %>
+<%@page import="cs236369.hw5.instrument.InstrumentManager" %>
+<%@page import="cs236369.hw5.instrument.Instrument" %>
+<%@page import="cs236369.hw5.instrument.AddNewInstrument" %>
 <%@page import="cs236369.hw5.*" %>
 <%
 	String des=request.getParameter("decision");

@@ -1,4 +1,4 @@
-package cs236369.hw5;
+package cs236369.hw5.instrument;
 
 import java.sql.Blob;
 import java.sql.Connection;
@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import javax.sql.rowset.serial.SerialBlob;
 
+import cs236369.hw5.User;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.db.DbManager;
 import cs236369.hw5.db.DbManager.DbConnections.SqlError;

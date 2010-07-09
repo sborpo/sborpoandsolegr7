@@ -1,4 +1,4 @@
-package cs236369.hw5;
+package cs236369.hw5.instrument;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -64,7 +64,7 @@ public class Instrument {
 	public PreparedStatement setInsertInstrument(Connection conn) throws SQLException
 	{
 
-		String query= "INSERT INTO instruments (`id`,`type`,`premission`,`timeslot`,`description`,`location`) VALUES(?,?,?,?,?,?)";
+		String query= "INSERT INTO instruments (`id`,`type`,`permission`,`timeslot`,`description`,`location`) VALUES(?,?,?,?,?,?)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1,Integer.toString((int) id));
 		prepareStatement.setString(2,type);

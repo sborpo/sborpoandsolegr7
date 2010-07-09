@@ -211,4 +211,14 @@
     <servlet-name>AxisAdminServlet</servlet-name>
     <url-pattern>/axis2-admin/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddNewInstrument</display-name>
+    <servlet-name>AddNewInstrument</servlet-name>
+    <servlet-class>cs236369.hw5.instrument.AddNewInstrument</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddNewInstrument</servlet-name>
+    <url-pattern>/AddNewInstrument</url-pattern>
+  </servlet-mapping>
 </web-app>

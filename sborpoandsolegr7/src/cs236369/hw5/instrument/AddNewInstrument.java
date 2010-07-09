@@ -11,13 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.ErrorInfoBean;
-import cs236369.hw5.InstrumentManager;
 import cs236369.hw5.Utils;
-import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.Utils.ParametersExp;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
 
 /**
- * Servlet implementation class AddNewUser
+ * Servlet implementation class AddNewInstrument
  */
 public class AddNewInstrument extends HttpServlet {
 	private static final long serialVersionUID = 1L;
