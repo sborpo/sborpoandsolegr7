@@ -14,7 +14,7 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 			
 			 <tr> 
 	  			<td class="label"><label id="lusername" for="username">Username</label></td> 
-	  			<td class="field"><input id="username" type="text"   maxlength="50" <%if (!des.equals("add")){%> readonly="readonly" value="<%=login%>" <%}%> name="<%=UserManager.Usern%>" /></td> 
+	  			<td class="field"><input id="username" type="text"   maxlength="50" <%if (!des.equals("add")){%> readonly="readonly" value="<%=login%>" <%}%> name="<%=UserManager.Usern%>" onchange="javascript:toggleGroupBox()" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 	  		  <tr> 
@@ -53,28 +53,9 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 	  			<td class="field"><input id="phoneno" name="<%=UserManager.PhoneNumber%>" type="text" value="<%=(user!=null)? user.getPhoneNumber() : ""%>" maxlength="150" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
-			  <tr> 
-	  			<td class="label"><label id="lgroup" for="group">Group</label></td> 
-	  			<td class="field"><input type="hidden" id="initialeGroupsNum"></input><select id="group" name="<%=UserManager.Group%>" >
-	  			<% for(int i=0; i<groups.size(); i++){ %>
-	  				<option value="<%= groups.get(i) %>"><%= groups.get(i) %></option>
-	  			<%} %>
-	  			</select></td> 
-	  			<td class="status"></td> 
-	  		  </tr>
-	  		  <%
-	  		  	if (isAdmin){
-	  		  %>
 	  		    <tr> 
-	  			<td class="label"><label id="lperm" for="permission">Permissions<br/>(seperated by commas)</label></td> 
-	  			<td class="field"><input id="perm" name="<%=UserManager.Permission%>" type="text" value="<%=(user!=null)? user.getPremissions() : ""%>" maxlength="150" /></td> 
-	  			<td class="status"></td> 
-	  		  </tr>  
-	  		  <%
-  	  		  	}
-  	  		  %>
-			  <tr> 
-	  			<td class="label"><label id="lusertype" for="usertype">User Type</label></td>
+	  			<td class="label"><label id="lusertype" for="usertype">User Type</label>
+	  			</td>
 				<%
 					if ((user!=null)&&((user.getRole()).equals(UserType.ADMIN))){
 				%> 
@@ -98,11 +79,35 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 	  		  </tr> 
 	  		  
 	  		   <tr id="authentication_row">
- 			  	<td class="label"><label id="ladminAuth" for="adminAuth">Admin Authentication Key:</label></td>
+ 			  	<td class="label"><label id="ladminAuth" for="adminAuth">Admin Authentication Key:</label><br/>
+
+				</td>
  			  	<td class="field"><input id="adminAuth" type="text" name="<%=UserManager.AdminAuth%>" value="" />
 				</td>
 				<td class="status"></td> 
 			  </tr>
+			  <tr> 
+	  			<td class="label"><label id="lgroup" for="group">Group Leader</label><br/>
+	  			 			
+	  			</td> 
+	  			<td class="field"><input type="hidden" id="initialeGroupsNum"></input><select id="group" name="<%=UserManager.Group%>"  >
+	  			<% for(int i=0; i<groups.size(); i++){ %>
+	  				<option value="<%= groups.get(i) %>"><%= groups.get(i) %></option>
+	  			<%} %>
+	  			</select></td> 
+	  			<td class="status"></td> 
+	  		  </tr>
+	  		  <%
+	  		  	if (isAdmin){
+	  		  %>
+	  		    <tr> 
+	  			<td class="label"><label id="lperm" for="permission">Permissions<br/>(seperated by commas)</label></td> 
+	  			<td class="field"><input id="perm" name="<%=UserManager.Permission%>" type="text" value="<%=(user!=null)? user.getPremissions() : ""%>" maxlength="150" /></td> 
+	  			<td class="status"></td> 
+	  		  </tr>  
+	  		  <%
+  	  		  	}
+  	  		  %>
 	  		  
  			  <tr>
  			  	<td class="label"><label id="lpicture" for="picture">Picture (Max Size: 300 Kb):</label></td>
