@@ -308,5 +308,12 @@ public abstract class User {
 	public  abstract PreparedStatement setUpdateRole(Connection statement) throws SQLException;
 	public  abstract PreparedStatement setInsertRole(Connection statement) throws SQLException;
 	public abstract UserType getRole();
+
+
+	public static PreparedStatement getUserGroups(Connection conn) throws SQLException {
+		String query= "SELECT DISTINCT usergroup FROM users";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		return prepareStatement;
+	}
 		
 }	
