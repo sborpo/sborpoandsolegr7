@@ -19,8 +19,9 @@ import org.apache.commons.fileupload.util.Streams;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
-import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.User.UserType;
+import cs236369.hw5.instrument.InstrumentManager;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
 import cs236369.hw5.users.UserManager;
 import cs236369.hw5.users.UserUtils;
 import cs236369.hw5.users.UserManager.UserExists;
@@ -79,10 +80,9 @@ public class Utils {
 		try {
 			Utils.handleParameters(request, params);
 			manipulator.paramsChecker(params, err);
-			UserType databaseUserType = UserUtils.determineUserType(params);
-			String userCaptchaResponse = params.get(InstrumentManager.Captcha);
+			String captchaResponse = params.get(InstrumentManager.Captcha);
 			boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(
-					request, userCaptchaResponse);
+					request, captchaResponse);
 			if (captchaPassed) {
 
 				// UserManager.AddUser(params.get(UserManager.Usern),
@@ -92,7 +92,7 @@ public class Utils {
 				// params.get(UserManager.PhoneNumber),
 				// params.get(UserManager.Address), imageBlob,
 				// databaseUserType);
-				manipulator.manipulate(params, null, databaseUserType);
+				manipulator.manipulate(params, null, null);
 				Utils.forwardToSuccessPage("viewUsers.jsp", request, //TODO: change That
 						response);
 				return;

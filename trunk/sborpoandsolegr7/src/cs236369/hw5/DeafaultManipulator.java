@@ -3,8 +3,8 @@ package cs236369.hw5;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.Utils.ParametersExp;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
 

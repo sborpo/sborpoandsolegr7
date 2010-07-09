@@ -28,8 +28,8 @@ import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.User;
 import cs236369.hw5.Utils;
-import cs236369.hw5.InstrumentManager.InstrumentExists;
 import cs236369.hw5.User.UserType;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
 
