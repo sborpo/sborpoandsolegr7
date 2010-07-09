@@ -33,7 +33,7 @@ public class YellowPagesRegistrator {
 		try{
 		RegistrationServiceStub stub = new RegistrationServiceStub();
 		DeleteEndpoint myAppWSDL= new DeleteEndpoint();
-		myAppWSDL.setUrl("checking");
+		myAppWSDL.setUrl("http://localhost:8080/sborpoandsolegr7/services/searchWS?wsdl");
 		DeleteEndpointResponse reponse=stub.deleteEndpoint(myAppWSDL);
 		System.out.println("This is the response: "+reponse.get_return()+".");
 		}

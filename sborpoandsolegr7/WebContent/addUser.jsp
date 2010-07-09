@@ -30,6 +30,21 @@ function poorman_close(id)
 	tr.style.display =  'none' ;
 }
 
+
+function addUserToGroupBox(id)
+{
+	var tr = document.getElementById(id);
+	if (tr==null) { return; }
+	tr.style.display =  'none' ;
+}
+
+function init()
+{
+	var hiddenInput = document.getElementById('initialeGroupsNum');
+	
+}
+
+
 function poorman_open(id)
 {
 	var tr = document.getElementById(id);

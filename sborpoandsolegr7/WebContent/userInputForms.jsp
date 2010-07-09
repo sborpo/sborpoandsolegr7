@@ -2,13 +2,15 @@
 <%@page import="cs236369.hw5.*" %>
 <%@page import="cs236369.hw5.User.*"%>
 <%
-	String des=request.getParameter("decision");
+String des=request.getParameter("decision");
 User user=null;
 String login=null;
 boolean isAdmin= UserUtils.isAdmin(request);
+ArrayList<String> groups = UserManager.getGroups();
 if (des.equals("update")){login = request.getParameter("username");  user=UserManager.getUserDetails(login); }
 %>
-<table> 
+
+<%@page import="java.util.ArrayList"%><table> 
 			
 			 <tr> 
 	  			<td class="label"><label id="lusername" for="username">Username</label></td> 
@@ -53,7 +55,11 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 	  		  </tr> 
 			  <tr> 
 	  			<td class="label"><label id="lgroup" for="group">Group</label></td> 
-	  			<td class="field"><input id="group" name="<%=UserManager.Group%>" type="text" value="<%=(user!=null)? user.getGroup() : ""%>" maxlength="150" /></td> 
+	  			<td class="field"><input type="hidden" id="initialeGroupsNum"></input><select id="group" name="<%=UserManager.Group%>" >
+	  			<% for(int i=0; i<groups.size(); i++){ %>
+	  				<option value="<%= groups.get(i) %>"><%= groups.get(i) %></option>
+	  			<%} %>
+	  			</select></td> 
 	  			<td class="status"></td> 
 	  		  </tr>
 	  		  <%

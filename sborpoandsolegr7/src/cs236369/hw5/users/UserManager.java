@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -112,7 +113,35 @@ public class UserManager {
 			}
 		}
 	}
-	
+	public static ArrayList<String> getGroups() throws SQLException
+	{
+		Connection conn=null;
+		 ResultSet set= null;
+		 ArrayList<String> groups= new ArrayList<String>();
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		PreparedStatement userGroups= User.getUserGroups(conn);
+		set= userGroups.executeQuery();
+		while (set.next())
+		{
+			groups.add(set.getString("usergroup"));
+		}
+		return groups;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+		
+		
+		
+	}
 	public static void removeUser(String login) throws UserNotExists, SQLException, TryDeleteAdmin
 	{
 		Connection conn=null;
