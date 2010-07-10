@@ -14,6 +14,9 @@ import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.Utils;
 import cs236369.hw5.Utils.ParametersExp;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
+import cs236369.hw5.users.UserManager;
+import cs236369.hw5.users.UserUtils;
+import cs236369.hw5.users.UserManager.Unauthenticated;
 
 /**
  * Servlet implementation class AddNewInstrument
@@ -74,6 +77,16 @@ public class AddNewInstrument extends HttpServlet {
 						.get(InstrumentManager.TimeSlot), params
 						.get(InstrumentManager.Type));
 
+			}
+
+			@Override
+			public void authenticate(HashMap<String, String> params,
+					HttpServletRequest request, HttpServletResponse respone)
+					throws Unauthenticated {
+				if ((request.getUserPrincipal()==null) || (!UserUtils.isAdmin(request)))
+				{
+					throw new UserManager.Unauthenticated();
+				}	
 			}
 		};
 		try {

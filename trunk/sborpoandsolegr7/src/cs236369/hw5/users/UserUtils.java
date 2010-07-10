@@ -30,6 +30,8 @@ import cs236369.hw5.User;
 import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
+import cs236369.hw5.users.UserManager.LeaderNotExists;
+import cs236369.hw5.users.UserManager.Unauthenticated;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
 
@@ -99,13 +101,11 @@ public class UserUtils {
 		try{
 		UserUtils.handleParameters(request, params, imageBlob);
 		manipulator.paramsChecker(params, err);
-		//addUserCheckParameters(params,err);
+		manipulator.authenticate(params, request, response);
 		UserType databaseUserType=UserUtils.determineUserType(params);
 		String userCaptchaResponse = params.get(UserManager.Captcha);
 		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, userCaptchaResponse);
 		if(captchaPassed){
-		
-			//UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address), imageBlob, databaseUserType);
 			manipulator.manipulate(params, imageBlob, databaseUserType);
 			Utils.forwardToSuccessPage("viewUsers.jsp", request, response);
 			return;
@@ -135,6 +135,13 @@ public class UserUtils {
 		}catch (UserNotExists e) {
 		err.setErrorString("User Error");
 		err.setReason("The username that you have tried to add already <br/> exists in the system.");
+		} catch (LeaderNotExists e) {
+			err.setErrorString("Group Error");
+			err.setReason("The group leader that you have supplied , no longer exists in the system. <br/>" +
+					"He might have been transfered to different group.");
+		} catch (Unauthenticated e) {
+			response.sendError(501);
+			return;
 		}
 		Utils.forwardToErrorPage(err,request,response);
 	}

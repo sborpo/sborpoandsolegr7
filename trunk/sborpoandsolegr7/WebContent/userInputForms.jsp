@@ -57,9 +57,9 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 	  			<td class="label"><label id="lusertype" for="usertype">User Type</label>
 	  			</td>
 				<%
-					if ((user!=null)&&((user.getRole()).equals(UserType.ADMIN))){
+					if (!isAdmin){
 				%> 
-	  			<td class="field"><select id="usertype" name="<%=UserManager.UserTypen%>" onchange="javascript:toggeleAdminAuth()">
+	  			<td class="field"><select id="usertype" name="<%=UserManager.UserTypen%>" <%if (!(des.equals("add"))){ %> disabled <%} %>onchange="javascript:toggeleAdminAuth()">
 						<option value="Researcher" >Researcher</option>
 						<option value="Admin" selected="selected">Administrator</option>
 					</select>
@@ -77,7 +77,7 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 				%>
 	  			<td class="status"></td> 
 	  		  </tr> 
-	  		  
+	  		  <%if (des.equals("add")){ %>
 	  		   <tr id="authentication_row">
  			  	<td class="label"><label id="ladminAuth" for="adminAuth">Admin Authentication Key:</label><br/>
 
@@ -86,13 +86,17 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 				</td>
 				<td class="status"></td> 
 			  </tr>
+			  <%} %>
 			  <tr> 
-	  			<td class="label"><label id="lgroup" for="group">Group Leader</label><br/>
-	  			 			
+	  			<td class="label"><label id="lgroup" for="group">Group Leader</label>		
 	  			</td> 
 	  			<td class="field"><input type="hidden" id="initialeGroupsNum"></input><select id="group" name="<%=UserManager.Group%>"  >
 	  			<% for(int i=0; i<groups.size(); i++){ %>
-	  				<option value="<%= groups.get(i) %>"><%= groups.get(i) %></option>
+	  				<%if (user!=null){ %>
+	  				<option value="<%= groups.get(i)%>" <%if (groups.get(i).equals(user.getGroup())){ %>selected="selected" <%} %>><%= groups.get(i)%></option>
+	  				<%}else{ %>
+	  					<option value="<%= groups.get(i) %>"><%= groups.get(i) %></option>
+	  				<%} %>
 	  			<%} %>
 	  			</select></td> 
 	  			<td class="status"></td> 

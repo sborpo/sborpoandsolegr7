@@ -1,4 +1,4 @@
-$(document).ready(function() {
+
 	// validate signup form on keyup and submit
 	var validator = $("#signupform").validate({
 		rules: {
@@ -56,5 +56,5 @@ $(document).ready(function() {
 	});
 	
  
-});
+
 

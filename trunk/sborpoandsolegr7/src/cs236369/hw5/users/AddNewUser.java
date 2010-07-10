@@ -17,6 +17,8 @@ import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.Utils.ParametersExp;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
+import cs236369.hw5.users.UserManager.LeaderNotExists;
+import cs236369.hw5.users.UserManager.Unauthenticated;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
 
@@ -59,7 +61,7 @@ public class AddNewUser extends HttpServlet {
 			
 			@Override
 			public void manipulate(HashMap<String, String> params, Object imageBlob,
-					Object databaseUserType) throws UserExists, UserNotExists, SQLException {
+					Object databaseUserType) throws UserExists, UserNotExists, SQLException, LeaderNotExists {
 				UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob,(UserType) databaseUserType,params.get(UserManager.Email));
 				
 			}
@@ -67,6 +69,13 @@ public class AddNewUser extends HttpServlet {
 			@Override
 			public void returnLinkSetter(ErrorInfoBean err) {
 				err.setLink("addUser.jsp"); err.setLinkStr("Try again");
+				
+			}
+
+			@Override
+			public void authenticate(HashMap<String, String> params,
+					HttpServletRequest request, HttpServletResponse respone)
+					throws Unauthenticated {
 				
 			}
 		};
@@ -147,17 +156,47 @@ public class AddNewUser extends HttpServlet {
 				throw new Utils.ParametersExp(err);
 			}
 		}
+		validateGroup(params,err);
 		if ((!(params.get(UserManager.UserTypen).equals("Admin"))) && (!(params.get(UserManager.UserTypen).equals("Researcher"))))
 		{
 			err.setErrorString("User Type Error");
 			err.setReason("The user type should be only Reasearcher or Admin");
 			throw new Utils.ParametersExp(err);
 		}
-		//TODO : check if group leader is on
 		
 
 	}
 
-	
+	public static void validateGroup(HashMap<String, String> params,ErrorInfoBean err) throws Utils.ParametersExp  {
+		if (params.get(UserManager.UserTypen).equals("Admin"))
+		{
+			if (!(params.get(UserManager.Group).equals("Administrators")))
+			{
+				err.setErrorString("Group Error");
+				err.setReason("The group leader that you have specified for admin is wrong");
+				throw new Utils.ParametersExp(err);
+			}
+		}
+		else{
+			if (params.get(UserManager.Group).equals(params.get(UserManager.Usern)))
+			{
+				return;
+			}
+			ArrayList<String> groups= new ArrayList<String>();
+			try {
+				groups = UserManager.getGroups();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (!(groups.contains(params.get(UserManager.Group))))
+			{
+				err.setErrorString("Group Error");
+				err.setReason("The group leader that you have entered doesn't exists in the system");
+				throw new Utils.ParametersExp(err);
+			}
+		}
+		
+	}
 
 }

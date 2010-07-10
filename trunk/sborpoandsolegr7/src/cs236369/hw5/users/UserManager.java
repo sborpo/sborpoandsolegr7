@@ -10,6 +10,8 @@ import java.util.LinkedList;
 
 import javax.sql.rowset.serial.SerialBlob;
 
+import com.jhlabs.image.StampFilter;
+
 import cs236369.hw5.Administrator;
 import cs236369.hw5.Researcher;
 import cs236369.hw5.User;
@@ -19,6 +21,9 @@ import cs236369.hw5.db.DbManager.DbConnections.SqlError;
 import cs236369.hw5.users.SendMail.SendingMailError;
 
 public class UserManager {
+	public static class Unauthenticated extends Exception{}
+	public static enum AuthenticationMode {ADMIN_AND_OWNER,ANY_USER,ADMIN_ONLY};
+	public static class LeaderNotExists extends Exception{}
 	public static class UserExists extends Exception{}
 	public static class UserNotExists extends Exception{}
 	public static class TryDeleteAdmin extends Exception{}
@@ -59,7 +64,7 @@ public class UserManager {
 		return null;
 	}
 	
-	public static void updateUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type,String email) throws SQLException, UserNotExists
+	public static void updateUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type,String email) throws SQLException, UserNotExists, LeaderNotExists
 	{
 		User user= null;
 		if (type.equals(UserType.ADMIN))
@@ -74,25 +79,39 @@ public class UserManager {
 		ResultSet set=null;
 		try{
 		conn=DbManager.DbConnections.getInstance().getConnection();
-		//TODO: verify this is the needed isolation level.
-		//When we read data , we don't aquire locks , so we don't care if someone has deleted
-		//the row or change it. Becuase update is done only on existing rows. (the admin could have been deleted the
-		//user after he changed his details.
-		conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+		//we want to lock the current user , and the new group leader , that
+		//someone else cannot do something to this record
+		conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
 		conn.setAutoCommit(false);
+		//here the user will be locked
 		 PreparedStatement userExists= User.getUserDetails(conn, login);
 		 set= userExists.executeQuery();
+		 User previousUser=null;
 		 if (!set.next())
 		 {
 			throw new UserNotExists();
 		 }
-		 PreparedStatement statementUsers= user.setUpdateUserDet(conn);
-		 PreparedStatement statementRoles = user.setUpdateRole(conn);
+		 else
+		 {
+			 previousUser=setUserFromRow(set);
+		 }
+		 //here the group leader will be locked
+		 PreparedStatement statementUsersLeader= user.setGetUserGroupLeader(conn,user);
+		 set=statementUsersLeader.executeQuery();
+		 if (!set.next())
+		 {
+			 throw new LeaderNotExists();
+		 }
+		 PreparedStatement statementUsers= user.setUpdateUserDet(conn,previousUser);
 		 statementUsers.execute();
-		 statementRoles.execute();
 		 conn.commit();
 		}
 		catch (UserNotExists ex)
+		{
+			conn.rollback();
+			throw ex;
+		}
+		catch (LeaderNotExists ex)
 		{
 			conn.rollback();
 			throw ex;
@@ -148,24 +167,36 @@ public class UserManager {
 		 ResultSet set= null;
 		try{
 		conn=DbManager.DbConnections.getInstance().getConnection();
+		
+		//no matter which situation , that db will stay consistent.
+		//suppose that X is not a group leader , so deleting it will delete 
+		//only his record. (even if we try to update concurently , reading X will lock it,
+		//then moving it to group Y and his members will succeed , now trying to update members which
+		//were belong to his first group will lead to nothing (they shouldn't be updated)
 		conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 		conn.setAutoCommit(false);
 		PreparedStatement userExists= User.getUserDetails(conn, login);
 		set= userExists.executeQuery();
+		User user=null;
 		if (!set.next())
 		{
 				throw new UserNotExists();
 		}
 		else
 		{
-			User user=UserManager.setUserFromRow(set);
+			 user=UserManager.setUserFromRow(set);
 			if (user.getRole().equals(UserType.ADMIN))
 			{
 				throw new TryDeleteAdmin();
 			}
 		}
-
-		User user= new Researcher(login);
+		if (user.isGroupLeader())
+		{
+			//update all group members to be in 1 person group
+			 PreparedStatement updateGroupMembers=user.setUpdateGroupsOnDelete(conn, user.getGroup());
+			 updateGroupMembers.execute();
+		}
+		//delete the user and his role
 		 PreparedStatement statementUsers= user.setDeleteUser(conn);
 		 PreparedStatement statementRoles = user.setDeleteUserRole(conn);
 		 statementUsers.execute();
@@ -189,7 +220,7 @@ public class UserManager {
 		}
 		 
 	}
-	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type,String email) throws SQLException, UserExists
+	public static void AddUser(String login,String pass,String group,String permission,String name,String phone,String address,Blob stream,UserType type,String email) throws SQLException, UserExists, LeaderNotExists
 	{
 		User user= null;
 		if (type.equals(UserType.ADMIN))
@@ -201,10 +232,20 @@ public class UserManager {
 			user = new Researcher(login,pass,name,permission,group,phone,address,stream,email);
 		}
 		Connection conn=null;
-		 
+		ResultSet set=null; 
 		try{
 		conn=DbManager.DbConnections.getInstance().getConnection();
 		conn.setAutoCommit(false);
+		//we need the repeatable read in order to obtain shared lock
+		//on the group leader. We don't want that when inserting a new member to the group,
+		//the group leader will be deleted or moved to other group.
+		conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+		 PreparedStatement statementUsersLeader= user.setGetUserGroupLeader(conn,user);
+		 set=statementUsersLeader.executeQuery();
+		 if (!set.next())
+		 {
+			 throw new LeaderNotExists();
+		 }
 		 PreparedStatement statementUsers= user.setInsertUser(conn);
 		 PreparedStatement statementRoles = user.setInsertRole(conn);
 		 statementUsers.execute();
@@ -220,7 +261,16 @@ public class UserManager {
 			}
 			throw ex;
 		}
+		catch (LeaderNotExists ex)
+		{
+			conn.rollback();
+			throw ex;
+		}
 		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
 			if (conn!=null)
 			{
 				conn.close();
@@ -358,7 +408,7 @@ public class UserManager {
 		}
 		
 	}
-
+	
 	public static void resetPassword(String login, String newPass) throws UserNotExists, SQLException {
 		Connection conn=null;
 		 ResultSet set= null;

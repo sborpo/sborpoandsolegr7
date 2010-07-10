@@ -221,4 +221,14 @@
     <servlet-name>AddNewInstrument</servlet-name>
     <url-pattern>/AddNewInstrument</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminUpdateUser</display-name>
+    <servlet-name>AdminUpdateUser</servlet-name>
+    <servlet-class>cs236369.hw5.users.AdminUpdateUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminUpdateUser</servlet-name>
+    <url-pattern>/AdminUpdateUser</url-pattern>
+  </servlet-mapping>
 </web-app>
