@@ -2,8 +2,14 @@ package cs236369.hw5.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import cs236369.hw5.Administrator;
+import cs236369.hw5.User;
+import cs236369.hw5.Utils;
 
 
 public class DbManager {
@@ -81,6 +87,7 @@ public class DbManager {
 	public static void  constructTables() throws SQLException
 	{
 		createDb();
+		ResultSet set=null;
 		Connection conn=DbConnections.getInstance().getConnection();
 		Statement statment=null;
 		conn.setAutoCommit(false);
@@ -94,8 +101,17 @@ public class DbManager {
 		 statment.executeUpdate(reservations); 
 		String userRoles="CREATE TABLE IF NOT EXISTS `user_roles` (`login` varchar(30) NOT NULL, `rolename` varchar(45) NOT NULL, PRIMARY KEY (`login`,`rolename`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(userRoles); 
+		PreparedStatement statement=User.getUserDetails(conn, "root");
+		set=statement.executeQuery();
+		if (!set.next())
+		{
+			String query = "INSERT INTO users (`login`,`password`,`name`,`permission`,`usergroup`,`phone`,`address`,`photo`,`email`) VALUES('root','123456','root',NULL,'root',NULL,NULL,NULL,'"+Utils.supportMail+"')";
+			statement.execute(query);
+			query = "INSERT INTO user_roles VALUES('root','admin');";
+			statement.execute(query);
+		}
 		conn.commit();
-		conn.setAutoCommit(true);
+		
 		}
 		catch (SQLException ex)
 		{
@@ -104,6 +120,7 @@ public class DbManager {
 		}
 		finally
 		{
+			if (set!=null){set.close();}
 			if (conn!=null){conn.close();}
 		}
 		

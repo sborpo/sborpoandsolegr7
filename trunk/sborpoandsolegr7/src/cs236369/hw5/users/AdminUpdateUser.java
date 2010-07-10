@@ -43,7 +43,7 @@ DeafaultManipulator manipulator = new DeafaultManipulator() {
 			
 			@Override
 			public void paramsChecker(HashMap<String, String> params, ErrorInfoBean err)
-					throws Utils.ParametersExp, ParametersExp {
+					throws Utils.ParametersExp {
 				UpdateUser.updateUserCheckParameters(params,err);
 				
 			}
@@ -79,9 +79,6 @@ DeafaultManipulator manipulator = new DeafaultManipulator() {
 		};
 		try {
 			UserUtils.manipulateUser(request, response, manipulator);
-		} catch (ParametersExp e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InstrumentExists e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -91,7 +91,7 @@ public class UserUtils {
 	}
 	
 	
-	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException, ParametersExp, InstrumentExists, Utils.ParametersExp
+	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException,  InstrumentExists, Utils.ParametersExp
 	{
 		SerialBlob imageBlob=null;
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -142,6 +142,9 @@ public class UserUtils {
 		} catch (Unauthenticated e) {
 			response.sendError(501);
 			return;
+		}
+		 catch (Utils.ParametersExp e) {
+			
 		}
 		Utils.forwardToErrorPage(err,request,response);
 	}

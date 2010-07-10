@@ -17,20 +17,28 @@
 
 <script src="http://jquery.bassistance.de/validate/lib/jquery.js" type="text/javascript"></script> 
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js" type="text/javascript"></script> 
- 
+ <script src="js/addUserValidate.js" type="text/javascript"></script> 
 <style type="text/css"> 
 	pre { text-align: left; }
 </style> 
  
 <script src="dynamicTestForUpdateUser.js" type="text/javascript"></script> 
 <script type="text/javascript">
-function toggeleAdminAuth(){}
+function init()
+{
+	
+	var hiddenInput = document.getElementById('initialeGroupsNum');
+	hiddenInput.value= document.getElementById('group').length;
+	document.getElementById('group').disabled=true;
+	poorman_close('usertyperow');
+	
+}
 </script> 
 </head>
 <%@page import="cs236369.hw5.*" %>
 <%@page import="cs236369.hw5.users.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
-<body> 
+<body onload="javascript:init();  toggeleAdminAuth();"> 
 <h1 id="banner">Update User</h1> 
 <div id="main"> 
  

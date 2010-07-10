@@ -94,8 +94,8 @@ function toggeleAdminAuth()
 			groupSelector.remove(currentSize-1);
 		}
 		var newOpt=document.createElement('option');
-		newOpt.text='Administrators';
-		newOpt.value='Administrators';
+		newOpt.text='root';
+		newOpt.value='root';
 		try
 		  {
 			groupSelector.add(newOpt,null); // standards compliant

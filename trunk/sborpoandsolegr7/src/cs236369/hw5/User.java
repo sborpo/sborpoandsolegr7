@@ -160,63 +160,9 @@ public abstract class User {
 	}
 	
 	
-	private PreparedStatement GroupLeaderUpdate(Connection conn,User previousUser) throws SQLException
-	{
-		String previousGroup=previousUser.getGroup();
-		String isPhotoUpdate=((photo!=null)? " , photo=? " :"");
-		String isPermissionUpdate=((premissions !=null)? " , permission=?," :"");
-		String query= "UPDATE users SET name=?, usergroup=?,email=?, phone=?, address=?"+isPermissionUpdate+isPhotoUpdate+ " WHERE usergroup=? ";
-		PreparedStatement prepareStatement = conn.prepareStatement(query);
-		prepareStatement.setString(1,name);
-		prepareStatement.setString(2,group);
-		prepareStatement.setString(3,email);
-		if (phoneNumber!=null)
-		{
-			prepareStatement.setString(4,phoneNumber);
-		}
-		else
-		{
-			prepareStatement.setNull(4, java.sql.Types.VARCHAR);
-		}
-		if (address!=null)
-		{
-			prepareStatement.setString(5,address);
-		}
-		else
-		{
-			prepareStatement.setNull(5, java.sql.Types.VARCHAR);
-		}
-		if (premissions!=null)
-		{
-			prepareStatement.setString(6, premissions);
-			if (photo!=null)
-			{
-				prepareStatement.setBlob(7, photo.getBinaryStream());
-				prepareStatement.setString(8, previousGroup);
-			}
-			else
-			{
-				prepareStatement.setString(7,previousGroup);
-			}
-		}
-		else
-		{
-			if (photo!=null)
-			{
-				prepareStatement.setBlob(6, photo.getBinaryStream());
-				prepareStatement.setString(7, previousGroup);
-			}
-			else
-			{
-				prepareStatement.setString(6, previousGroup);
-			}
-		}
-		
-		return prepareStatement;
-	}
+
 	
-	
-	private PreparedStatement notGroupLeaderUpdate(Connection conn) throws SQLException
+	private PreparedStatement GroupLeaderUpdate(Connection conn) throws SQLException
 	{
 		String isPhotoUpdate=((photo!=null)? " , photo=? " :"");
 		String isPermissionUpdate=((premissions !=null)? " , permission=?," :"");
@@ -271,22 +217,38 @@ public abstract class User {
 	}
 	
 	
-	public PreparedStatement setUpdateUserDet(Connection conn, User previousUser) throws SQLException
+	public PreparedStatement[] setUpdateUserDet(Connection conn, User previousUser) throws SQLException
 	{
+		PreparedStatement[] statements;
 		boolean isGroupLeader= previousUser.getGroup().equals(previousUser.getLogin());
 		if (isGroupLeader)
 		{
+			statements= new PreparedStatement[2];
 			//we will move the rest of the team member with him too.
-			return GroupLeaderUpdate(conn, previousUser);
+			statements[0]= GroupLeaderUpdate(conn);
+			statements[1]= GroupMembersUpdate(conn, previousUser);
+			
 		}
 		else
 		{
 			//no one but the user will move group
-			return notGroupLeaderUpdate(conn);
+			statements= new PreparedStatement[1];
+			statements[0]= GroupLeaderUpdate(conn);
 		}
+		return statements;
 		
 	}
 	
+	private PreparedStatement GroupMembersUpdate(Connection conn,
+			User previousUser) throws SQLException {
+		String query= "UPDATE users  SET usergroup=? WHERE usergroup=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1,this.group);
+		prepareStatement.setString(2,previousUser.getGroup());
+		return prepareStatement;
+	}
+
+
 	public boolean isGroupLeader()
 	{
 		return this.group.equals(this.login);
@@ -395,7 +357,7 @@ public abstract class User {
 
 
 	public static PreparedStatement getUserGroups(Connection conn) throws SQLException {
-		String query= "SELECT DISTINCT usergroup FROM users";
+		String query= "SELECT DISTINCT usergroup FROM users WHERE NOT(usergroup='root')";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		return prepareStatement;
 	}
@@ -404,7 +366,7 @@ public abstract class User {
 	public PreparedStatement setGetUserGroupLeader(Connection conn, User user) throws SQLException {
 		String query= "SELECT usergroup FROM users WHERE login=? AND (usergroup=login)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
-		prepareStatement.setString(1, user.getLogin());
+		prepareStatement.setString(1, user.getGroup());
 		return prepareStatement;
 	}
 		
