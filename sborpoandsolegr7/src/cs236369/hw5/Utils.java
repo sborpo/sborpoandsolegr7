@@ -24,6 +24,7 @@ import cs236369.hw5.instrument.InstrumentManager;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
 import cs236369.hw5.users.UserManager;
 import cs236369.hw5.users.UserUtils;
+import cs236369.hw5.users.UserManager.LeaderNotExists;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
 import cs236369.hw5.users.UserUtils.FileTooBigExp;
@@ -115,16 +116,9 @@ public class Utils {
 			err.setReason("There was a problem accessing the database.");
 			e.printStackTrace();
 		} catch (UserExists e) {
-			err.setErrorString("User Error");
-			err
-					.setReason("The username that you have tried to add already <br/> exists in the system.");
-
 		} catch (UserNotExists e) {
-			err.setErrorString("User Error");
-			err
-					.setReason("The username that you have tried to add already <br/> exists in the system.");
 		} catch (Utils.ParametersExp e) {
-
+		} catch (LeaderNotExists e) {
 		}
 		Utils.forwardToErrorPage(err, request, response);
 

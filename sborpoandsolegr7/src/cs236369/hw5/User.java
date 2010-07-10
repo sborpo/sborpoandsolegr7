@@ -160,8 +160,63 @@ public abstract class User {
 	}
 	
 	
+	private PreparedStatement GroupLeaderUpdate(Connection conn,User previousUser) throws SQLException
+	{
+		String previousGroup=previousUser.getGroup();
+		String isPhotoUpdate=((photo!=null)? " , photo=? " :"");
+		String isPermissionUpdate=((premissions !=null)? " , permission=?," :"");
+		String query= "UPDATE users SET name=?, usergroup=?,email=?, phone=?, address=?"+isPermissionUpdate+isPhotoUpdate+ " WHERE usergroup=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1,name);
+		prepareStatement.setString(2,group);
+		prepareStatement.setString(3,email);
+		if (phoneNumber!=null)
+		{
+			prepareStatement.setString(4,phoneNumber);
+		}
+		else
+		{
+			prepareStatement.setNull(4, java.sql.Types.VARCHAR);
+		}
+		if (address!=null)
+		{
+			prepareStatement.setString(5,address);
+		}
+		else
+		{
+			prepareStatement.setNull(5, java.sql.Types.VARCHAR);
+		}
+		if (premissions!=null)
+		{
+			prepareStatement.setString(6, premissions);
+			if (photo!=null)
+			{
+				prepareStatement.setBlob(7, photo.getBinaryStream());
+				prepareStatement.setString(8, previousGroup);
+			}
+			else
+			{
+				prepareStatement.setString(7,previousGroup);
+			}
+		}
+		else
+		{
+			if (photo!=null)
+			{
+				prepareStatement.setBlob(6, photo.getBinaryStream());
+				prepareStatement.setString(7, previousGroup);
+			}
+			else
+			{
+				prepareStatement.setString(6, previousGroup);
+			}
+		}
+		
+		return prepareStatement;
+	}
 	
-	public PreparedStatement setUpdateUserDet(Connection conn) throws SQLException
+	
+	private PreparedStatement notGroupLeaderUpdate(Connection conn) throws SQLException
 	{
 		String isPhotoUpdate=((photo!=null)? " , photo=? " :"");
 		String isPermissionUpdate=((premissions !=null)? " , permission=?," :"");
@@ -213,6 +268,28 @@ public abstract class User {
 		}
 		
 		return prepareStatement;
+	}
+	
+	
+	public PreparedStatement setUpdateUserDet(Connection conn, User previousUser) throws SQLException
+	{
+		boolean isGroupLeader= previousUser.getGroup().equals(previousUser.getLogin());
+		if (isGroupLeader)
+		{
+			//we will move the rest of the team member with him too.
+			return GroupLeaderUpdate(conn, previousUser);
+		}
+		else
+		{
+			//no one but the user will move group
+			return notGroupLeaderUpdate(conn);
+		}
+		
+	}
+	
+	public boolean isGroupLeader()
+	{
+		return this.group.equals(this.login);
 	}
 	
 	public PreparedStatement setInsertUser(Connection conn) throws SQLException
@@ -276,11 +353,18 @@ public abstract class User {
 	public static PreparedStatement getAllUsersNoPicture(Connection conn) throws SQLException
 	{
 
-		String query= "SELECT U.login , password , name ,permission, usergroup , phone , address ,photo, UR.rolename,email FROM users U,user_roles UR WHERE U.login=UR.login ";
+		String query= "SELECT U.login , password , name ,permission, usergroup , phone , address ,photo, UR.rolename, email FROM users U, user_roles UR WHERE U.login=UR.login ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		return prepareStatement;
 	}
 	
+	public PreparedStatement setUpdateGroupsOnDelete(Connection conn,String group) throws SQLException
+	{
+		String query= "UPDATE users SET usergroup=login WHERE usergroup=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, group);
+		return prepareStatement;
+	}
 	public  PreparedStatement setDeleteUser(Connection conn) throws SQLException
 	{
 		String query= "DELETE FROM users WHERE login=? ";
@@ -313,6 +397,14 @@ public abstract class User {
 	public static PreparedStatement getUserGroups(Connection conn) throws SQLException {
 		String query= "SELECT DISTINCT usergroup FROM users";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		return prepareStatement;
+	}
+
+
+	public PreparedStatement setGetUserGroupLeader(Connection conn, User user) throws SQLException {
+		String query= "SELECT usergroup FROM users WHERE login=? AND (usergroup=login)";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, user.getLogin());
 		return prepareStatement;
 	}
 		

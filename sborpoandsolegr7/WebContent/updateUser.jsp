@@ -23,9 +23,12 @@
 </style> 
  
 <script src="dynamicTestForUpdateUser.js" type="text/javascript"></script> 
- 
+<script type="text/javascript">
+function toggeleAdminAuth(){}
+</script> 
 </head>
 <%@page import="cs236369.hw5.*" %>
+<%@page import="cs236369.hw5.users.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <body> 
 <h1 id="banner">Update User</h1> 
@@ -44,7 +47,11 @@
         </ul> 
       </div> 
       <div id="signupwrap"> 
-      		<form id="signupform" action="UpdateUser" enctype="multipart/form-data" method="post" action=""> 
+      <%if (UserUtils.isAdmin(request)){ %>
+      			<form id="signupform" action="AdminUpdateUser" enctype="multipart/form-data" method="post" action="" > 
+      		<%} else{ %>
+      			<form id="signupform" action="UpdateUser" enctype="multipart/form-data" method="post" action=""> 
+      		<%} %>
       		<!-- form  action="AddNewUser" ENCTYPE="multipart/form-data" method="post"/> -->
 	  		 <jsp:include page="userInputForms.jsp">
 	  		 	<jsp:param value="<%=decision %>" name="decision"/>

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
+import cs236369.hw5.users.UserManager.LeaderNotExists;
+import cs236369.hw5.users.UserManager.Unauthenticated;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
 import cs236369.hw5.users.UserUtils.ParametersExp;
@@ -51,8 +54,6 @@ public class UpdateUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO: admin update
-		//check if user tries to change it's data , and not someone else
 		DeafaultManipulator manipulator = new DeafaultManipulator() {
 			
 			@Override
@@ -64,7 +65,7 @@ public class UpdateUser extends HttpServlet {
 			
 			@Override
 			public void manipulate(HashMap<String, String> params, Object imageBlob,
-					Object databaseUserType) throws UserExists, UserNotExists, SQLException {
+					Object databaseUserType) throws UserExists, UserNotExists, SQLException, LeaderNotExists {
 				UserManager.updateUser(params.get(UserManager.Usern), null, params.get(UserManager.Group), null, params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob, (UserType)databaseUserType,params.get(UserManager.Email));
 				
 			}
@@ -74,6 +75,22 @@ public class UpdateUser extends HttpServlet {
 				err.setLink("viewUsers.jsp"); err.setLinkStr("Try again");
 				
 			}
+			
+			@Override
+			public void authenticate(HashMap<String, String> params,
+					HttpServletRequest request, HttpServletResponse respone) throws Unauthenticated {
+				if (request.getUserPrincipal()==null)
+				{
+					throw new UserManager.Unauthenticated();
+				}
+				if (UserUtils.isAdmin(request) || (params.get(UserManager.Usern).equals(request.getUserPrincipal().getName())))
+				{
+					return;
+				}
+				throw new UserManager.Unauthenticated();
+				
+			}
+			
 		};
 		try {
 			UserUtils.manipulateUser(request, response, manipulator);
@@ -89,20 +106,20 @@ public class UpdateUser extends HttpServlet {
 		}
 	}
 	
-	private ArrayList<String> requiredFieldsToUpdateUser()
+	public static ArrayList<String> requiredFieldsToUpdateUser()
 	{
 		ArrayList<String> required = new ArrayList<String>();
 		required.add(UserManager.Usern);
 		required.add(UserManager.Group);
-		required.add(UserManager.UserTypen);
 		required.add(UserManager.Name);
+		required.add(UserManager.UserTypen);
 		required.add(UserManager.Captcha);
 		required.add(UserManager.Email);
 		return required;
 	}
 
-	private void updateUserCheckParameters(HashMap<String, String> params,
-			ErrorInfoBean err) throws cs236369.hw5.users.UserUtils.ParametersExp {
+	public static void updateUserCheckParameters(HashMap<String, String> params,
+			ErrorInfoBean err) throws Utils.ParametersExp {
 		
 		 ArrayList<String> requiered = requiredFieldsToUpdateUser();
 		 for (String field : requiered) {
@@ -110,14 +127,14 @@ public class UpdateUser extends HttpServlet {
 			{
 				err.setErrorString("Parameters Error");
 				err.setReason("You must fill the mandatory fields");
-				throw new UserUtils.ParametersExp(err);
+				throw new Utils.ParametersExp(err);
 			}
 		}
 		if (!UserUtils.isValidEmail(params.get(UserManager.Email)))
 			{
 				err.setErrorString("Email Error");
 				err.setReason("The email that you specified is not a valid one");
-				throw new UserUtils.ParametersExp(err);
+				throw new Utils.ParametersExp(err);
 			}
 		if (params.containsKey(UserManager.PhoneNumber))
 		{
@@ -125,7 +142,7 @@ public class UpdateUser extends HttpServlet {
 			{
 				err.setErrorString("Phone Number Error");
 				err.setReason("The phone number should contain only numbers");
-				throw new UserUtils.ParametersExp(err);
+				throw new Utils.ParametersExp(err);
 			}
 		}
 		else
@@ -140,9 +157,9 @@ public class UpdateUser extends HttpServlet {
 		{
 			err.setErrorString("User Type Error");
 			err.setReason("The user type should be only Reasearcher or Admin");
-			throw new UserUtils.ParametersExp(err);
+			throw new Utils.ParametersExp(err);
 		}
-		//TODO : check if group leader is on
+		AddNewUser.validateGroup(params, err);
 		
 	}
 
