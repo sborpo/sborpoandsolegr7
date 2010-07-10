@@ -86,11 +86,11 @@ public class DbManager {
 		conn.setAutoCommit(false);
 		try{
 		statment= conn.createStatement(); 
-		String instruments="CREATE TABLE IF NOT EXISTS `instruments` (`id` bigint(20) NOT NULL,`type` varchar(30) NOT NULL,`permission` int(11) NOT NULL,`timeslot` int(11) NOT NULL,`description` text NOT NULL,PRIMARY KEY (`id`),KEY `Permission` (`permission`),KEY `Type` (`type`), KEY `Location` (`location`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		String instruments="CREATE TABLE IF NOT EXISTS `instruments` ( `id` bigint(20) NOT NULL, `type` varchar(30) NOT NULL, `permission` int(11) NOT NULL, `timeslot` int(11) NOT NULL, `description` text NOT NULL,`location` varchar(45) DEFAULT NULL, PRIMARY KEY (`id`), KEY `Permission` (`permission`), KEY `Type` (`type`),KEY `loc` (`location`), FULLTEXT KEY `index4` (`type`,`description`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(instruments); 
-		String users= "CREATE TABLE IF NOT EXISTS `users` ( `login` varchar(30) NOT NULL, `password` varchar(32) NOT NULL, `name` varchar(50) NOT NULL, `permission` text,`usergroup` varchar(50) NOT NULL, `phone` varchar(15) DEFAULT NULL,`address` varchar(50) DEFAULT NULL,`photo` blob,`email` varchar(100) NOT NULL, PRIMARY KEY (`login`), KEY `name` (`name`),KEY `group` (`usergroup`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		String users= "CREATE TABLE IF NOT EXISTS `users` ( `login` varchar(30) NOT NULL, `password` varchar(32) NOT NULL, `name` varchar(50) NOT NULL,`permission` text, `usergroup` varchar(50) NOT NULL, `phone` varchar(15) DEFAULT NULL, `address` varchar(50) DEFAULT NULL, `photo` blob, `email` varchar(100) NOT NULL, PRIMARY KEY (`login`), KEY `name` (`name`),KEY `group` (`usergroup`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(users); 
-		String reservations= "CREATE TABLE IF NOT EXISTS `instruments` ( `id` bigint(20) NOT NULL, `type` varchar(30) NOT NULL, `permission` int(11) NOT NULL, `timeslot` int(11) NOT NULL, `description` text NOT NULL, PRIMARY KEY (`id`), KEY `Permission` (`permission`),KEY `Type` (`type`),KEY `Location` (`location`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		String reservations= "CREATE TABLE IF NOT EXISTS `reservations` ( `instid` bigint(20) unsigned NOT NULL, `year` int(11) NOT NULL, `month` int(11) NOT NULL, `day` int(11) NOT NULL, `slotbegin` int(11) NOT NULL, `slotend` int(11) NOT NULL, PRIMARY KEY (`instid`,`year`,`month`,`day`,`slotbegin`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		 statment.executeUpdate(reservations); 
 		String userRoles="CREATE TABLE IF NOT EXISTS `user_roles` (`login` varchar(30) NOT NULL, `rolename` varchar(45) NOT NULL, PRIMARY KEY (`login`,`rolename`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(userRoles); 
