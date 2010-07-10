@@ -41,13 +41,14 @@ public class ApplicationStarts implements ServletContextListener {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
+    Utils.redirectDelay=Integer.parseInt(arg0.getServletContext().getInitParameter("successRedirectDelay"));
+    Utils.supportMail=arg0.getServletContext().getInitParameter("labSupportMail");
+    UserUtils.authorizationStr=arg0.getServletContext().getInitParameter("authKey");
       DbManager.DbConnections.getInstance().setUrl( arg0.getServletContext().getInitParameter("db-server"));
       DbManager.DbConnections.getInstance().setUserName( arg0.getServletContext().getInitParameter("db-user"));
       DbManager.DbConnections.getInstance().setPassword( arg0.getServletContext().getInitParameter("db-password"));
       DbManager.DbConnections.getInstance().setDbName( arg0.getServletContext().getInitParameter("db-dbname"));
-      Utils.redirectDelay=Integer.parseInt(arg0.getServletContext().getInitParameter("successRedirectDelay"));
-      Utils.supportMail=arg0.getServletContext().getInitParameter("labSupportMail");
-      UserUtils.authorizationStr=arg0.getServletContext().getInitParameter("authKey");
+
       try {
 		DbManager.constructTables();
 	} catch (SQLException e) {

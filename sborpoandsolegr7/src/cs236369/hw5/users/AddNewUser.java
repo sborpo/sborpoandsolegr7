@@ -84,10 +84,7 @@ public class AddNewUser extends HttpServlet {
 		} catch (InstrumentExists e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (cs236369.hw5.users.UserUtils.ParametersExp e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParametersExp e) {
+		}  catch (ParametersExp e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -100,7 +97,6 @@ public class AddNewUser extends HttpServlet {
 		required.add(UserManager.Usern);
 		required.add(UserManager.Password);
 		required.add(UserManager.PassConfirm);
-		required.add(UserManager.Group);
 		required.add(UserManager.UserTypen);
 		required.add(UserManager.Name);
 		required.add(UserManager.Captcha);
@@ -170,14 +166,15 @@ public class AddNewUser extends HttpServlet {
 	public static void validateGroup(HashMap<String, String> params,ErrorInfoBean err) throws Utils.ParametersExp  {
 		if (params.get(UserManager.UserTypen).equals("Admin"))
 		{
-			if (!(params.get(UserManager.Group).equals("Administrators")))
-			{
-				err.setErrorString("Group Error");
-				err.setReason("The group leader that you have specified for admin is wrong");
-				throw new Utils.ParametersExp(err);
-			}
+			params.put(UserManager.Group, "root");
 		}
 		else{
+			if (!params.containsKey(UserManager.Group))
+			{
+				err.setErrorString("Group Error");
+				err.setReason("You didn't supplied a group leader");
+				throw new Utils.ParametersExp(err);
+			}
 			if (params.get(UserManager.Group).equals(params.get(UserManager.Usern)))
 			{
 				return;

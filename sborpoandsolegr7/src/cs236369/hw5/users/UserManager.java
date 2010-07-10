@@ -102,8 +102,10 @@ public class UserManager {
 		 {
 			 throw new LeaderNotExists();
 		 }
-		 PreparedStatement statementUsers= user.setUpdateUserDet(conn,previousUser);
-		 statementUsers.execute();
+		 PreparedStatement[] statementUsers= user.setUpdateUserDet(conn,previousUser);
+		 for (PreparedStatement preparedStatement : statementUsers) {
+			 preparedStatement.execute();
+		}
 		 conn.commit();
 		}
 		catch (UserNotExists ex)
@@ -240,11 +242,14 @@ public class UserManager {
 		//on the group leader. We don't want that when inserting a new member to the group,
 		//the group leader will be deleted or moved to other group.
 		conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
-		 PreparedStatement statementUsersLeader= user.setGetUserGroupLeader(conn,user);
-		 set=statementUsersLeader.executeQuery();
-		 if (!set.next())
-		 {
-			 throw new LeaderNotExists();
+		if (!user.isGroupLeader())
+		{
+			 PreparedStatement statementUsersLeader= user.setGetUserGroupLeader(conn,user);
+			 set=statementUsersLeader.executeQuery();
+			 if (!set.next())
+			 {
+				 throw new LeaderNotExists();
+			 }
 		 }
 		 PreparedStatement statementUsers= user.setInsertUser(conn);
 		 PreparedStatement statementRoles = user.setInsertRole(conn);

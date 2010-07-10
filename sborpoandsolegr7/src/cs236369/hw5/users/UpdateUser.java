@@ -58,7 +58,7 @@ public class UpdateUser extends HttpServlet {
 			
 			@Override
 			public void paramsChecker(HashMap<String, String> params, ErrorInfoBean err)
-					throws Utils.ParametersExp, ParametersExp {
+					throws Utils.ParametersExp{
 				updateUserCheckParameters(params,err);
 				
 			}
@@ -94,10 +94,8 @@ public class UpdateUser extends HttpServlet {
 		};
 		try {
 			UserUtils.manipulateUser(request, response, manipulator);
-		} catch (ParametersExp e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstrumentExists e) {
+		}
+		 catch (InstrumentExists e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (cs236369.hw5.Utils.ParametersExp e) {
@@ -110,11 +108,10 @@ public class UpdateUser extends HttpServlet {
 	{
 		ArrayList<String> required = new ArrayList<String>();
 		required.add(UserManager.Usern);
-		required.add(UserManager.Group);
 		required.add(UserManager.Name);
-		required.add(UserManager.UserTypen);
 		required.add(UserManager.Captcha);
 		required.add(UserManager.Email);
+		required.add(UserManager.UserTypen);
 		return required;
 	}
 

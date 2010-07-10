@@ -17,7 +17,7 @@ import cs236369.hw5.users.UserManager.UserNotExists;
 public interface DeafaultManipulator  {
 	
 	public void manipulate(HashMap<String, String> params,Object inage,Object type) throws UserExists, UserNotExists, SQLException, InstrumentExists, LeaderNotExists;
-	public void paramsChecker(HashMap<String, String> params , ErrorInfoBean err) throws ParametersExp, cs236369.hw5.users.UserUtils.ParametersExp;
+	public void paramsChecker(HashMap<String, String> params , ErrorInfoBean err) throws Utils.ParametersExp;
 	public void returnLinkSetter(ErrorInfoBean err);
 	public void authenticate(HashMap<String, String> params,HttpServletRequest request,HttpServletResponse respone) throws UserManager.Unauthenticated;
 }
