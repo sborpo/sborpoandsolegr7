@@ -164,7 +164,7 @@ Display Hours: From:&nbsp;&nbsp;<input type="hidden" id="fromHourPrev" value="<%
  <%} %>
  </tr>
  <%for (int i=1; i<arr.length; i++){ %>
-<tr id="<%=i %>" onclick="javascript:poorman_toggle('<%=i %>');">
+<tr id="<%=i %>">
 <%for (int j=0; j<arr[i].length; j++) {
 	if (j!=0){
 	String classcolor=null;
