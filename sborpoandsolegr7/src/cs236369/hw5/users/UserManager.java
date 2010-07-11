@@ -336,6 +336,52 @@ public class UserManager {
 		}
 	}
 	
+	
+	public static LinkedList<User> getUsersByGroups() throws SQLException
+	{
+		Connection conn=null;ResultSet set=null;
+		LinkedList<User> usersList = new LinkedList<User>();
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		 PreparedStatement statementUsers= User.getUsersByGroups(conn);
+		 set= statementUsers.executeQuery();
+		 LinkedList<User> tempList = new LinkedList<User>();
+		 String currGroup=null;
+		 User user=null;
+		 while (set.next())
+		 { 
+			 user=setUserFromRow(set);
+			 if ((currGroup==null) || (!(user.getGroup().equals(currGroup))))
+			 {
+				 usersList.addAll(tempList);
+				 tempList.clear();
+				 currGroup=user.getGroup();
+			 }
+			 if (user.isGroupLeader())
+			 {
+				 usersList.add(user);
+			 }
+			 else
+			 {
+				 tempList.add(user);
+			 }
+		 }
+		 usersList.addAll(tempList);
+		 return usersList;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		
+		}
+	}
+	
 	public static LinkedList<User> getUsers() throws SQLException{ 
 		Connection conn=null;ResultSet set=null;
 		LinkedList<User> usersList = new LinkedList<User>();
@@ -416,7 +462,32 @@ public class UserManager {
 		}
 		
 	}
-	
+	public static boolean isUserExists(String login) throws SQLException
+	{
+		Connection conn=null;
+		 ResultSet set= null;
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		PreparedStatement userExists= User.getUserDetails(conn, login);
+		set= userExists.executeQuery();
+		if (!set.next())
+		{
+				return false;
+				
+		}
+		return true;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+	}
 	public static void resetPassword(String login, String newPass) throws UserNotExists, SQLException {
 		Connection conn=null;
 		 ResultSet set= null;

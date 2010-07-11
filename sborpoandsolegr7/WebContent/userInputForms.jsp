@@ -100,7 +100,7 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 	  			<td class="status"></td> 
 	  		  </tr>
 	  		  <%
-	  		  	if (isAdmin){
+	  		  	if (isAdmin&&des.equals("update")){
 	  		  %>
 	  		    <tr> 
 	  			<td class="label"><label id="lperm" for="permission">Permissions<br/>(seperated by commas)</label></td> 
