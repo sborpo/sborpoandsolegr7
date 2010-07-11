@@ -15,6 +15,7 @@
 <script src="http://jquery.bassistance.de/validate/lib/jquery.js" type="text/javascript"></script> 
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js" type="text/javascript"></script> 
 <script src="dynamicTestForAddUser.js" type="text/javascript"></script> 
+<script src="js/common.js" type="text/javascript"></script> 
 <script src="js/addUserValidate.js" type="text/javascript"></script> 
 
 <style type="text/css"> 

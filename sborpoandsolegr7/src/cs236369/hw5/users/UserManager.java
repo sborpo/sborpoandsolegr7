@@ -96,11 +96,14 @@ public class UserManager {
 			 previousUser=setUserFromRow(set);
 		 }
 		 //here the group leader will be locked
-		 PreparedStatement statementUsersLeader= user.setGetUserGroupLeader(conn,user);
-		 set=statementUsersLeader.executeQuery();
-		 if (!set.next())
+		 if (!user.isGroupLeader())
 		 {
-			 throw new LeaderNotExists();
+			 PreparedStatement statementUsersLeader= user.setGetUserGroupLeader(conn,user);
+			 set=statementUsersLeader.executeQuery();
+			 if (!set.next())
+			 {
+				 throw new LeaderNotExists();
+			 }
 		 }
 		 PreparedStatement[] statementUsers= user.setUpdateUserDet(conn,previousUser);
 		 for (PreparedStatement preparedStatement : statementUsers) {

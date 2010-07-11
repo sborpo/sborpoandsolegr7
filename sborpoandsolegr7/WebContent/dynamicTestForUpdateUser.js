@@ -21,11 +21,9 @@ $(document).ready(function() {
 				email: true
 			},
 			address: {
-				required: true,
 				minlength: 5
 			},
 			phonenumber : {
-				required: true,
 				minlength: 9,
 				number: true
 			},

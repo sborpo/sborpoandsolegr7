@@ -165,7 +165,7 @@ public abstract class User {
 	private PreparedStatement GroupLeaderUpdate(Connection conn) throws SQLException
 	{
 		String isPhotoUpdate=((photo!=null)? " , photo=? " :"");
-		String isPermissionUpdate=((premissions !=null)? " , permission=?," :"");
+		String isPermissionUpdate=((premissions !=null)? " , permission=?" :"");
 		String query= "UPDATE users SET name=?, usergroup=?,email=?, phone=?, address=?"+isPermissionUpdate+isPhotoUpdate+ " WHERE login=? ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setString(1,name);
