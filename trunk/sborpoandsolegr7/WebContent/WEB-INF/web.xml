@@ -76,6 +76,130 @@
       <role-name>researcher</role-name>
     </auth-constraint>
   </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>updateUser.jsp</web-resource-name>
+      <url-pattern>/updateUser.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>viewUser.jsp</web-resource-name>
+      <url-pattern>/viewUser.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>viewUsers.jsp</web-resource-name>
+      <url-pattern>/viewUsers.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>passReseter.jsp</web-resource-name>
+      <url-pattern>/passReseter.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>displayResvTimeline.jsp</web-resource-name>
+      <url-pattern>/displayResvTimeline.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>AdminUpdateUser</web-resource-name>
+      <url-pattern>/AdminUpdateUser</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>Logout</web-resource-name>
+      <url-pattern>/Logout</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>UpdateUser</web-resource-name>
+      <url-pattern>/UpdateUser</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>DeleteUser</web-resource-name>
+      <url-pattern>/DeleteUser</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+  	</web-resource-collection>
+  	   <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
@@ -86,7 +210,9 @@
   <security-role>
     <role-name>admin</role-name>
   </security-role>
-  <servlet>
+  <security-role>
+  	<role-name>researcher</role-name>
+  </security-role><servlet>
     <description></description>
     <display-name>ErrorServlet</display-name>
     <servlet-name>ErrorServlet</servlet-name>
@@ -231,4 +357,5 @@
     <servlet-name>AdminUpdateUser</servlet-name>
     <url-pattern>/AdminUpdateUser</url-pattern>
   </servlet-mapping>
+  
 </web-app>

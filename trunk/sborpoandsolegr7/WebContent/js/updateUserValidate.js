@@ -9,32 +9,20 @@ function toggleGroupBox()
 	{
 		return;
 	}
+	
 	var userbox = document.getElementById('username');
 	var initialeSize = parseInt(document.getElementById('initialeGroupsNum').value);
 	var groupSelector=document.getElementById('group');
 	var currentSize = parseInt(groupSelector.length);
-	var wasSelected;
-	if (groupSelector.selectedIndex==(currentSize-1))
-	{
-		wasSelected=true;
-	}
-	else
-	{
-		wasSelected=false;
-	}
-	if (userbox.value.length<=1)
-	{
-		if (currentSize>initialeSize)
-		{
-			groupSelector.remove(currentSize-1);
-		}
-		groupSelector.disabled=true;
-		return;
-	}
 	groupSelector.disabled=false;
-	if (currentSize>initialeSize)
+	var i=0;
+	while (i<currentSize)
 	{
-		groupSelector.remove(currentSize-1);
+		if (groupSelector.options[i].value == userbox.value)
+		{
+			return;
+		}
+		i=i+1;
 	}
 	var newOpt=document.createElement('option');
 	newOpt.text='Me: '+userbox.value;
@@ -47,22 +35,8 @@ function toggleGroupBox()
 	  {
 		groupSelector.add(newOpt); // IE only
 	  }
-	if (wasSelected==true)
-	{
-		groupSelector.selectedIndex=parseInt(groupSelector.length)-1;
-	}
-
 }
 
-function init()
-{
-	
-	var hiddenInput = document.getElementById('initialeGroupsNum');
-	hiddenInput.value= document.getElementById('group').length;
-	document.getElementById('group').disabled=true;
-	
-	
-}
 
 
 function toggeleAdminAuth()
@@ -75,7 +49,6 @@ function toggeleAdminAuth()
 	if (val=="Admin")
 	{
 		document.getElementById('adminAuth').value="";
-		poorman_open('authentication_row');
 		groupSelector.disabled=true;
 		if (currentSize>initialeSize)
 		{

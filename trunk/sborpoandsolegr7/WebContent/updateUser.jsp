@@ -17,7 +17,8 @@
 
 <script src="http://jquery.bassistance.de/validate/lib/jquery.js" type="text/javascript"></script> 
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js" type="text/javascript"></script> 
- <script src="js/addUserValidate.js" type="text/javascript"></script> 
+<script src="js/common.js" type="text/javascript"></script> 
+<script src="js/updateUserValidate.js" type="text/javascript"></script> 
 <style type="text/css"> 
 	pre { text-align: left; }
 </style> 
@@ -26,12 +27,11 @@
 <script type="text/javascript">
 function init()
 {
-	
 	var hiddenInput = document.getElementById('initialeGroupsNum');
 	hiddenInput.value= document.getElementById('group').length;
 	document.getElementById('group').disabled=true;
 	poorman_close('usertyperow');
-	
+	poorman_close('authentication_row');
 }
 </script> 
 </head>

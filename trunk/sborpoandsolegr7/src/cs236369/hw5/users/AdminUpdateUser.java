@@ -51,7 +51,7 @@ DeafaultManipulator manipulator = new DeafaultManipulator() {
 			@Override
 			public void manipulate(HashMap<String, String> params, Object imageBlob,
 					Object databaseUserType) throws UserExists, UserNotExists, SQLException, LeaderNotExists {
-				UserManager.updateUser(params.get(UserManager.Usern), params.get(UserManager.Permission), params.get(UserManager.Group), null, params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob, (UserType)databaseUserType,params.get(UserManager.Email));
+				UserManager.updateUser(params.get(UserManager.Usern),null, params.get(UserManager.Group),  params.get(UserManager.Permission), params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob, (UserType)databaseUserType,params.get(UserManager.Email));
 				
 			}
 
