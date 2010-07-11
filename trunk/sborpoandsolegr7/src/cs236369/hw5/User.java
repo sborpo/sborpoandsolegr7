@@ -369,5 +369,12 @@ public abstract class User {
 		prepareStatement.setString(1, user.getGroup());
 		return prepareStatement;
 	}
+
+
+	public static PreparedStatement getUsersByGroups(Connection conn) throws SQLException {
+		String query= "SELECT U.login , password , name ,permission, usergroup , phone , address ,photo, UR.rolename, email FROM users U, user_roles UR WHERE U.login=UR.login  ORDER BY usergroup ,name ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		return prepareStatement;
+	}
 		
 }	

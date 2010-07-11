@@ -1,10 +1,18 @@
+<%if (request.getParameter(UserManager.Usern)==null){ %><jsp:forward page="ParamErrorSetter"></jsp:forward><%} %>
+<%if (!UserManager.isUserExists(request.getParameter(UserManager.Usern))){ 		
+		ErrorInfoBean err = new ErrorInfoBean();
+		err.setErrorString("User Error");
+		err.setReason("User not exists in the system!");
+		err.setLink("javascript:history.back(1);");
+		err.setLinkStr("Back");
+		request.setAttribute("ErrorInfoBean", err);%><jsp:forward page="/errorPages/errorPage.jsp"></jsp:forward><%} %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<%@page import="cs236369.hw5.users.UserManager"%>
 <%@page import="cs236369.hw5.User"%>
 <%@page import="cs236369.hw5.users.*"%>
-<html>
+<%@page import="cs236369.hw5.ErrorInfoBean"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
