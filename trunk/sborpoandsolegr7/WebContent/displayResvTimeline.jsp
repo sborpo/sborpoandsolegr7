@@ -86,6 +86,9 @@ function updateRows(from,to,lastIndex)
 	
 }
 
+function gotoOptionsScreen(id,year,instrumnetType) {
+	document.location.href = "optionsPage.jsp/?" + "id=" + id + "&year=" + year + "&type=" + instrumnetType;
+}
 
 
 
@@ -161,6 +164,8 @@ div.hours {
 	Integer endTime = (startHourTime != null) ? endHourTime : TimeSlot
 			.numOfSlotsInHour() * 12 + 1;
 %>
+
+
 <body
 	onload="javascript: updateRows(<%=startTime%>,<%=endTime%>,<%=arr.length%>);">
 <h3>You can see the reservations scheduale on the week between: <%=day%>/<%=month%>/<%=year%>
@@ -224,7 +229,6 @@ to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 						for (int t = 1; t < i; ++t) {
 							time = time.nextSlot();
 						}
-						System.out.println(time.getSlotNumber());
 						switch (x) {
 						case (-1):
 							classcolor = "notAvailible";
@@ -236,7 +240,7 @@ to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 							classcolor = "available";
 						}
 		%>
-		<td class="<%=classcolor%>" id="<%=time.getSlotNumber()%>">
+		<td class="<%=classcolor%>" id="<%=time.getSlotNumber()%>" onclick="gotoOptionsScreen(id,<%=time.getYear()%>,'<%=type %>')">
 		<%
 			if (x == 1) {
 							out.print(arr[i][j].split(";")[1]);
