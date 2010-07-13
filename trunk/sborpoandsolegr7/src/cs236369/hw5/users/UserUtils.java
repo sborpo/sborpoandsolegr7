@@ -3,6 +3,7 @@ package cs236369.hw5.users;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Random;
@@ -93,13 +94,13 @@ public class UserUtils {
 	
 	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException,  InstrumentExists, Utils.ParametersExp
 	{
-		SerialBlob imageBlob=null;
+		
 		HashMap<String, String> params = new HashMap<String, String>();
 		ErrorInfoBean err = new ErrorInfoBean();
 		//TODO: err
 		manipulator.returnLinkSetter(err);
 		try{
-		UserUtils.handleParameters(request, params, imageBlob);
+		SerialBlob imageBlob = UserUtils.handleParameters(request, params);
 		manipulator.paramsChecker(params, err);
 		manipulator.authenticate(params, request, response);
 		UserType databaseUserType=UserUtils.determineUserType(params);
@@ -166,8 +167,9 @@ public class UserUtils {
 	        
 	        return true;
 	    }
-	public static void handleParameters(HttpServletRequest request,	HashMap<String, String> params,SerialBlob imageBlob) throws FileTooBigExp, FileUploadException, IOException, SerialException, SQLException
+	public static SerialBlob handleParameters(HttpServletRequest request,	HashMap<String, String> params) throws FileTooBigExp, FileUploadException, IOException, SerialException, SQLException
 	{
+		SerialBlob imageBlob = null;
 		ServletFileUpload upload = new ServletFileUpload();
 		FileItemIterator iter = upload.getItemIterator(request);
 		while (iter.hasNext()) {
@@ -204,5 +206,6 @@ public class UserUtils {
 		        }
 		    } 
 	}
+		return imageBlob;
 }
 }

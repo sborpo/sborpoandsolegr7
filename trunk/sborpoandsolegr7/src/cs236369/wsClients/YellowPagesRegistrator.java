@@ -48,7 +48,8 @@ public class YellowPagesRegistrator {
 		try{
 		RegistrationServiceStub stub = new RegistrationServiceStub();
 		GetRegisteredEndpointsResponse response=stub.getRegisteredEndpoints();
-		return response.get_return();
+		String [] rsp= response.get_return();
+		return rsp;
 		}
 		catch (Exception e)
 		{
