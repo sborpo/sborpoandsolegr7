@@ -368,4 +368,14 @@
     <servlet-name>ParamErrorSetter</servlet-name>
     <url-pattern>/ParamErrorSetter</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchLab</display-name>
+    <servlet-name>SearchLab</servlet-name>
+    <servlet-class>cs236369.wsClients.SearchLab</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchLab</servlet-name>
+    <url-pattern>/SearchLab</url-pattern>
+  </servlet-mapping>
 </web-app>

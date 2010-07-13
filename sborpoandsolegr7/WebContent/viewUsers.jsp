@@ -29,7 +29,7 @@ function handleClick(rowname,isshown,imagen)  {
 function toggleDisplay(rowname) {
 	   var tblRows=document.getElementById('users_table').rows;
 	   for (i = 0; i < tblRows.length; i++) {
-	      if (tblRows[i].className == rowname) {
+	      if (tblRows[i].title == rowname) {
 		      if ( tblRows[i].style.display =="none")
 		      {
 		    	  tblRows[i].style.display="";
@@ -52,17 +52,19 @@ width:90%;
 }
 th
 {
-height:50px;
+height:40 px;
 }
 td
 {
-padding:15px;
+padding:15 px;
 }
 table,th, td
 {
 border: 1px solid black;
 }
-td.userTypesRow {background-color:yellow;}
+tr.groupLeader {background-color:#e4f3b0;} 
+tr.userTypesRow {background-color:yellow;}
+td.groupMemberUsername {padding-left: 18px;}
 </style>
 </head>
 <%@page import="cs236369.hw5.*" %>
@@ -70,7 +72,7 @@ td.userTypesRow {background-color:yellow;}
 <body>
 <table id="users_table">
 <tr>
-<th>Username</th><th>Name</th><th>Group Leader</th><th>Permissions</th>
+<th>Username</th><th>Name</th><th>Email</th><th>Permissions</th>
 </tr>
 <tr class="userTypesRow">
 <td colspan="4">Researchers</td>
@@ -79,10 +81,15 @@ td.userTypesRow {background-color:yellow;}
 LinkedList<User> users= UserManager.getUsersByGroups();
 for ( User user : users ){ if (!user.getRole().equals(User.UserType.REASEARCHER)){continue;}
 %>
-<tr <%if (user.isGroupLeader()){ %> id="<%}%><%else{ %>class="<%} %><%=user.getGroup() %>">
-<td><%if (user.isGroupLeader()){ %><input id="in_<%=user.getLogin() %>" type="hidden" value="shown" ></input><img src="/sborpoandsolegr7/images/minus.gif" id="im_<%=user.getLogin()%>" onclick="handleClick('<%=user.getLogin() %>','in_<%=user.getLogin() %>','im_<%=user.getLogin() %>')" align="left">&nbsp;&nbsp;<%} %><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getGroup() %></td><td><%=user.getPremissions() %></td>
+<%if (user.isGroupLeader()){ %>
+<tr class="groupLeader" id="<%=user.getGroup() %>">
+<td><input id="in_<%=user.getLogin() %>" type="hidden" value="shown" ></input><img src="/sborpoandsolegr7/images/minus.gif" id="im_<%=user.getLogin()%>" onclick="handleClick('<%=user.getLogin() %>','in_<%=user.getLogin() %>','im_<%=user.getLogin() %>')" align="left">&nbsp;&nbsp;<a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPremissions() %></td>
 </tr>
-<%} %>
+<%}else { %>
+<tr class="groupMember" title="<%=user.getGroup() %>">
+<td class="groupMemberUsername"><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPremissions() %></td>
+</tr>
+<%}} %>
 <tr class="userTypesRow">
 <td colspan="4">Administrators</td>
 </tr>
