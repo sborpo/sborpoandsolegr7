@@ -47,6 +47,8 @@ td.selection{padding: 1px; width: 10%;}
 <br/>
 <p id="pls" class="searchPageText"> Please select the labs that you want to search in from the following list: </p>
 <br/>
+<label id="pls">Instrument Keywords  </label><input type="text" id="instkeys" value=""></input>&nbsp;&nbsp;<label>Number Of Consicutive Slots: </label><input type="text" id="kinput" value=""></input>
+<br/>
 <table>
 <tr>
 <th>Sel/Des</th><th>Lab's Search Web Service Location</th>
@@ -58,7 +60,7 @@ td.selection{padding: 1px; width: 10%;}
 <%} %>
 </table>
 <br/>
-<button class="searchPageText" type="button">Search</button>
+<button class="searchPageText" type="button" onclick="javascript:searchfunc()">Search</button>
 <%} %>
 </body>
 </html>
