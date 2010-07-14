@@ -75,7 +75,10 @@ public class DbManager {
 		Statement statment=null;
 		try{
 			statment= conn.createStatement(); 
-			String db= "CREATE SCHEMA IF NOT EXISTS `labdb` ;";	
+			String db="CREATE USER 'sborpo'@'%' IDENTIFIED BY 'sborpo';" +
+					" GRANT USAGE ON * . * TO 'sborpo'@'%' IDENTIFIED BY 'sborpo' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ; " +
+					"CREATE DATABASE IF NOT EXISTS `sborpoDB` ;" +
+					" GRANT ALL PRIVILEGES ON `sborpoDB` . * TO 'sborpo'@'%';";
 			statment.executeUpdate(db); 
 		}
 		finally
@@ -86,7 +89,7 @@ public class DbManager {
 	
 	public static void  constructTables() throws SQLException
 	{
-		createDb();
+		//createDb();
 		ResultSet set=null;
 		Connection conn=DbConnections.getInstance().getConnection();
 		Statement statment=null;

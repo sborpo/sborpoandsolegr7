@@ -50,12 +50,16 @@ public class SearchLab extends HttpServlet {
 			SearchResponse resp=stub.search(search);
 			String [] answ=resp.get_return();
 			//send XML response
+			if ((answ==null) || (answ.length==0))
+			{
+				throw new Exception();
+			}
 			PrintWriter writer=response.getWriter();
 			writer.write("<slots>");
 			for (String avSlot : answ) {
 				// labname || instid || (year,month,day,slot)
 				writer.write("<slotElem>");
-				String [] parsedComp= avSlot.split("||");
+				String [] parsedComp= avSlot.split("\\|\\|");
 				printTag("labName",parsedComp[0],writer);
 				printTag("instid",parsedComp[1],writer);
 				printTag("timeSlot",parsedComp[2],writer);
@@ -66,7 +70,7 @@ public class SearchLab extends HttpServlet {
 			}
 			catch (Exception e)
 			{
-				if (response.isCommitted())
+				if (!response.isCommitted())
 				{
 					response.setStatus(500);
 				}

@@ -26,6 +26,10 @@ public class searchWS {
 		for (Period period : slots.values()) {
 			avSlots.add("sborpoandsolegr7||"+period.getInstId()+"||"+period.getStart());
 		}
+		if (avSlots.size()==0)
+		{
+			return new String[0];
+		}
 		String [] answer = new String[avSlots.size()];
 		avSlots.toArray(answer);
 		return answer;

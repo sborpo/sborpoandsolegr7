@@ -15,15 +15,15 @@
   </context-param>
   <context-param>
     <param-name>db-user</param-name>
-    <param-value>root</param-value>
+    <param-value>sborpo</param-value>
   </context-param>
   <context-param>
     <param-name>db-password</param-name>
-    <param-value>123456</param-value>
+    <param-value>sborpo</param-value>
   </context-param>
   <context-param>
     <param-name>db-dbname</param-name>
-    <param-value>labdb</param-value>
+    <param-value>sborpoDB</param-value>
   </context-param>
   <context-param>
     <param-name>labSupportMail</param-name>
@@ -376,6 +376,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>SearchLab</servlet-name>
-    <url-pattern>/SearchLab</url-pattern>
+    <url-pattern>/ws/SearchLab</url-pattern>
   </servlet-mapping>
 </web-app>
