@@ -104,9 +104,9 @@ public  class ReservationManager {
 	
 	private static ResultSet executeOccupiedSlotsQuery(Connection conn,TimeSlot initialeSlot,String type, int k) throws SQLException
 	{
-		String query= "SELECT id,year,slotbegin,slotend FROM instruments I LEFT OUTER JOIN reservations R" +
+		String query= "SELECT * FROM ( SELECT id,year,slotbegin,slotend,I.type AS type FROM instruments I LEFT OUTER JOIN reservations R" +
 		" ON ((R.slotbegin>=? AND R.year=?) OR (R.slotbegin<=? AND R.year=?)) AND I.id=R.instid AND I.type=?" +
-		" ORDER BY id,year,slotbegin";
+		" ORDER BY id,year,slotbegin)T WHERE T.type=? ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setInt(1, initialeSlot.getSlotNumber());
 		prepareStatement.setInt(2, initialeSlot.getYear());
@@ -121,6 +121,7 @@ public  class ReservationManager {
 		}
 		prepareStatement.setInt(4, initialeSlot.getYear()+1);
 		prepareStatement.setString(5, type);
+		prepareStatement.setString(6, type);
 		return prepareStatement.executeQuery();
 		
 	}
