@@ -42,11 +42,10 @@ public class Instrument {
 		this.premission = premission;
 		this.location = location;
 	}
-	public Instrument(int id,String description, Integer timeSlot, Integer premission, String type,  String location) {
+	public Instrument(int id,String type, Integer premission, Integer timeSlot, String description,  String location) {
 		super();
 		this.id = id;
 		this.description = description;
-		this.id = idGenerator.addAndGet(1);
 		this.timeSlot = timeSlot;
 		this.type = type;
 		this.premission = premission;
@@ -135,9 +134,10 @@ public class Instrument {
 		return location;
 	}
 
-	public static PreparedStatement getAllInstrumentsNoPicture(Connection conn) {
-		// TODO Auto-generated method stub
-		return null;
+	public static PreparedStatement getAllInstruments(Connection conn) throws SQLException {
+		String query= "SELECT * FROM instruments";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		return prepareStatement;
 	}
 
 

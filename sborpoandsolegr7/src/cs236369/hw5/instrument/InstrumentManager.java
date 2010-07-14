@@ -138,7 +138,7 @@ public class InstrumentManager {
 		try {
 			conn = DbManager.DbConnections.getInstance().getConnection();
 			PreparedStatement statementUsers = Instrument
-					.getAllInstrumentsNoPicture(conn);
+					.getAllInstruments(conn);
 			set = statementUsers.executeQuery();
 			while (set.next()) {
 
