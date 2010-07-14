@@ -40,17 +40,23 @@ public class TestingClass {
 //			e.printStackTrace();
 //		}
 		
-		try {
-			HashMap<Long, ReservationManager.Period> periods = ReservationManager.searchForSlotsAv(new TimeSlot(2009, 11, 2),new String[] { "abcdefg","stam"}, 8640);
-			searchWS sr = new searchWS();
-			String [] str =sr.search(new String[] { "abcdefg","stam"}, 8640);
-			for (String per :str) {
-				System.out.println(per);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			HashMap<Long, ReservationManager.Period> periods = ReservationManager.searchForSlotsAv(new TimeSlot(2009, 11, 2),new String[] { "abcdefg","stam"}, 8640);
+//			searchWS sr = new searchWS();
+//			String [] str =sr.search(new String[] { "abcdefg","stam"}, 8640);
+//			for (String per :str) {
+//				System.out.println(per);
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	String z= "asfasf||aaaaa||bbbbb";
+	String[] arr=z.split("\\|\\|");
+	for (String string : arr) {
+		System.out.println(string);
+	}
+
 	}
 	
 

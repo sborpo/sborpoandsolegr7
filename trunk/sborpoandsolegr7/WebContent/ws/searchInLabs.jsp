@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" media="screen" href="/sborpoandsolegr7/defualtCss.css" />   
-
+<script src="/sborpoandsolegr7/js/common.js" type="text/javascript"></script> 
+<script src="searchInLabs.js" type="text/javascript"></script> 
 <style type="text/css">
 .searchPageText
 {
@@ -32,7 +33,7 @@ td.selection{padding: 1px; width: 10%;}
 </style>
 <%String [] services=YellowPagesRegistrator.getServicesFromYellow(); %>
 <title>Search For Available Slots In Other Labs</title>
-<script src="searchInLabs.js" type="text/javascript"></script> 
+
 </head>
 <body>
 
@@ -47,9 +48,11 @@ td.selection{padding: 1px; width: 10%;}
 <br/>
 <p id="pls" class="searchPageText"> Please select the labs that you want to search in from the following list: </p>
 <br/>
-<label id="pls">Instrument Keywords  </label><input type="text" id="instkeys" value=""></input>&nbsp;&nbsp;<label>Number Of Consicutive Slots: </label><input type="text" id="kinput" value=""></input>
+<div id="searchStuff">
+<label class="searchPageText" id="instLabel">Instrument Keywords  </label><input type="text" id="instkeys" value=""></input>&nbsp;&nbsp;<label id="slotsLabel">Number Of Consicutive Slots: </label><input type="text" id="kinput" value="" maxlength="4" onchange="javascript:data_change('kinput')"  ></input>
 <br/>
-<table>
+<br/>
+<table id="searchTable">
 <tr>
 <th>Sel/Des</th><th>Lab's Search Web Service Location</th>
 </tr>
@@ -62,5 +65,8 @@ td.selection{padding: 1px; width: 10%;}
 <br/>
 <button class="searchPageText" type="button" onclick="javascript:searchfunc()">Search</button>
 <%} %>
+</div>
+<br/>
+<br/>
 </body>
 </html>

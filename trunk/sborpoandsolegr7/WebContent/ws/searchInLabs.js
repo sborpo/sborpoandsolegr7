@@ -1,5 +1,5 @@
 var lastBrother;
-
+var numOfReq;
 function init()
 {
 	lastBrother=document.getElementById('pls');
@@ -7,69 +7,123 @@ function init()
 
 function searchfunc()
 {
+	var k=document.getElementById('kinput');
+	if (!validateK(k.value))
+	{
+		return;
+	}
 	var check;
 	var checkBoxColl=document.getElementsByName('selection');
+	var searchTableI=document.getElementById('searchTable');
 	var keys=document.getElementById('instkeys');
-	var k=document.getElementById('kinput');
+	var tut=document.getElementById('pls');
+	var instLabel=document.getElementById('instLabel');
+	var slotsLabel=document.getElementById('slotsLabel');
+	var saerchDiv=document.getElementById('searchStuff');
+	saerchDiv.style.display =  'none' ;
+	tut.innerHTML='Searching...';
+	crateResultTable();
+	numOfReq=0;
+	numOfReq=numOfRequests(checkBoxColl);
 	for (var i=0; i<checkBoxColl.length; i++)
 	{
 		if (checkBoxColl[i].checked==true)
 		{
 		var request=getRequestObject();
 		var URL = "SearchLab?labname="+encodeURIComponent(checkBoxColl[i].value)+"&keywords="+encodeURIComponent(keys.value)+"&slots="+encodeURIComponent(k.value);
-		var handlerFunction = new function(){
-//			var slots=request.responseXML.getElementsByTagName('slotElem');
-		    var table = document.createElement('table');
-		    var headerRow = document.createElement('tr');
-		    var nameH= document.createElement('th').appendChild(document.createTextNode('Lab Name'));
-		    var instH= document.createElement('th').appendChild(document.createTextNode('Instrument ID'));
-		    var slotH= document.createElement('th').appendChild(document.createTextNode('Slot'));
-//		    headerRow.appendChild(mameH);
-//		    headerRow.appendChild(instH);
-//		    headerRow.appendChild(slotH);
-//		    table.appendChild(headerRow);
-//		    for (var i=0;i<slots.length;i++)
-//			{
-//		    	var newRow = document.createElement('tr');
-//		        newRow.appendChild(document.createElement('td').appendChild(document.createTextNode(getNodeValue(books[i],'labName'))));
-//		    	newRow.appendChild(document.createElement('td').appendChild(document.createTextNode(getNodeValue(books[i],'instid'))));
-//		    	newRow.appendChild(document.createElement('td').appendChild(document.createTextNode(getNodeValue(books[i],'timeSlot'))));
-//		    	table.appendChild(newRow);
-//			}
-//		    var body=document.getElementsByTagName('body');
-//		    body[0].appendChild(table);
-//		    body[0].appendChild( document.createElement('br'));		
-		};   // Set the handler function to receive callback notifications from the request object  
-		req.onreadystatechange = handlerFunction;        
+		var handlerFunction = getReadyStateHandler(request, handleSearchReponse);
+		request.onreadystatechange = handlerFunction;        
 		request.open("GET",URL,true);               
 		request.send(null);	
 		}
 	}
 }
 
+function numOfRequests(checkBoxColl)
+{
+	var counter=0;
+	for (var i=0; i<checkBoxColl.length; i++)
+	{
+		if (checkBoxColl[i].checked==true)
+		{
+			counter++;
+		}
+	}
+	return counter;
+}
+function crateResultTable()
+{
+	 var table = document.createElement('table');
+	 table.id="resultTable";
+	 table.style.display =  'none' ;
+	 var headerRow = document.createElement('tr');
+	 var nameH= document.createElement('td');
+	 nameH.appendChild(document.createTextNode('Lab Name'));
+	 var instH= document.createElement('td');
+	 instH.appendChild(document.createTextNode('Instrument ID'));
+	 var slotH= document.createElement('td');
+	 slotH.appendChild(document.createTextNode('Slot'));
+	 headerRow.appendChild(nameH);
+	 headerRow.appendChild(instH);
+	 headerRow.appendChild(slotH);
+	 table.appendChild(headerRow);
+	 var body=document.getElementsByTagName('body');
+	 var saerchDiv=document.getElementById('searchStuff');
+	 body[0].insertBefore( document.createElement('br'),saerchDiv);
+	 body[0].insertBefore(table,saerchDiv);
+	 body[0].insertBefore( document.createElement('br'),saerchDiv);
+}
+
 function handleSearchReponse(req)
 {
-    var slots=request.responseXML.getElementsByTagName('slotElem');
-    var table = document.createElement('table');
-    var headerRow = document.createElement('tr');
-    var nameH= document.createElement('th').appendChild(document.createTextNode('Lab Name'));
-    var instH= document.createElement('th').appendChild(document.createTextNode('Instrument ID'));
-    var slotH= document.createElement('th').appendChild(document.createTextNode('Slot'));
-    headerRow.appendChild(mameH);
-    headerRow.appendChild(instH);
-    headerRow.appendChild(slotH);
-    table.appendChild(headerRow);
+    var slots=req.responseXML.getElementsByTagName('slotElem');
+	var table=document.getElementById('resultTable');
     for (var i=0;i<slots.length;i++)
 	{
     	var newRow = document.createElement('tr');
-        newRow.appendChild(document.createElement('td').appendChild(document.createTextNode(getNodeValue(books[i],'labName'))));
-    	newRow.appendChild(document.createElement('td').appendChild(document.createTextNode(getNodeValue(books[i],'instid'))));
-    	newRow.appendChild(document.createElement('td').appendChild(document.createTextNode(getNodeValue(books[i],'timeSlot'))));
+        var name=document.createElement('td');
+        var instId=document.createElement('td');
+        var timeSlot=document.createElement('td');
+        name.appendChild(document.createTextNode(getNodeValue(slots[i],'labName')));
+        instId.appendChild(document.createTextNode(getNodeValue(slots[i],'instid')));
+    	timeSlot.appendChild(document.createTextNode(getNodeValue(slots[i],'timeSlot')));
+    	newRow.appendChild(name);
+    	newRow.appendChild(instId);
+    	newRow.appendChild(timeSlot);
     	table.appendChild(newRow);
+    	
+    
 	}
-    var body=document.getElementsByTagName('body');
-    body[0].appendChild(table);
-    body[0].appendChild( document.createElement('br'));
+    table.style.display = '';
+	 numOfReq--;
+	sleep(1);
+	 if (numOfReq==0)
+	 {
+		 var body=document.getElementsByTagName('body');
+		 var saerchDiv=document.getElementById('searchStuff');
+		 body[0].insertBefore( document.createElement('br'),saerchDiv);
+		 var heading=document.createElement('h3');
+		 heading.className='searchPageText';
+		 heading.innerHTML='Search Completed!';
+		 body[0].insertBefore(heading,saerchDiv);
+		var tut=document.getElementById('pls');
+		 tut.style.display = 'none';
+		 
+	 }
+}
+
+
+function sleep (naptime){
+    naptime = naptime * 1000;
+    var sleeping = true;
+    var now = new Date();
+    var alarm;
+    var startingMSeconds = now.getTime();
+    while(sleeping){
+        alarm = new Date();
+        alarmMSeconds = alarm.getTime();
+        if(alarmMSeconds - startingMSeconds > naptime){ sleeping = false; }
+    }        
 }
 
 function getNodeValue(obj,tag)
@@ -89,15 +143,49 @@ function getReadyStateHandler(req, responseXmlHandler) {
                 // Pass the XML payload of the response to the   
                 // handler function  
                 responseXmlHandler(req);  
-            }else{  
-                // An HTTP problem has occurred  
-                //alert("HTTP error: "+req.status);  
-                $('lblError').innerHTML += "HTTP error: "+req.status;  
-            }  
-        }  
+            }
+            else
+            {
+            	numOfReq--;
+            }
     }  
-}       
+}
+}
 
+
+function validateK(val)
+{
+	var check = true;
+    for(var i=0;i < val.length; ++i)
+    {
+         var new_key = val.charAt(i); //cycle through characters
+         if(((new_key < "0") || (new_key > "9")) && 
+              !(new_key == ""))
+         {
+              check = false;
+              break;
+         }
+    }
+    return check;
+}
+
+function data_change(id)
+{
+     var check = true;
+ 	var field=document.getElementById(id);
+     var value = field.value; //get characters
+     //check that all characters are digits, ., -, or ""
+     check=validateK(value);
+     //apply appropriate colour based on value
+     if(!check)
+     {
+          field.style.backgroundColor = "red";
+     }
+     else
+     {
+          field.style.backgroundColor = "white";
+     }
+}
 
 function getRequestObject(){
 	if(window.XMLHttpRequest)
