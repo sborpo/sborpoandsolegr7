@@ -197,14 +197,10 @@ to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 <table>
 	<tr style="border: none">
 		<td colspan="4" style="text-align: left; border: none"><a
-			href=/sborpoandsolegr7/displayResvTimeline.jsp?year=
-			<%=prevWeek.getYear()%>&month=<%=prevWeek.getMonth()%>
-			&day=<%=prevWeek.getDay()%> &type=<%=type%> &slotSequence=<%=k%>>&lt;&lt;</a>
+			href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=prevWeek.getYear()%>&month=<%=prevWeek.getMonth()%>&day=<%=prevWeek.getDay()%>&type=<%=type%>&slotSequence=<%=k%>>&lt;&lt;</a>
 		Previous Week</td>
 		<td colspan="4" style="text-align: right; border: none">Next Week
-		<a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=
-			<%=nextWeek.getYear()%>&month=<%=nextWeek.getMonth()%>
-			&day=<%=nextWeek.getDay()%> &type=<%=type%> &slotSequence=<%=k%>>
+		<a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=nextWeek.getYear()%>&month=<%=nextWeek.getMonth()%>&day=<%=nextWeek.getDay()%>&type=<%=type%>&slotSequence=<%=k%>>
 		&gt;&gt;</a></td>
 	</tr>
 	<tr>
