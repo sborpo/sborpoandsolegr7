@@ -14,12 +14,12 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 			
 			 <tr> 
 	  			<td class="label"><label id="lusername" for="username">Username</label></td> 
-	  			<td class="field"><input id="username" type="text"   maxlength="50" <%if (!des.equals("add")){%> readonly="readonly" value="<%=login%>" <%}%> name="<%=UserManager.Usern%>" onchange="javascript:toggleGroupBox()" /></td> 
+	  			<td class="field"><input id="username" type="text"   maxlength="30" <%if (!des.equals("add")){%> readonly="readonly" value="<%=login%>" <%}%> name="<%=UserManager.Usern%>" onchange="javascript:toggleGroupBox()" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 	  		  <tr> 
 	  		  	<td class="label"><label id="lname" for="name">Name</label></td> 
-	  		  	<td class="field"><input id="name"  type="text" value="<%=(user!=null)? user.getName() : ""%>" maxlength="100" name="<%=UserManager.Name%>" /></td> 
+	  		  	<td class="field"><input id="name"  type="text" value="<%=(user!=null)? user.getName() : ""%>" maxlength="50" name="<%=UserManager.Name%>" /></td> 
 	  		  	<td class="status"></td> 
 	  		  </tr>
 	  		  <%
@@ -27,12 +27,12 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 	  		  %> 
 	  		  <tr> 
 	  			<td class="label"><label id="lpassword" for="password">Password</label></td> 
-	  			<td class="field"><input id="password" type="password" maxlength="50" value="" name="<%=UserManager.Password%>"/></td> 
+	  			<td class="field"><input id="password" type="password" maxlength="32" value="" name="<%=UserManager.Password%>"/></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 	  		  <tr> 
 	  			<td class="label"><label id="lpassword_confirm" for="password_confirm">Confirm Password</label></td> 
-	  			<td class="field"><input id="password_confirm" type="password" maxlength="50" value="" name="<%=UserManager.PassConfirm%>"/></td> 
+	  			<td class="field"><input id="password_confirm" type="password" maxlength="32" value="" name="<%=UserManager.PassConfirm%>"/></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 	  		    <%
@@ -40,17 +40,17 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
  	  		    %>
  	  		  <tr> 
 	  			<td class="label"><label id="lemail" for="email">Email</label></td> 
-	  			<td class="field"><input id="email" name="<%=UserManager.Email%>" type="text" value="<%=(user!=null)? user.getEmail() : ""%>" maxlength="150" /></td> 
+	  			<td class="field"><input id="email" name="<%=UserManager.Email%>" type="text" value="<%=(user!=null)? user.getEmail() : ""%>" maxlength="100" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr>
 	  		  <tr> 
 	  			<td class="label"><label id="laddress" for="address">Address</label></td> 
-	  			<td class="field"><input id="address" name="<%=UserManager.Address%>" type="text" value="<%=(user!=null)? user.getAddress() : ""%>" maxlength="150" /></td> 
+	  			<td class="field"><input id="address" name="<%=UserManager.Address%>" type="text" value="<%=(user!=null)? user.getAddress() : ""%>" maxlength="50" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 			    <tr> 
 	  			<td class="label"><label id="lphoneno" for="phoneno">Phone Number</label></td> 
-	  			<td class="field"><input id="phoneno" name="<%=UserManager.PhoneNumber%>" type="text" value="<%=(user!=null)? user.getPhoneNumber() : ""%>" maxlength="150" /></td> 
+	  			<td class="field"><input id="phoneno" name="<%=UserManager.PhoneNumber%>" type="text" value="<%=(user!=null)? user.getPhoneNumber() : ""%>" maxlength="15" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 	  		    <tr id="usertyperow"> 
