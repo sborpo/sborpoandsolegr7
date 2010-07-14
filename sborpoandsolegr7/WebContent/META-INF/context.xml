@@ -20,7 +20,7 @@
   <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
       driverName="com.mysql.jdbc.Driver"
    connectionURL="jdbc:mysql://localhost/sborpoDB"
-    connectionName="root" connectionPassword="123456"
+    connectionName="sborpo" connectionPassword="sborpo"
        userTable="users" userNameCol="login" userCredCol="password"
    userRoleTable="user_roles" roleNameCol="rolename"/>
 </Context>
