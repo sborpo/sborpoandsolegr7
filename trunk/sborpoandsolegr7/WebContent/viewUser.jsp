@@ -18,6 +18,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
+<style type="text/css">
+label.viewuser{ font-weight: bold;}
+</style>
 </head>
 
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
@@ -28,21 +31,26 @@
 <h1>User Details</h1><br/><br/>
 <table>
 <tr>
-<td>Username: <%=user.getLogin()%></td><td>Name: <%=user.getName() %></td>
+<td>
+<span class="viewuser">
+<label>Username:</label> <%=user.getLogin()%><br/>
+<label>Name:</label> <%=user.getName() %><br/>
+<label>Group:</label> <%=user.getGroup() %><br/>
+<label>Permissions:</label> <%=((user.getPremissions()==null)? "No Permission" :user.getPremissions()) %><br/>
+<label>Phone Number:</label> <%=user.getPhoneNumber() %><br/>
+<label>Address: </label><%=user.getAddress() %><br/>
+</span>
+</td>
+<td><img src="ImageGetter?username=<%=login%>" height="100%"/></td>
 </tr>
 <tr>
-<td>Group: <%=user.getGroup() %></td><td>Permissions:<%=((user.getPremissions()==null)? "No Permission" :user.getPremissions()) %></td>
-</tr>
-<tr>
-<td>Phone Number: <%=user.getPhoneNumber() %></td><td>Address: <%=user.getAddress() %></td>
-</tr>
-
-</table>
-<img src="ImageGetter?username=<%=login%>" />
-<br/>
-<br/>
-<% boolean isAdmin= UserUtils.isAdmin(request);
+<td colspan="2"><% boolean isAdmin= UserUtils.isAdmin(request);
 if (((request.getUserPrincipal()!=null) && (request.getUserPrincipal().getName().equals(request.getParameter("username")))) || isAdmin){%>
-	<a href=updateUser.jsp?username=<%=login%>>Updated Profile Details</a><%}%><%if ((isAdmin)&&(user.getRole().equals(User.UserType.REASEARCHER))){ %> || <a href="DeleteUser?username=<%=login %>"> remove User</a><%} %>
+	<a href=updateUser.jsp?username=<%=login%>>Updated Profile Details</a><%}%><%if ((isAdmin)&&(user.getRole().equals(User.UserType.REASEARCHER))){ %> || <a href="DeleteUser?username=<%=login %>"> remove User</a><%} %></td>
+</tr>
+</table>
+<br/>
+<br/>
+
 </body>
 </html>

@@ -121,9 +121,11 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 			  <%
 			  	if ((user!=null) && (user.getPhoto()!=null)){
 			  %>
-			   <tr>
+			  
+			  <!--  <tr>
 			  	<td class="label"><label>user photo</label></td><td class="field"><img src="ImageGetter?username=<%=(user!=null)? user.getLogin(): "stam"%>" /><br/></td>
 			  </tr>
+			   -->
 			<%
 				}
 			%>
