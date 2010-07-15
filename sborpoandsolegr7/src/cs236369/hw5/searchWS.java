@@ -19,8 +19,7 @@ public class searchWS {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String[] date=sdf.format(cal.getTime()).split("/");
 		try{
-	//	TimeSlot initialeTimeSlot= new TimeSlot(Integer.valueOf(date[2]), Integer.valueOf(date[1]),Integer.valueOf(date[0]));
-		TimeSlot initialeTimeSlot = new TimeSlot(2009, 11, 2);
+		TimeSlot initialeTimeSlot= new TimeSlot(Integer.valueOf(date[2]), Integer.valueOf(date[1]),Integer.valueOf(date[0]));
 		HashMap<Long,Period> slots=ReservationManager.searchForSlotsAv(initialeTimeSlot, keywords, k);
 		ArrayList<String> avSlots= new ArrayList<String>();
 		for (Period period : slots.values()) {

@@ -49,7 +49,7 @@ td.selection{padding: 1px; width: 10%;}
 <p id="pls" class="searchPageText"> Please select the labs that you want to search in from the following list: </p>
 <br/>
 <div id="searchStuff">
-<label class="searchPageText" id="instLabel">Instrument Keywords  </label><input type="text" id="instkeys" value=""></input>&nbsp;&nbsp;<label id="slotsLabel">Number Of Consicutive Slots: </label><input type="text" id="kinput" value="" maxlength="4" onchange="javascript:data_change('kinput')"  ></input>
+<label class="searchPageText" id="instLabel">Instrument Keywords </label><input type="text" id="instkeys" value=""></input>&nbsp;&nbsp;<label id="slotsLabel">Number Of Consicutive Slots: </label><input type="text" id="kinput" value="" maxlength="4" onchange="javascript:data_change('kinput')"  ></input>
 <br/>
 <br/>
 <table id="searchTable">
