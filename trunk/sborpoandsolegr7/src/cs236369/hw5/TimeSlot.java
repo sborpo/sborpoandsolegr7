@@ -1,6 +1,8 @@
 package cs236369.hw5;
 
 public class TimeSlot {
+	
+	public static int MAX_K=288;
 	@Override
 	public String toString() {
 		return "("+year+","+month+","+day+","+new Integer(slotNumberInDay()).toString()+")";

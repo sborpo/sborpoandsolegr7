@@ -57,11 +57,11 @@ function crateResultTable()
 	 table.id="resultTable";
 	 table.style.display =  'none' ;
 	 var headerRow = document.createElement('tr');
-	 var nameH= document.createElement('td');
+	 var nameH= document.createElement('th');
 	 nameH.appendChild(document.createTextNode('Lab Name'));
-	 var instH= document.createElement('td');
+	 var instH= document.createElement('th');
 	 instH.appendChild(document.createTextNode('Instrument ID'));
-	 var slotH= document.createElement('td');
+	 var slotH= document.createElement('th');
 	 slotH.appendChild(document.createTextNode('Slot'));
 	 headerRow.appendChild(nameH);
 	 headerRow.appendChild(instH);
@@ -99,17 +99,21 @@ function handleSearchReponse(req)
 	sleep(1);
 	 if (numOfReq==0)
 	 {
-		 var body=document.getElementsByTagName('body');
-		 var saerchDiv=document.getElementById('searchStuff');
-		 body[0].insertBefore( document.createElement('br'),saerchDiv);
-		 var heading=document.createElement('h3');
-		 heading.className='searchPageText';
-		 heading.innerHTML='Search Completed!';
-		 body[0].insertBefore(heading,saerchDiv);
-		var tut=document.getElementById('pls');
-		 tut.style.display = 'none';
-		 
+		 searchCompleted();
 	 }
+}
+
+function searchCompleted()
+{
+	 var body=document.getElementsByTagName('body');
+	 var saerchDiv=document.getElementById('searchStuff');
+	 body[0].insertBefore( document.createElement('br'),saerchDiv);
+	 var heading=document.createElement('h3');
+	 heading.className='searchPageText';
+	 heading.innerHTML='Search Completed!';
+	 body[0].insertBefore(heading,saerchDiv);
+	var tut=document.getElementById('pls');
+	 tut.style.display = 'none';
 }
 
 
@@ -147,44 +151,19 @@ function getReadyStateHandler(req, responseXmlHandler) {
             else
             {
             	numOfReq--;
+            	if (numOfReq==0)
+            	{
+            		searchCompleted();
+            	}
             }
     }  
 }
 }
 
 
-function validateK(val)
-{
-	var check = true;
-    for(var i=0;i < val.length; ++i)
-    {
-         var new_key = val.charAt(i); //cycle through characters
-         if(((new_key < "0") || (new_key > "9")) && 
-              !(new_key == ""))
-         {
-              check = false;
-              break;
-         }
-    }
-    return check;
-}
-
 function data_change(id)
 {
-     var check = true;
- 	var field=document.getElementById(id);
-     var value = field.value; //get characters
-     //check that all characters are digits, ., -, or ""
-     check=validateK(value);
-     //apply appropriate colour based on value
-     if(!check)
-     {
-          field.style.backgroundColor = "red";
-     }
-     else
-     {
-          field.style.backgroundColor = "white";
-     }
+	validateSlotsInput(id);
 }
 
 function getRequestObject(){

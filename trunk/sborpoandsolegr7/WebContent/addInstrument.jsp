@@ -44,7 +44,7 @@
         </ul> 
       </div> 
       <div id="signupwrap"> 
-      		<form id="signupform" action="AddNewInstrument" enctype="multipart/form-data" method="post" action=""> 
+      		<form id="signupform" action="/sborpoandsolegr7/AddNewInstrument" enctype="multipart/form-data" method="post" action=""> 
       		<!-- form  action="AddNewUser" ENCTYPE="multipart/form-data" method="post"/> -->
 	  		 <jsp:include page="instrumentInputForms.jsp">
 	  		 	<jsp:param value="<%=decision %>" name="decision"/>

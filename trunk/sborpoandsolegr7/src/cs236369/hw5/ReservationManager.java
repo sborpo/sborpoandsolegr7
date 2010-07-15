@@ -221,8 +221,8 @@ public  class ReservationManager {
 		ResultSet set=null;
 		HashMap<Long,Period> slot= new HashMap<Long, Period>();
 		try{
-		String query= "SELECT INST.id , M2.* FROM labdb.instruments INST LEFT OUTER JOIN " +
-				"labdb.reservations M2 " +
+		String query= "SELECT INST.id , M2.* FROM instruments INST LEFT OUTER JOIN " +
+				"reservations M2 " +
 				" ON ((year>? ) OR ((year=?)AND (slotbegin>?))) AND (INST.id=M2.instid) AND (MATCH (INST.type,INST.description) AGAINST (?  IN BOOLEAN MODE)) " +
 				"ORDER BY INST.id  , M2.year ,M2.slotbegin  ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);

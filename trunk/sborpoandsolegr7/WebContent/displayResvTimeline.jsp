@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>See Available Reservations</title>
 <link rel="stylesheet" type="text/css" href="addUser.css" />
+<link rel="stylesheet" type="text/css" href="defualtCss.css" />
 
 <script type="text/javascript">
 

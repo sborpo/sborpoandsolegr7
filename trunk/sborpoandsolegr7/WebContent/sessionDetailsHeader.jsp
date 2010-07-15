@@ -28,7 +28,7 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
 
 <div class="mynavbar">
 
-<a class="navbartitle" id="t1" href="index.jsp"  onMouseOver="ShowItem('main_submenu');" 
+<a class="navbartitle" id="t1" href="/sborpoandsolegr7/index.jsp"  onMouseOver="ShowItem('main_submenu');" 
     onMouseOut="HideItem('main_submenu');">Main</a
 ><a class="navbartitle" id="t2" 
       onMouseOut="HideItem('users_submenu');" 
@@ -53,7 +53,7 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
   <div class="submenubox">
     <ul>
 
-      <li><a href="about.jsp" class="submenlink">About Us</a></li>
+      <li><a href="/sborpoandsolegr7/about.jsp" class="submenlink">About Us</a></li>
      </ul>
 
   </div>
@@ -66,7 +66,7 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
     onMouseOut="HideItem('users_submenu');">
   <div class="submenubox">
     <ul>
-      <li><a href="viewUsers.jsp" class="submenlink">View users</a></li>
+      <li><a href="/sborpoandsolegr7/viewUsers.jsp" class="submenlink">View users</a></li>
       </ul>
   </div>
 </div>
@@ -77,7 +77,7 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
     onMouseOut="HideItem('reservations_submenu');">
   <div class="submenubox">
     <ul>
-      <li><a href="viewReservations.jsp" class="submenlink">View time line</a></li>
+      <li><a href="/sborpoandsolegr7/viewReservations.jsp" class="submenlink">View time line</a></li>
        <li><a href="/sborpoandsolegr7/ws/searchInLabs.jsp" class="submenlink">Search for slots in other labs</a></li>
     </ul>
   </div>
