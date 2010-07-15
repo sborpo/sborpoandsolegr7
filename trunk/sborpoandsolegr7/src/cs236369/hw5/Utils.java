@@ -106,7 +106,6 @@ public class Utils {
 			err
 					.setReason("The file that you have tried to upload is biggger than "
 							+ UserManager.FileSizeInBytes / 1000 + " KB");
-			Utils.forwardToErrorPage(err, request, response);
 		} catch (FileUploadException ex) {
 			err.setErrorString("File Uploading Error");
 			err.setReason("There was a problem uploading you file");

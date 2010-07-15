@@ -36,7 +36,7 @@ td.selection{padding: 1px; width: 10%;}
 
 </head>
 <body>
-
+<jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <br/>
 <h1>Available slots search</h1>
 <br/>

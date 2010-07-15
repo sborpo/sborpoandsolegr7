@@ -262,7 +262,14 @@ public abstract class User {
 		prepareStatement.setString(1, login);
 		prepareStatement.setString(2,password);
 		prepareStatement.setString(3,name);
-		prepareStatement.setString(4,premissions);
+		if (premissions!=null)
+		{
+			prepareStatement.setString(4,premissions);
+		}
+		else
+		{
+			prepareStatement.setNull(4, java.sql.Types.VARCHAR);
+		}
 		prepareStatement.setString(5,group);
 		if (phoneNumber!=null)
 		{

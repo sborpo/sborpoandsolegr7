@@ -12,7 +12,8 @@
 <%@page import="cs236369.hw5.users.UserManager"%>
 <%@page import="cs236369.hw5.User"%>
 <%@page import="cs236369.hw5.users.*"%>
-<%@page import="cs236369.hw5.ErrorInfoBean"%><html>
+<%@page import="cs236369.hw5.ErrorInfoBean"%>
+<%@page import="cs236369.hw5.User.UserType"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
@@ -42,6 +43,6 @@
 <br/>
 <% boolean isAdmin= UserUtils.isAdmin(request);
 if (((request.getUserPrincipal()!=null) && (request.getUserPrincipal().getName().equals(request.getParameter("username")))) || isAdmin){%>
-	<a href=updateUser.jsp?username=<%=login%>>Updated Profile Details</a><%}%><%if (isAdmin){ %> || <a href="DeleteUser?username=<%=login %>"> remove User</a><%} %>
+	<a href=updateUser.jsp?username=<%=login%>>Updated Profile Details</a><%}%><%if ((isAdmin)&&(user.getRole().equals(User.UserType.REASEARCHER))){ %> || <a href="DeleteUser?username=<%=login %>"> remove User</a><%} %>
 </body>
 </html>

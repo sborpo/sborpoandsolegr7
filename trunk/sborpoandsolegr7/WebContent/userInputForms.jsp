@@ -100,11 +100,11 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
 	  			<td class="status"></td> 
 	  		  </tr>
 	  		  <%
-	  		  	if (isAdmin&&des.equals("update")){
+	  		  	if ((isAdmin&&des.equals("update"))&&(user.getRole().equals(UserType.REASEARCHER))){
 	  		  %>
 	  		    <tr> 
 	  			<td class="label"><label id="lperm" for="permission">Permissions<br/>(seperated by commas)</label></td> 
-	  			<td class="field"><input id="perm" name="<%=UserManager.Permission%>" type="text" value="<%=(user!=null)? user.getPremissions() : ""%>" maxlength="150" /></td> 
+	  			<td class="field"><input id="perm" name="<%=UserManager.Permission%>" type="text" value="<%=(user!=null)? user.getPremissions() : ""%>" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr>  
 	  		  <%
@@ -114,8 +114,9 @@ if (des.equals("update")){login = request.getParameter("username");  user=UserMa
  			  <tr>
  			  	<td class="label"><label id="lpicture" for="picture">Picture (Max Size: 300 Kb):</label></td>
  			  	<td class="field"><input id="picture" type="hidden" name="MAX_FILE_SIZE" value="<%=UserManager.FileSizeInBytes/1000%>" />
-								  <input type="file" name="userpicture" />
+								  <input type="file" id ="userpicture" name="userpicture" />
 				</td>
+				<td class="status"></td> 
 			  </tr>
 			  <%
 			  	if ((user!=null) && (user.getPhoto()!=null)){
