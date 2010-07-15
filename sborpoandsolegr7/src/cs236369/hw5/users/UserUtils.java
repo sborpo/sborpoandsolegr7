@@ -118,7 +118,6 @@ public class UserUtils {
 		{
     		err.setErrorString("File Uploading Error");
     		err.setReason("The file that you have tried to upload is biggger than "+UserManager.FileSizeInBytes/1000+" KB");
-    		Utils.forwardToErrorPage(err,request,response);
 		}
 		catch (FileUploadException ex)
 		{
@@ -155,7 +154,7 @@ public class UserUtils {
 	 public static boolean containsOnlyNumbers(String str) {
 	        
 	        //It can't contain only numbers if it's null or empty...
-	        if (str == null || str.length() == 0)
+	        if (str == null || str.length() <9)
 	            return false;
 	        
 	        for (int i = 0; i < str.length(); i++) {

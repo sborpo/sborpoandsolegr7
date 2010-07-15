@@ -62,7 +62,7 @@ public class AddNewUser extends HttpServlet {
 			@Override
 			public void manipulate(HashMap<String, String> params, Object imageBlob,
 					Object databaseUserType) throws UserExists, UserNotExists, SQLException, LeaderNotExists {
-				UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), "", params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob,(UserType) databaseUserType,params.get(UserManager.Email));
+				UserManager.AddUser(params.get(UserManager.Usern), params.get(UserManager.Password), params.get(UserManager.Group), params.get(UserManager.Permission), params.get(UserManager.Name), params.get(UserManager.PhoneNumber), params.get(UserManager.Address),(Blob) imageBlob,(UserType) databaseUserType,params.get(UserManager.Email));
 				
 			}
 
@@ -128,11 +128,14 @@ public class AddNewUser extends HttpServlet {
 		}
 		if (params.containsKey(UserManager.PhoneNumber))
 		{
-			if (!(UserUtils.containsOnlyNumbers(params.get(UserManager.PhoneNumber))))
+			if (!params.get(UserManager.PhoneNumber).equals(""))
 			{
-				err.setErrorString("Phone Number Error");
-				err.setReason("The phone number should contain only numbers");
-				throw new Utils.ParametersExp(err);
+				if (!(UserUtils.containsOnlyNumbers(params.get(UserManager.PhoneNumber))))
+				{
+					err.setErrorString("Phone Number Error");
+					err.setReason("The phone number should contain only numbers");
+					throw new Utils.ParametersExp(err);
+				}
 			}
 		}
 		else
@@ -143,6 +146,7 @@ public class AddNewUser extends HttpServlet {
 		{
 			params.put(UserManager.Address, null);
 		}
+		params.put(UserManager.Permission, "");
 		if (params.get(UserManager.UserTypen).equals("Admin"))
 		{
 			if ((!params.containsKey(UserManager.AdminAuth))|| (!(params.get(UserManager.AdminAuth).equals(UserUtils.authorizationStr))))
@@ -151,12 +155,19 @@ public class AddNewUser extends HttpServlet {
 				err.setReason("The authentication key was not supplied");
 				throw new Utils.ParametersExp(err);
 			}
+			params.put(UserManager.Permission, null);
 		}
 		validateGroup(params,err);
 		if ((!(params.get(UserManager.UserTypen).equals("Admin"))) && (!(params.get(UserManager.UserTypen).equals("Researcher"))))
 		{
 			err.setErrorString("User Type Error");
 			err.setReason("The user type should be only Reasearcher or Admin");
+			throw new Utils.ParametersExp(err);
+		}
+		if (!UserManager.isParamLengthGood(params))
+		{
+			err.setErrorString("Parameter Length Error");
+			err.setReason("Some of your parameters may be too long");
 			throw new Utils.ParametersExp(err);
 		}
 		

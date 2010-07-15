@@ -26,6 +26,8 @@
 <%@page import="cs236369.hw5.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <body onload="javascript:init(); toggeleAdminAuth(); "> 
+<br/>
+<br/>
 <h1 id="banner">Add User</h1> 
 <div id="main"> 
  

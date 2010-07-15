@@ -1,6 +1,15 @@
 $(document).ready(function() {
+	
+	$.validator.addMethod('PhoneNumber', function(value) {
+		if (value=="")
+		{
+			return true;
+		}
+		return validatePhone(value);
+    }, 'Enter minimum 9 digits');
+
 	// validate signup form on keyup and submit
-	var validator = $("#signupform").validate({
+	 $("#signupform").validate({
 		rules: {
 			name: "required",
 			username: {
@@ -25,15 +34,16 @@ $(document).ready(function() {
 				minlength: 5
 			},
 			phonenumber : {
-				required: false,
-				minlength: 9,
-				number: true
+				PhoneNumber : true	
 			},
-			group : {
+			group : {	
 				required: true
 			},
 			admin_auth : {
 				required: true
+			},
+			userpicture : {
+				accept: "jpg|png|gif"
 			}
 		},
 		messages: {
@@ -56,17 +66,15 @@ $(document).ready(function() {
 				required: "Enter an address",
 				minlength: jQuery.format("Enter at least {0} characters")
 			},
-			phonenumber : {
-				required: "Enter your phone number",
-				minlength: jQuery.format("Enter at least {0} characters"),
-				number: "Enter digits only"
-			},
 			group : {
 				required: "Enter your group"
 			}
 			,
 			admin_auth : {
 				required: "Enter the authentication key"
+			},
+			userpicture : {
+				accept: "Only jpg,gif,png are allowed"
 			}
 		},
 		// the errorPlacement has to take the table layout into account

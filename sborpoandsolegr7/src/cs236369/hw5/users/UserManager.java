@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -42,7 +43,43 @@ public class UserManager {
 	public static String Email="email";
 	public static int FileSizeInBytes=300000;
 	public static String NotSpecified="Not Specified";
+	public static HashMap<String, Integer> maxLengthParams;
 	
+	static 
+	{
+		maxLengthParams= new HashMap<String, Integer>();
+		maxLengthParams.put(Usern, 30);
+		maxLengthParams.put(Password, 32);
+		maxLengthParams.put(Name, 50);
+		maxLengthParams.put(Group, maxLengthParams.get(Usern));
+		maxLengthParams.put(PhoneNumber, 15);
+		maxLengthParams.put(Address, 50);
+		maxLengthParams.put(Email, 100);
+	}
+	
+	public static boolean isParamLengthGood(HashMap<String, String> parmsAndValues)
+	{
+		for (String param : parmsAndValues.keySet()) {
+			if (!isParamLengthGood(param, parmsAndValues.get(param)))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean isParamLengthGood(String paramName,String value)
+	{
+		if (value==null)
+		{
+			return true;
+		}
+		if (!maxLengthParams.containsKey(paramName))
+		{
+			return true;
+		}
+		return (value.length()<=maxLengthParams.get(paramName));
+	}
 	
 	public static byte[] getPhoto(String username) throws SQLException
 	{
@@ -295,17 +332,23 @@ public class UserManager {
 		 {
 			b=null;
 		 }
-		
+		 String phone=set.getString("phone");
+		 if (set.wasNull())
+		 {
+			 phone="";
+		 }
+		 String address=set.getString("address");
+		 if (set.wasNull())
+		 {
+			 address="";
+		 }
 		 if (set.getString("rolename").equals(UserType.REASEARCHER.toString()))
 		 {
-			
-			 
-			 
-			 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b,set.getString("email"));
+			 user = new Researcher(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), phone, address,b,set.getString("email"));
 		 }
 		 else
 		 {
-			 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), set.getString("phone"), set.getString("address"),b,set.getString("email"));
+			 user = new Administrator(set.getString("login"), set.getString("password"), set.getString("name"), set.getString("permission"), set.getString("usergroup"), phone, address,b,set.getString("email"));
 		 }
 		 return user;
 	}

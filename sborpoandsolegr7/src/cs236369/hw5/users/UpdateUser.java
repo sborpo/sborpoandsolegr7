@@ -1,6 +1,7 @@
 package cs236369.hw5.users;
 
 import java.io.IOException;
+import java.security.acl.Permission;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -150,14 +151,54 @@ public class UpdateUser extends HttpServlet {
 		{
 			params.put(UserManager.Address, null);
 		}
+		if (params.containsKey(UserManager.Permission))
+		{
+			if (!authenticatePermissionParam(params.get(UserManager.Permission)))
+			{
+				err.setErrorString("Permission Error");
+				err.setReason("The permission levels should be seperated with commas");
+				throw new Utils.ParametersExp(err);
+			}
+		}
+		if (params.get(UserManager.UserTypen).equals("Admin"))
+		{
+			params.put(UserManager.Permission, null);
+		}
 		if ((!(params.get(UserManager.UserTypen).equals("Admin"))) && (!(params.get(UserManager.UserTypen).equals("Researcher"))))
 		{
 			err.setErrorString("User Type Error");
 			err.setReason("The user type should be only Reasearcher or Admin");
 			throw new Utils.ParametersExp(err);
 		}
+		if (!UserManager.isParamLengthGood(params))
+		{
+			err.setErrorString("Parameter Length Error");
+			err.setReason("Some of your parameters may be too long");
+			throw new Utils.ParametersExp(err);
+		}
 		AddNewUser.validateGroup(params, err);
 		
+	}
+
+	private static boolean authenticatePermissionParam(String permission) {
+		if (permission.equals(""))
+		{
+			return true;
+		}
+		if (permission.endsWith(","))
+		{
+			return false;
+		}
+		for (String perm : permission.split(",")) {
+			try{
+				Integer.parseInt(perm);
+			}
+			catch (NumberFormatException e)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
