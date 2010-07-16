@@ -33,6 +33,7 @@
 <script src="dynamicTestForAddUser.js" type="text/javascript"></script> 
 </head>
 <body>
+<jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <h2>Reset Password</h2>
 <br/>
 <br/>
@@ -44,7 +45,7 @@
         </ul> 
       </div> 
       <div id="signupwrap"> 
-      <p>A new password will be sent to the email that you have entered when you have registered to the site.<br/>The email will be sent to you within 15 minutes, so please be patient.<br/> Please enter your username:</p>
+      <p>Now you can reset your password<br/> Please enter your username:</p>
       		<form id="signupform" action="ResetPassword"  method="post" > 
 <table> 
 				

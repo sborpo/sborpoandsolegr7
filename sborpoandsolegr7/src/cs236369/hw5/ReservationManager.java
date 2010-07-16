@@ -221,15 +221,17 @@ public  class ReservationManager {
 		ResultSet set=null;
 		HashMap<Long,Period> slot= new HashMap<Long, Period>();
 		try{
-		String query= "SELECT INST.id , M2.* FROM instruments INST LEFT OUTER JOIN " +
+		String query= "SELECT INST.id , M2.* FROM " +
+				"( SELECT * FROM instruments WHERE (MATCH (type,description) AGAINST (?  IN BOOLEAN MODE))" +
+				")INST LEFT OUTER JOIN " +
 				"reservations M2 " +
-				" ON ((year>? ) OR ((year=?)AND (slotbegin>?))) AND (INST.id=M2.instid) AND (MATCH (INST.type,INST.description) AGAINST (?  IN BOOLEAN MODE)) " +
+				" ON ((year>? ) OR ((year=?)AND (slotbegin>?))) " +
 				"ORDER BY INST.id  , M2.year ,M2.slotbegin  ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
-		prepareStatement.setInt(1, initialeTimeSlot.getYear());
 		prepareStatement.setInt(2, initialeTimeSlot.getYear());
-		prepareStatement.setInt(3, initialeTimeSlot.getSlotNumber());
-		prepareStatement.setString(4, keywords);
+		prepareStatement.setInt(3, initialeTimeSlot.getYear());
+		prepareStatement.setInt(4, initialeTimeSlot.getSlotNumber());
+		prepareStatement.setString(1, keywords);
 		set= prepareStatement.executeQuery();
 		 long instId=-1;
 		while (set.next())
@@ -266,15 +268,17 @@ public  class ReservationManager {
 		ResultSet set=null;
 		HashMap<Long,TimeSlot> slot= new HashMap<Long, TimeSlot>();
 		try{
-		String query= "SELECT INST.id , M2.* FROM instruments INST LEFT OUTER JOIN " +
+		String query= "SELECT INST.id , M2.* FROM " +
+				"( SELECT * FROM instruments WHERE (MATCH (type,description) AGAINST (?  IN BOOLEAN MODE))" +
+				")INST LEFT OUTER JOIN " +
 				"reservations M2 " +
-				" ON ((year>? ) OR ((year=?)AND (slotbegin>?))) AND (INST.id=M2.instid) AND (MATCH (INST.type,INST.description) AGAINST (?  IN BOOLEAN MODE)) " +
+				" ON ((year>? ) OR ((year=?)AND (slotbegin>?))) AND (INST.id=M2.instid) " +
 				"ORDER BY INST.id  , M2.year DESC,M2.slotbegin DESC ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
-		prepareStatement.setInt(1, initialeTimeSlot.getYear());
 		prepareStatement.setInt(2, initialeTimeSlot.getYear());
-		prepareStatement.setInt(3, initialeTimeSlot.getSlotNumber());
-		prepareStatement.setString(4, keywords);
+		prepareStatement.setInt(3, initialeTimeSlot.getYear());
+		prepareStatement.setInt(4, initialeTimeSlot.getSlotNumber());
+		prepareStatement.setString(1, keywords);
 		set= prepareStatement.executeQuery();
 		 long instId=-1;
 		while (set.next())
