@@ -31,12 +31,15 @@ function isNumeric(val)
 
 function validateK(val)
 {
+	if (val=="")
+		{
+		return false;
+		}
 	var check = true;
     for(var i=0;i < val.length; ++i)
     {
          var new_key = val.charAt(i); //cycle through characters
-         if(((new_key < "0") || (new_key > "9")) && 
-              !(new_key == ""))
+         if(((new_key < "0") || (new_key > "9")))
          {
               check = false;
               break;
@@ -53,6 +56,10 @@ function validateSlotsInput(id)
 	     var value = field.value; //get characters
 	     //check that all characters are digits, ., -, or ""
 	     check=validateK(value);
+	     if (field.value=="")
+	    	 {
+	    	 check=false;
+	    	 }
 	     //apply appropriate colour based on value
 	     if(!check)
 	     {
@@ -62,6 +69,7 @@ function validateSlotsInput(id)
 	     {
 	          field.style.backgroundColor = "white";
 	     }
+	     return check;
 }
 
 function validatePhone(val)

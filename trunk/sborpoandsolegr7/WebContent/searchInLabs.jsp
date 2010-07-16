@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" media="screen" href="/sborpoandsolegr7/defualtCss.css" />   
 <script src="/sborpoandsolegr7/js/common.js" type="text/javascript"></script> 
-<script src="searchInLabs.js" type="text/javascript"></script> 
+<script src="/sborpoandsolegr7/js/searchInLabs.js" type="text/javascript"></script> 
 <style type="text/css">
 .searchPageText
 {

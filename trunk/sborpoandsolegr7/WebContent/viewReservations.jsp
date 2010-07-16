@@ -11,7 +11,7 @@
 </head>
 <body>
 <jsp:include page="sessionDetailsHeader.jsp"></jsp:include>
-<form method="GET" action="/sborpoandsolegr7/displayResvTimeline.jsp">
+<form method="GET" action="/sborpoandsolegr7/displayResvTimeline.jsp" onsubmit="return validateSlotsInput('slotInput');">
 <label>Instrument Type : </label><input type="text" size="15" maxlength="25" name="type"><br><br>
 <label>Day :</label> <select  name="day"><%for (int i=1; i<=30; i++){ %><option value=<%=i %>><%=i %></option><%} %></select>&nbsp;&nbsp;&nbsp;
 <label>Month :</label> <select name="month"><%for (int i=1; i<=12; i++){ %><option value=<%=i %>><%=i %></option><%} %></select>&nbsp;&nbsp;&nbsp;
@@ -19,7 +19,7 @@
 <br/>
 <br/>
 <label>Sequence Slots Number : </label><input type="text" size="4" maxlength="4" id="slotInput" name="slotSequence" onchange="javascript:validateSlotsInput('slotInput')"><br><br>
-<input value="Search For Slots" type="submit">&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset">
+<input value="Search For Slots" type="submit" >&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset">
 </form>
 </body>
 </html>

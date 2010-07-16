@@ -20,17 +20,23 @@ function searchfunc()
 	var instLabel=document.getElementById('instLabel');
 	var slotsLabel=document.getElementById('slotsLabel');
 	var saerchDiv=document.getElementById('searchStuff');
+	numOfReq=0;
+	numOfReq=numOfRequests(checkBoxColl);
+	if (numOfReq==0)
+		{
+		//no point to search
+		return;
+		}
 	saerchDiv.style.display =  'none' ;
 	tut.innerHTML='Searching...';
 	crateResultTable();
-	numOfReq=0;
-	numOfReq=numOfRequests(checkBoxColl);
+
 	for (var i=0; i<checkBoxColl.length; i++)
 	{
 		if (checkBoxColl[i].checked==true)
 		{
 		var request=getRequestObject();
-		var URL = "SearchLab?labname="+encodeURIComponent(checkBoxColl[i].value)+"&keywords="+encodeURIComponent(keys.value)+"&slots="+encodeURIComponent(k.value);
+		var URL = "/sborpoandsolegr7/SearchLab?labname="+encodeURIComponent(checkBoxColl[i].value)+"&keywords="+encodeURIComponent(keys.value)+"&slots="+encodeURIComponent(k.value);
 		var handlerFunction = getReadyStateHandler(request, handleSearchReponse);
 		request.onreadystatechange = handlerFunction;        
 		request.open("GET",URL,true);               
@@ -96,7 +102,6 @@ function handleSearchReponse(req)
 	}
     table.style.display = '';
 	 numOfReq--;
-	sleep(1);
 	 if (numOfReq==0)
 	 {
 		 searchCompleted();
@@ -105,12 +110,20 @@ function handleSearchReponse(req)
 
 function searchCompleted()
 {
+	 var table=document.getElementById('resultTable');
 	 var body=document.getElementsByTagName('body');
 	 var saerchDiv=document.getElementById('searchStuff');
 	 body[0].insertBefore( document.createElement('br'),saerchDiv);
 	 var heading=document.createElement('h3');
 	 heading.className='searchPageText';
+	 if ( table.style.display == '')
+	{
 	 heading.innerHTML='Search Completed!';
+	}
+	 else
+	 {
+		 heading.innerHTML='Search completed without any result :-(';
+	 }
 	 body[0].insertBefore(heading,saerchDiv);
 	var tut=document.getElementById('pls');
 	 tut.style.display = 'none';

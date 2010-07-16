@@ -21,6 +21,7 @@
 <script src="dynamicTestForAddUser.js" type="text/javascript"></script> 
 </head>
 <body>
+<jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <h2>Password Recovery</h2>
 <br/>
 <br/>

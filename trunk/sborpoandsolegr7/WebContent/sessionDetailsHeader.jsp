@@ -67,6 +67,7 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
   <div class="submenubox">
     <ul>
       <li><a href="/sborpoandsolegr7/viewUsers.jsp" class="submenlink">View users</a></li>
+       <li><a href="/sborpoandsolegr7/addUser.jsp" class="submenlink">Add new user</a></li>
       </ul>
   </div>
 </div>
@@ -78,7 +79,7 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
   <div class="submenubox">
     <ul>
       <li><a href="/sborpoandsolegr7/viewReservations.jsp" class="submenlink">View time line</a></li>
-       <li><a href="/sborpoandsolegr7/ws/searchInLabs.jsp" class="submenlink">Search for slots in other labs</a></li>
+       <li><a href="/sborpoandsolegr7/searchInLabs.jsp" class="submenlink">Search for slots in other labs</a></li>
     </ul>
   </div>
 </div>
