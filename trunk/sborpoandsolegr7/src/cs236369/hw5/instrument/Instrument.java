@@ -1,9 +1,14 @@
 package cs236369.hw5.instrument;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import cs236369.hw5.User;
+import cs236369.hw5.db.DbManager;
 
 /**
  * ID - Identifies the instrument, in the lab.
@@ -18,7 +23,7 @@ Instruments may have additional properties according to your choice.
 
 public class Instrument {
 
-	private static AtomicInteger idGenerator = new AtomicInteger(-1);
+	//private static AtomicInteger idGenerator = new AtomicInteger(getBiggestIdFromDB());
 	private String description = null;
 	private long id = -1;
 	private Integer timeSlot = null;
@@ -33,16 +38,17 @@ public class Instrument {
 	 * @param timeSlot
 	 * @param type
 	 */
-	public Instrument(String description, Integer timeSlot, String type, Integer premission, String location) {
-		super();
-		this.description = description;
-		this.id = idGenerator.addAndGet(1);
-		this.timeSlot = timeSlot;
-		this.type = type;
-		this.premission = premission;
-		this.location = location;
-	}
-	public Instrument(int id,String type, Integer premission, Integer timeSlot, String description,  String location) {
+//	public Instrument(String description, Integer timeSlot, String type, Integer premission, String location) {
+//		super();
+//		this.description = description;
+//		this.id = idGenerator.addAndGet(1);
+//		this.timeSlot = timeSlot;
+//		this.type = type;
+//		this.premission = premission;
+//		this.location = location;
+//	}
+
+	public Instrument(Integer id,String type, Integer premission, Integer timeSlot, String description,  String location) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -59,6 +65,8 @@ public class Instrument {
 		this.premission = premission;
 		this.location = location;
 	}
+	
+	
 
 	public PreparedStatement setInsertInstrument(Connection conn) throws SQLException
 	{
@@ -97,10 +105,10 @@ public class Instrument {
 	}
 	
 	public static int getGenID () {
-		int real = idGenerator.addAndGet(1);
-		idGenerator.addAndGet(-1);
-		return real;
+		return 0;
 	}
+	
+
 
 	public int getTimeSlot() {
 		return timeSlot;
@@ -110,9 +118,11 @@ public class Instrument {
 		return type;
 	}
 
-	public static PreparedStatement getDetails(Connection conn, int id2) {
-		// TODO Auto-generated method stub
-		return null;
+	public static PreparedStatement getDetails(Connection conn, int id) throws SQLException {
+		String query= "SELECT * FROM instruments WHERE login=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setLong(1, id);
+		return prepareStatement;
 	}
 
 	public PreparedStatement setUpdateInstDet(Connection conn) {
