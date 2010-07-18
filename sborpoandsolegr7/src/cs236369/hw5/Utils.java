@@ -73,7 +73,7 @@ public class Utils {
 	}
 
 	public static void manipulateInstrument(HttpServletRequest request,
-			HttpServletResponse response, DeafaultManipulator manipulator) throws InstrumentExists, IOException, Utils.ParametersExp, UserUtils.ParametersExp {
+			HttpServletResponse response, DeafaultManipulator manipulator) throws IOException, Utils.ParametersExp, UserUtils.ParametersExp {
 		HashMap<String, String> params = new HashMap<String, String>();
 		ErrorInfoBean err = new ErrorInfoBean();
 		// TODO: err
@@ -85,17 +85,8 @@ public class Utils {
 			boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(
 					request, captchaResponse);
 			if (captchaPassed) {
-
-				// UserManager.AddUser(params.get(UserManager.Usern),
-				// params.get(UserManager.Password),
-				// params.get(UserManager.Group), "",
-				// params.get(UserManager.Name),
-				// params.get(UserManager.PhoneNumber),
-				// params.get(UserManager.Address), imageBlob,
-				// databaseUserType);
 				manipulator.manipulate(params, null, null);
-				Utils.forwardToSuccessPage("viewUsers.jsp", request, //TODO: change That
-						response);
+				Utils.forwardToSuccessPage("viewInstruments.jsp", request,response);
 				return;
 			}
 			err.setErrorString("Catchpa Error");
@@ -106,6 +97,7 @@ public class Utils {
 			err
 					.setReason("The file that you have tried to upload is biggger than "
 							+ UserManager.FileSizeInBytes / 1000 + " KB");
+			Utils.forwardToErrorPage(err, request, response);
 		} catch (FileUploadException ex) {
 			err.setErrorString("File Uploading Error");
 			err.setReason("There was a problem uploading you file");
@@ -118,6 +110,10 @@ public class Utils {
 		} catch (UserNotExists e) {
 		} catch (Utils.ParametersExp e) {
 		} catch (LeaderNotExists e) {
+		} catch (InstrumentExists e) {
+			err.setErrorString("Instrument Error");
+			err.setReason("The id that you have tried to add already <br/> exists in the system.");
+			e.printStackTrace();
 		}
 		Utils.forwardToErrorPage(err, request, response);
 
