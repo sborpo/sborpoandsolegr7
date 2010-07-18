@@ -70,12 +70,13 @@ public class AddNewInstrument extends HttpServlet {
 			public void manipulate(HashMap<String, String> params,
 					Object image, Object type) throws SQLException,
 					InstrumentExists {
-				InstrumentManager.addInstrument(params
-						.get(InstrumentManager.Description), params
-						.get(InstrumentManager.Location), params
-						.get(InstrumentManager.Premission), params
-						.get(InstrumentManager.TimeSlot), params
-						.get(InstrumentManager.Type));
+				InstrumentManager.addInstrument(
+						params.get(InstrumentManager.ID),
+						params.get(InstrumentManager.Description), 
+						params.get(InstrumentManager.Location), 
+						params.get(InstrumentManager.Premission), 
+						params.get(InstrumentManager.TimeSlot), 
+						params.get(InstrumentManager.Type));
 
 			}
 
@@ -91,9 +92,6 @@ public class AddNewInstrument extends HttpServlet {
 		};
 		try {
 			Utils.manipulateInstrument(request, response, manipulator);
-		} catch (InstrumentExists e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (ParametersExp e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
