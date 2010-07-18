@@ -61,7 +61,7 @@ public class AddNewInstrument extends HttpServlet {
 
 			@Override
 			public void returnLinkSetter(ErrorInfoBean err) {
-				err.setLink("AddInstrument.jsp");
+				err.setLink("sddInstrument.jsp");
 				err.setLinkStr("Try again");
 
 			}
