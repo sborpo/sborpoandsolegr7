@@ -28,8 +28,8 @@ body {background: #f9fee8;margin: 0; padding: 1em; text-align:left; font-family:
   }
 
 
-
-
+ul {list-style-type: square; list-style: square;}
+li.list{list-style: square;}
 
 input
 {
