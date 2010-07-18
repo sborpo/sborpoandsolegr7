@@ -147,7 +147,7 @@ div.hours {
 	int k = Integer.parseInt(request.getParameter("slotSequence"));
 	String type = request.getParameter("type");
 	String[][] arr = new ReservationManager.ReservationTable(year,
-			month, day, k, type).getReservationTable();
+			month, day, k, type,request.getUserPrincipal().getName()).getReservationTable();
 	TimeSlot weekEnd = new TimeSlot(year,
 			new TimeSlot(year, month, day).getSlotNumber()
 					+ TimeSlot.numOfSlotsInDay() * 6);
