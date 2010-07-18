@@ -22,7 +22,7 @@ public class InstrumentManager {
 	}
 
 	public static final String Captcha = "captcha";
-	public static String ID = "instrumentID";
+	public static String ID = "id";
 	public static String Type = "type";
 	public static String Premission = "permission";
 	public static String TimeSlot = "timeslot";
@@ -73,14 +73,14 @@ public class InstrumentManager {
 		}
 	}
 
-	public static void addInstrument(String description,
+	public static void addInstrument(String id, String description,
 			String location, String permission, String timeslot, String type)
 			throws SQLException, InstrumentExists {
 		Instrument instrument = null;
 		try {
-			instrument = new Instrument(description,
-					Integer.parseInt(timeslot), type, Integer
-							.parseInt(permission), location);
+			instrument = new Instrument(Integer.parseInt(id),type,
+					Integer.parseInt(permission), Integer
+							.parseInt(timeslot),description , location);
 		} catch (NumberFormatException e) {
 			// TODO: add error here
 			e.printStackTrace();
@@ -108,7 +108,7 @@ public class InstrumentManager {
 		}
 	}
 
-	public static Instrument getUserDetails(int id) throws SQLException {
+	public static Instrument getInstrumentDetails(int id) throws SQLException {
 		Connection conn = null;
 		ResultSet set = null;
 		try {
@@ -166,5 +166,31 @@ public class InstrumentManager {
 					.getString("description"), set.getString("location"));
 		}
 		return null;
+	}
+	
+	public static Boolean isInstrumentExists (int id) throws SQLException {
+		Connection conn=null;
+		 ResultSet set= null;
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		PreparedStatement userExists= Instrument.getDetails(conn, id);
+		set= userExists.executeQuery();
+		if (!set.next())
+		{
+				return false;
+				
+		}
+		return true;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
 	}
 }
