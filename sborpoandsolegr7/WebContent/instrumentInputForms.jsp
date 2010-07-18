@@ -13,7 +13,7 @@ String login=null;
 			
 			 <tr> 
 	  			<td class="label"><label id="lid" for="id">ID</label></td> 
-	  			<td class="field"><input id="id" type="text"   maxlength="50" readonly="readonly" value="<%=Instrument.getGenID()%>" name="<%=InstrumentManager.ID%>" /></td> 
+	  			<td class="field"><input id="id" type="text"   maxlength="50" value="" name="<%=InstrumentManager.ID%>" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 	  		  <tr> 
