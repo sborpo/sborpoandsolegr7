@@ -5,9 +5,14 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
 <hr/>
 <br/>
 <br/>
-
-
-
+<%}else{ %>
+<p>
+<a href="/sborpoandsolegr7/indexLoged.jsp">Log-in</a> 
+</p>
+<hr/>
+<br/>
+<br/>
+<%} %>
 <!-- ############### #### Navigation Bar #### ############### -->
 
 <!-- Link to styles used for our Navigation Bar -->
@@ -106,4 +111,3 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
 
 <br/>
 <br/>
-<%} %>

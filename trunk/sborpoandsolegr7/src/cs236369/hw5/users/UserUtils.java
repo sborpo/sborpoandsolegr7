@@ -108,7 +108,7 @@ public class UserUtils {
 		boolean captchaPassed = SimpleImageCaptchaServlet.validateResponse(request, userCaptchaResponse);
 		if(captchaPassed){
 			manipulator.manipulate(params, imageBlob, databaseUserType);
-			Utils.forwardToSuccessPage("viewUsers.jsp", request, response);
+			Utils.forwardToSuccessPage("/sborpoandsolegr7/indexLoged.jsp", request, response);
 			return;
 		}
 		err.setErrorString("Catchpa Error");
