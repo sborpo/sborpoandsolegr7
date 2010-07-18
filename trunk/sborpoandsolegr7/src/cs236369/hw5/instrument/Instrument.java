@@ -104,12 +104,6 @@ public class Instrument {
 		return id;
 	}
 	
-	public static int getGenID () {
-		return 0;
-	}
-	
-
-
 	public int getTimeSlot() {
 		return timeSlot;
 	}
