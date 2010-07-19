@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>See Available Reservations</title>
@@ -148,6 +149,11 @@ div.hours {
 	String type = request.getParameter("type");
 	String[][] arr = new ReservationManager.ReservationTable(year,
 			month, day, k, type,request.getUserPrincipal().getName()).getReservationTable();
+
+	////TODO: remove
+	for (int i=0; i < arr.length; i++ )
+		for (int j=0; j < arr[0].length; j++ )
+			System.out.println(arr[i][j]);
 	TimeSlot weekEnd = new TimeSlot(year,
 			new TimeSlot(year, month, day).getSlotNumber()
 					+ TimeSlot.numOfSlotsInDay() * 6);
@@ -237,7 +243,7 @@ to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 							classcolor = "available";
 						}
 		%>
-		<td class="<%=classcolor%>" id="<%=time.getSlotNumber()%>" onclick="gotoOptionsScreen(id,<%=time.getYear()%>,'<%=type %>')">
+		<td class="<%=classcolor%>" id="<%=time.getSlotNumber()%>"<% if (classcolor.equals("available")) { %> onclick="gotoOptionsScreen(id,<%=time.getYear()%>,'<%=type %>')" <%} %>>
 		<%
 			if (x == 1) {
 							out.print(arr[i][j].split(";")[1]);

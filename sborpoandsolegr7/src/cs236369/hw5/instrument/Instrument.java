@@ -113,7 +113,7 @@ public class Instrument {
 	}
 
 	public static PreparedStatement getDetails(Connection conn, int id) throws SQLException {
-		String query= "SELECT * FROM instruments WHERE login=? ";
+		String query= "SELECT * FROM instruments WHERE id=? ";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setLong(1, id);
 		return prepareStatement;

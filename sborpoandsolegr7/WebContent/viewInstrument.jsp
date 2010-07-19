@@ -1,5 +1,5 @@
 <%if (request.getParameter("id")==null){ %><jsp:forward page="ParamErrorSetter"></jsp:forward><%} %>
-<%if (!InstrumentManager.isInstrumentExists(Integer.parseInt(request.getParameter(request.getParameter("id"))))){ 		
+<%if (!InstrumentManager.isInstrumentExists(Integer.parseInt(request.getParameter("id")))){ 		
 		ErrorInfoBean err = new ErrorInfoBean();
 		err.setErrorString("User Error");
 		err.setReason("User not exists in the system!");
@@ -17,18 +17,18 @@
 <%@page import="cs236369.hw5.instrument.InstrumentManager"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>View Instrument</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
 </head>
 
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 
-
 <body>
 <%
-	String id = request.getParameter("id"); Instrument inst=InstrumentManager.getInstrumentDetails(Integer.parseInt(id));
+	String id = request.getParameter("id");
+	Instrument inst=InstrumentManager.getInstrumentDetails(Integer.parseInt(id));
 %>
-<h1>User Details</h1><br/><br/>
+<h1>Instrument Details</h1><br/><br/>
 <table>
 <tr>
 <td>ID: <%=inst.getId()%></td>
