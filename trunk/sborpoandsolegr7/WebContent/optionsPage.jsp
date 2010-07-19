@@ -11,7 +11,6 @@
 <title>View System's Users</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
 
-
 <style type="text/css">
 table
 {
@@ -44,7 +43,9 @@ td.groupMemberUsername {padding-left: 18px;}
 </tr>
 
 <%
-LinkedList<Instrument> instruments = InstrumentManager.getInstruments();
+String[][] arr = new ReservationManager.ReservationTable(year,
+		month, day, k, request.getParameter("type"),request.getUserPrincipal().getName()).getReservationTable();
+LinkedList<Instrument> instruments = ReservationManager.ReservationTable();
 for ( Instrument instrument : instruments ){
 %>
 <tr class="instruments" id="instruments">

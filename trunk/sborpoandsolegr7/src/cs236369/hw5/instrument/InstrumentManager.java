@@ -173,7 +173,7 @@ public class InstrumentManager {
 		 ResultSet set= null;
 		try{
 		conn=DbManager.DbConnections.getInstance().getConnection();
-		PreparedStatement userExists= Instrument.getDetails(conn, id);
+		PreparedStatement userExists= Instrument.getDetails(conn, id); //TODO: change
 		set= userExists.executeQuery();
 		if (!set.next())
 		{

@@ -4,7 +4,8 @@ $(document).ready(function() {
 		rules: {
 			id : {
 				required: true,
-				number: true
+				number: true,
+				remote: "IdInDB.jsp"
 			},
 			type: {
 				required: true,
@@ -30,7 +31,8 @@ $(document).ready(function() {
 		messages: {
 			id : {
 				required: "Specifiy an id",
-				number: "Enter digits only"
+				number: "Enter digits only",
+				remote: "An instrument with the specified id already exists"
 			},
 			type: {
 				required: "Specify a type",

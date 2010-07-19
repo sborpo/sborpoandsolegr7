@@ -96,7 +96,9 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
   <div class="submenubox">
     <ul>
 
-      <li><a href="placeholder.html" class="submenlink">Add links...</a></li>
+      <li><a href="addInstrument.jsp" class="submenlink">Add Instrument</a></li>
+      <li><a href="addInstrument.jsp" class="submenlink">Update Instrument</a></li>
+      <li><a href="viewInstruments.jsp" class="submenlink">View Instruments</a></li>
 
      </ul>
 
