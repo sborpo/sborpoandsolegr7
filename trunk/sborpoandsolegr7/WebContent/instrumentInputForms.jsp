@@ -4,26 +4,51 @@
 <%@page import="cs236369.hw5.*" %>
 <%
 	String des=request.getParameter("decision");
-User user=null;
-String login=null;
-//boolean isAdmin= UserUtils.isAdmin(request);
-//if (des.equals("update")){login = request.getParameter("username");  user=InstrumentManager.getUserDetails(login); }
+	if (des == null) {
+		des = "";
+	}
+	String id=request.getParameter("id");
+	if (id == null) {
+		des = "";
+	}
+	if (request.getParameter(InstrumentManager.ID)==null){ %>
+	
+<%@page import="java.lang.NumberFormatException;"%><jsp:forward page="ParamErrorSetter"></jsp:forward>
+	<%} %>
+	<%
+	try {
+	if (!InstrumentManager.isInstrumentExists(Integer.parseInt(request.getParameter(InstrumentManager.ID)))){ 		
+			ErrorInfoBean err= new ErrorInfoBean();
+			err.setErrorString("Instrument Error");
+			err.setReason("Instrument does not exists in the system!");
+			err.setLink("javascript:history.back(1);");
+			err.setLinkStr("Back");
+			request.setAttribute("ErrorInfoBean", err);%>
+			<jsp:forward page="/errorPages/errorPage.jsp"></jsp:forward>
+			<%}
+	}
+	catch (NumberFormatException e) {%>
+			<jsp:forward page="/errorPages/errorPage.jsp"></jsp:forward>
+<%	} %>
+<% 
+Instrument instrument = InstrumentManager.getInstrumentDetails(Integer.parseInt(request.getParameter(InstrumentManager.ID)));
+
 %>
 <table> 
 			
 			 <tr> 
 	  			<td class="label"><label id="lid" for="id">ID</label></td> 
-	  			<td class="field"><input id="id" type="text"   maxlength="50" value="" name="<%=InstrumentManager.ID%>" /></td> 
+	  			<td class="field"><input id="id" type="text"   maxlength="50" <% if(des.equals("update")) { %> value="<%=instrument.getId()%>" readonly="readonly" <% } else { %>value="" <%} %> name="<%=InstrumentManager.ID%>" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 	  		  <tr> 
 	  		  	<td class="label"><label id="ltype" for="type">Type</label></td> 
-	  		  	<td class="field"><input id="type"  type="text" value="" maxlength="100" name="<%=InstrumentManager.Type%>" /></td> 
+	  		  	<td class="field"><input id="type"  type="text" <% if (des.equals("update")) { %> value="<%=instrument.getType()%>"  <% } else { %>value="" <%} %>  maxlength="100" name="<%=InstrumentManager.Type%>" /></td> 
 	  		  	<td class="status"></td> 
 	  		  </tr>
 	  		  <tr> 
 	  			<td class="label"><label id="lpermission" for="permission">Permission</label></td> 
-	  			<td class="field"><input id="permission" type="text" maxlength="50" value="" name="<%=InstrumentManager.Premission%>"/></td> 
+	  			<td class="field"><input id="permission" type="text" maxlength="50" <% if (des.equals("update")) { %> value="<%=instrument.getPremission()%>"  <% } else { %>value="" <%} %>  name="<%=InstrumentManager.Premission%>"/></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
  	  		  <tr> 
@@ -33,12 +58,12 @@ String login=null;
 	  		  </tr>
 	  		  <tr> 
 	  			<td class="label"><label id="llocation" for="location">Location</label></td> 
-	  			<td class="field"><input id="location" name="<%=InstrumentManager.Location%>" type="text" value="" maxlength="150" /></td> 
+	  			<td class="field"><input id="location" name="<%=InstrumentManager.Location%>" type="text" <% if (des.equals("update")) { %> value="<%=instrument.getLocation()%>"  <% } else { %>value="" <%} %>  maxlength="150" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 			    <tr> 
 	  			<td class="label"><label id="ldescription" for="description">Description</label></td> 
-	  			<td class="field"><input id="description" name="<%=InstrumentManager.Description%>" type="text" value="" maxlength="150" /></td> 
+	  			<td class="field"><input id="description" name="<%=InstrumentManager.Description%>" type="text" <% if (des.equals("update")) { %> value="<%=instrument.getDescription()%>"  <% } else { %>value="" <%} %>  maxlength="150" /></td> 
 	  			<td class="status"></td> 
 	  		  </tr> 
 			  <tr>

@@ -43,13 +43,18 @@ td.groupMemberUsername {padding-left: 18px;}
 </tr>
 
 <%
-String[][] arr = new ReservationManager.ReservationTable(year,
-		month, day, k, request.getParameter("type"),request.getUserPrincipal().getName()).getReservationTable();
-LinkedList<Instrument> instruments = ReservationManager.ReservationTable();
+int year =Integer.parseInt(request.getParameter("year"));
+int id =Integer.parseInt(request.getParameter("id"));
+int k =Integer.parseInt(request.getParameter("k"));
+String type =request.getParameter("type");
+TimeSlot chosenSlot = new TimeSlot(year, id);
+String[][] arr = new ReservationManager.ReservationTable(
+		year,chosenSlot.getMonth(), chosenSlot.getDay(), k, type,request.getUserPrincipal().getName()).getReservationTable();
+LinkedList<Instrument> instruments = ReservationManager.ReservationTable.parseArrayOfInstruments(arr, chosenSlot);
 for ( Instrument instrument : instruments ){
 %>
 <tr class="instruments" id="instruments">
-<td><input id="in_<%=instrument.getId() %>" type="hidden" value="shown" ></input>&nbsp;&nbsp;<a href=viewInstrument.jsp?id=<%=instrument.getId()%>><%=instrument.getId() %></a></td><td><%=instrument.getType() %></td><td><%=instrument.getPremission() %></td><td><%=instrument.getLocation() %></td><td><%=instrument.getDescription() %></td>
+<td><input id="in_<%=instrument.getId() %>" type="hidden" value="shown" ></input>&nbsp;&nbsp;<a href=makeReservation.jsp?id=<%=instrument.getId()%>><%=instrument.getId() %></a></td><td><%=instrument.getType() %></td><td><%=instrument.getPremission() %></td><td><%=instrument.getLocation() %></td><td><%=instrument.getDescription() %></td>
 </tr>
 <% }%>
 </table>
