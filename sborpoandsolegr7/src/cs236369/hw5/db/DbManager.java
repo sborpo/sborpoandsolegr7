@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import cs236369.hw5.Administrator;
 import cs236369.hw5.User;
 import cs236369.hw5.Utils;
 

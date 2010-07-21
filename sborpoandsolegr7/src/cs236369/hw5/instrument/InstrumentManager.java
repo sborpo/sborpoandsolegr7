@@ -1,27 +1,33 @@
 package cs236369.hw5.instrument;
 
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-import javax.sql.rowset.serial.SerialBlob;
-
-import cs236369.hw5.User;
-import cs236369.hw5.User.UserType;
 import cs236369.hw5.db.DbManager;
 import cs236369.hw5.db.DbManager.DbConnections.SqlError;
 
 public class InstrumentManager {
 	public static class InstrumentExists extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 	}
 
 	public static class InstrumentNotExists extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 	}
 
 	public static final String Captcha = "captcha";
+	public static final Integer DEFUALT = 15;
 	public static String ID = "id";
 	public static String Type = "type";
 	public static String Premission = "permission";
@@ -30,11 +36,15 @@ public class InstrumentManager {
 	public static String Location = "location";
 	public static String NotSpecified = "Not Specified";
 
-	public static void updateInstrument(int id, String pass, String group,
-			String permission, String name, String phone, String address,
-			Blob stream, UserType type) throws SQLException,
+	public static void updateInstrument(String id, String type, String permission, String timeslot, String location,String description) throws SQLException,
 			InstrumentNotExists {
-		Instrument inst = new Instrument(id);
+		Instrument inst = null;
+		try {
+			inst = new Instrument(Integer.parseInt(id), type, Integer.parseInt(permission), Integer.parseInt(timeslot), description, location);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Connection conn = null;
 		ResultSet set = null;
 		try {
@@ -48,7 +58,7 @@ public class InstrumentManager {
 			conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 			conn.setAutoCommit(false);
 			PreparedStatement instrumentExists = Instrument
-					.getDetails(conn, id);
+					.getDetails(conn, Integer.parseInt(id));
 			set = instrumentExists.executeQuery();
 			if (!set.next()) {
 				throw new InstrumentNotExists();
@@ -158,11 +168,11 @@ public class InstrumentManager {
 		}
 	}
 
-	private static Instrument setInstrumentFromRow(ResultSet set)
+	static Instrument setInstrumentFromRow(ResultSet set)
 			throws SQLException {
 		if (!set.wasNull()) {
 			return new Instrument(set.getInt("id"), set.getString("type"), set
-					.getInt("permission"), set.getInt("timeslot"), set
+					.getInt("permission"), DEFUALT, set
 					.getString("description"), set.getString("location"));
 		}
 		return null;
