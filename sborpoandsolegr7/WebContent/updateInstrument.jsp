@@ -1,22 +1,24 @@
-<%if (request.getParameter(UserManager.Usern)==null){ %><jsp:forward page="ParamErrorSetter"></jsp:forward><%} %>
-<%if (!UserManager.isUserExists(request.getParameter(UserManager.Usern))){ 		
+<%if (request.getParameter(InstrumentManager.ID)==null){ %><jsp:forward page="ParamErrorSetter"></jsp:forward><%} %>
+<%if (!InstrumentManager.isInstrumentExists(Integer.parseInt(request.getParameter(InstrumentManager.ID)))){ 		
 		ErrorInfoBean err= new ErrorInfoBean();
-		err.setErrorString("User Error");
-		err.setReason("User does not exists in the system!");
+		err.setErrorString("Instrument Error");
+		err.setReason("Instrument does not exists in the system!");
 		err.setLink("javascript:history.back(1);");
 		err.setLinkStr("Back");
 		request.setAttribute("ErrorInfoBean", err);%><jsp:forward page="/errorPages/errorPage.jsp"></jsp:forward><%} %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>	
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<%@page import="cs236369.hw5.users.UserManager"%>
+
+<%@page import="cs236369.hw5.instrument.InstrumentManager"%>
+<%@page import="cs236369.hw5.ErrorInfoBean"%>
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
 <%String decision="update";%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> 
 
-<title>Update User</title> 
+<title>Update Instrument</title> 
  
 
 <link rel="stylesheet" type="text/css" media="screen" href="addUser.css" /> 
@@ -26,28 +28,16 @@
 <script src="http://jquery.bassistance.de/validate/lib/jquery.js" type="text/javascript"></script> 
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js" type="text/javascript"></script> 
 <script src="js/common.js" type="text/javascript"></script> 
-<script src="js/updateUserValidate.js" type="text/javascript"></script> 
 <style type="text/css"> 
 	pre { text-align: left; }
 </style> 
  
-<script src="dynamicTestForUpdateUser.js" type="text/javascript"></script> 
-<script type="text/javascript">
-function init()
-{
-	var hiddenInput = document.getElementById('initialeGroupsNum');
-	hiddenInput.value= document.getElementById('group').length;
-	document.getElementById('group').disabled=true;
-	poorman_close('usertyperow');
-	poorman_close('authentication_row');
-}
-</script> 
+<script src="dynamicTestForUpdateInstrument.js" type="text/javascript"></script> 
+
 </head>
-<%@page import="cs236369.hw5.*" %>
-<%@page import="cs236369.hw5.users.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
-<body onload="javascript:init();  toggeleAdminAuth();"> 
-<h1 id="banner">Update User</h1> 
+<body> 
+<h1 id="banner">Update Instrument</h1> 
 <div id="main"> 
  
 <div id="content"> 
@@ -63,17 +53,13 @@ function init()
         </ul> 
       </div> 
       <div id="signupwrap"> 
-      <%if (UserUtils.isAdmin(request)){ %>
-      			<form id="signupform" action="AdminUpdateUser" enctype="multipart/form-data" method="post" action="" > 
-      		<%} else{ %>
-      			<form id="signupform" action="UpdateUser" enctype="multipart/form-data" method="post" action=""> 
-      		<%} %>
-      		<!-- form  action="AddNewUser" ENCTYPE="multipart/form-data" method="post"/> -->
-	  		 <jsp:include page="userInputForms.jsp">
+      		 <form id="signupform" action="UpdateInstrument" enctype="multipart/form-data" method="post"> 
+	  		 <jsp:include page="instrumentInputForms.jsp">
 	  		 	<jsp:param value="<%=decision %>" name="decision"/>
+	  		 	<jsp:param value="<%=request.getParameter("id") %>" name="id"/>
 	  		 </jsp:include>
 <br/>
-			<input value="Update User" type="submit"/>&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset"/>
+			<input value="Update Instrument" type="submit"/>&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset"/>
 </form>
       </div> 
     </div> 
@@ -81,7 +67,6 @@ function init()
  
 </div> 
 <br/>
-<a href="passReseter.jsp?username=<%=request.getParameter("username")%>">Reset Password</a>
  
 </div> 
  
