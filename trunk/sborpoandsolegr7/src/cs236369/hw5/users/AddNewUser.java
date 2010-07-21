@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.DeafaultManipulator;
+import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.Utils.ParametersExp;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
 import cs236369.hw5.users.UserManager.LeaderNotExists;
 import cs236369.hw5.users.UserManager.Unauthenticated;
 import cs236369.hw5.users.UserManager.UserExists;
@@ -85,6 +86,9 @@ public class AddNewUser extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  catch (ParametersExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstrumentNotExists e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

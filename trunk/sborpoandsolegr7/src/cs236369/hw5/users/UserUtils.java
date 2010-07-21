@@ -3,15 +3,11 @@ package cs236369.hw5.users;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
@@ -31,6 +27,7 @@ import cs236369.hw5.User;
 import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
 import cs236369.hw5.users.UserManager.LeaderNotExists;
 import cs236369.hw5.users.UserManager.Unauthenticated;
 import cs236369.hw5.users.UserManager.UserExists;
@@ -92,7 +89,7 @@ public class UserUtils {
 	}
 	
 	
-	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException,  InstrumentExists, Utils.ParametersExp
+	public static void manipulateUser(HttpServletRequest request, HttpServletResponse response,DeafaultManipulator manipulator) throws IOException,  InstrumentExists, Utils.ParametersExp, InstrumentNotExists
 	{
 		
 		HashMap<String, String> params = new HashMap<String, String>();

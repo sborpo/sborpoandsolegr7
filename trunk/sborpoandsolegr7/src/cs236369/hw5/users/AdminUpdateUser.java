@@ -15,11 +15,11 @@ import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.Utils;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
 import cs236369.hw5.users.UserManager.LeaderNotExists;
 import cs236369.hw5.users.UserManager.Unauthenticated;
 import cs236369.hw5.users.UserManager.UserExists;
 import cs236369.hw5.users.UserManager.UserNotExists;
-import cs236369.hw5.users.UserUtils.ParametersExp;
 
 /**
  * Servlet implementation class AdminUpdateUser
@@ -83,6 +83,9 @@ DeafaultManipulator manipulator = new DeafaultManipulator() {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (cs236369.hw5.Utils.ParametersExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstrumentNotExists e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

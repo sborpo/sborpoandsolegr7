@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.ErrorInfoBean;
-import cs236369.hw5.TimeSlot;
 import cs236369.hw5.Utils;
 import cs236369.hw5.Utils.ParametersExp;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
@@ -21,15 +20,15 @@ import cs236369.hw5.users.UserUtils;
 import cs236369.hw5.users.UserManager.Unauthenticated;
 
 /**
- * Servlet implementation class AddNewInstrument
+ * Servlet implementation class UpdateInstrument
  */
-public class AddNewInstrument extends HttpServlet {
+public class UpdateInstrument extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AddNewInstrument() {
+	public UpdateInstrument() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,7 +41,6 @@ public class AddNewInstrument extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		ErrorInfoBean err = Utils.notSupported();
 		Utils.forwardToErrorPage(err, request, response);
-
 	}
 
 	/**
@@ -57,13 +55,13 @@ public class AddNewInstrument extends HttpServlet {
 			@Override
 			public void paramsChecker(HashMap<String, String> params,
 					ErrorInfoBean err) throws ParametersExp {
-				addInstrumentCheckParameters(params, err);
+				updateInstrumentCheckParameters(params, err);
 
 			}
 
 			@Override
 			public void returnLinkSetter(ErrorInfoBean err) {
-				err.setLink("addInstrument.jsp");
+				err.setLink("updateInstruments.jsp");
 				err.setLinkStr("Try again");
 
 			}
@@ -71,14 +69,14 @@ public class AddNewInstrument extends HttpServlet {
 			@Override
 			public void manipulate(HashMap<String, String> params,
 					Object image, Object type) throws SQLException,
-					InstrumentExists {
-				InstrumentManager.addInstrument(
-						params.get(InstrumentManager.ID),
-						params.get(InstrumentManager.Description), 
-						params.get(InstrumentManager.Location), 
-						params.get(InstrumentManager.Premission), 
-						params.get(InstrumentManager.TimeSlot), 
-						params.get(InstrumentManager.Type));
+					InstrumentExists, InstrumentNotExists {
+				InstrumentManager.updateInstrument(params
+						.get(InstrumentManager.ID), params
+						.get(InstrumentManager.Type), params
+						.get(InstrumentManager.Premission), params
+						.get(InstrumentManager.TimeSlot), params
+						.get(InstrumentManager.Location), params
+						.get(InstrumentManager.Description));
 
 			}
 
@@ -86,10 +84,10 @@ public class AddNewInstrument extends HttpServlet {
 			public void authenticate(HashMap<String, String> params,
 					HttpServletRequest request, HttpServletResponse respone)
 					throws Unauthenticated {
-				if ((request.getUserPrincipal()==null) || (!UserUtils.isAdmin(request)))
-				{
+				if ((request.getUserPrincipal() == null)
+						|| (!UserUtils.isAdmin(request))) {
 					throw new UserManager.Unauthenticated();
-				}	
+				}
 			}
 		};
 		try {
@@ -107,20 +105,21 @@ public class AddNewInstrument extends HttpServlet {
 
 	}
 
-	protected void addInstrumentCheckParameters(HashMap<String, String> params,
-			ErrorInfoBean err) throws cs236369.hw5.Utils.ParametersExp {
+	protected void updateInstrumentCheckParameters(
+			HashMap<String, String> params, ErrorInfoBean err)
+			throws cs236369.hw5.Utils.ParametersExp {
 		if (!(params.containsKey(InstrumentManager.ID)
 				&& params.containsKey(InstrumentManager.Location)
 				&& params.containsKey(InstrumentManager.Premission)
-				&& params.containsKey(InstrumentManager.TimeSlot) && params
-				.containsKey(InstrumentManager.Type))) {
+				&& params.containsKey(InstrumentManager.TimeSlot) 
+				&& params.containsKey(InstrumentManager.Type))) {
 			err.setErrorString("Parameters Error");
 			err.setReason("You must fill the mandatory fields");
 			throw new Utils.ParametersExp(err);
 		}
 		try {
 			Integer.parseInt(params.get(InstrumentManager.ID));
-					
+
 		} catch (NumberFormatException e) {
 			err.setErrorString("Parameters Error");
 			err.setReason("ID must be a number");
@@ -135,7 +134,7 @@ public class AddNewInstrument extends HttpServlet {
 		}
 
 		int timeSlot = 0;
-		
+
 		try {
 			timeSlot = Integer.parseInt(params.get(InstrumentManager.TimeSlot));
 		} catch (NumberFormatException e) {

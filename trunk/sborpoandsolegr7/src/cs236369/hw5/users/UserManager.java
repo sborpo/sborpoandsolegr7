@@ -11,8 +11,6 @@ import java.util.LinkedList;
 
 import javax.sql.rowset.serial.SerialBlob;
 
-import com.jhlabs.image.StampFilter;
-
 import cs236369.hw5.Administrator;
 import cs236369.hw5.Researcher;
 import cs236369.hw5.User;

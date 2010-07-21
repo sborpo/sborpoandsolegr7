@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.Utils;
 import cs236369.hw5.users.SendMail.SendingMailError;
-import cs236369.hw5.users.UserManager.TryDeleteAdmin;
 import cs236369.hw5.users.UserManager.UserNotExists;
 
 /**
