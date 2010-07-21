@@ -1,11 +1,6 @@
 package cs236369.hw5;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-
-import cs236369.hw5.ReservationManager.Period;
 import cs236369.hw5.db.DbManager;
-import cs236369.hw5.users.UserManager;
 
 public class TestingClass {
 

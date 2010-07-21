@@ -19,9 +19,9 @@ import org.apache.commons.fileupload.util.Streams;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
-import cs236369.hw5.User.UserType;
 import cs236369.hw5.instrument.InstrumentManager;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
 import cs236369.hw5.users.UserManager;
 import cs236369.hw5.users.UserUtils;
 import cs236369.hw5.users.UserManager.LeaderNotExists;
@@ -73,7 +73,7 @@ public class Utils {
 	}
 
 	public static void manipulateInstrument(HttpServletRequest request,
-			HttpServletResponse response, DeafaultManipulator manipulator) throws IOException, Utils.ParametersExp, UserUtils.ParametersExp {
+			HttpServletResponse response, DeafaultManipulator manipulator) throws IOException, Utils.ParametersExp, UserUtils.ParametersExp, InstrumentNotExists {
 		HashMap<String, String> params = new HashMap<String, String>();
 		ErrorInfoBean err = new ErrorInfoBean();
 		// TODO: err
