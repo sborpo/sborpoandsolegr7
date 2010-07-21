@@ -83,11 +83,11 @@ for ( User user : users ){ if (!user.getRole().equals(User.UserType.REASEARCHER)
 %>
 <%if (user.isGroupLeader()){ %>
 <tr class="groupLeader" id="<%=user.getGroup() %>">
-<td><input id="in_<%=user.getLogin() %>" type="hidden" value="shown" ></input><img src="/sborpoandsolegr7/images/minus.gif" id="im_<%=user.getLogin()%>" onclick="handleClick('<%=user.getLogin() %>','in_<%=user.getLogin() %>','im_<%=user.getLogin() %>')" align="left">&nbsp;&nbsp;<a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPremissions() %></td>
+<td><input id="in_<%=user.getLogin() %>" type="hidden" value="shown" ></input><img src="/sborpoandsolegr7/images/minus.gif" id="im_<%=user.getLogin()%>" onclick="handleClick('<%=user.getLogin() %>','in_<%=user.getLogin() %>','im_<%=user.getLogin() %>')" align="left">&nbsp;&nbsp;<a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPermissionsView()%></td>
 </tr>
 <%}else { %>
 <tr class="groupMember" title="<%=user.getGroup() %>">
-<td class="groupMemberUsername"><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPremissions() %></td>
+<td class="groupMemberUsername"><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPermissionsView() %></td>
 </tr>
 <%}} %>
 <tr class="userTypesRow">
@@ -95,7 +95,7 @@ for ( User user : users ){ if (!user.getRole().equals(User.UserType.REASEARCHER)
 </tr>
 <%for ( User user : users ){ if (!user.getRole().equals(User.UserType.ADMIN)){continue;}%>
 <tr>
-<td><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getGroup() %></td><td><%=user.getPremissions() %></td>
+<td><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getGroup() %></td><td><%=user.getPermissionsView() %></td>
 </tr>
 <% } %>
 </table>
