@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.RegistrationServiceStub;
 import cs236369.hw5.SearchWSStub;
+import cs236369.hw5.TimeSlot;
 import cs236369.hw5.RegistrationServiceStub.AddEndpoint;
 import cs236369.hw5.RegistrationServiceStub.AddEndpointResponse;
 import cs236369.hw5.SearchWSStub.Search;
@@ -39,10 +40,19 @@ public class SearchLab extends HttpServlet {
     	writer.write("<"+elem+">"+value+"</"+elem+">");
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try{
+		if ((request.getParameter("labname")==null) || (request.getParameter("keywords")==null) || request.getParameter("slots")==null)
+		{
+			throw new Exception();
+		}
 		String wsdlUrl=request.getParameter("labname");
 		String [] keywords=request.getParameter("keywords").split(" ");
 		int k = Integer.parseInt(request.getParameter("slots"));
-		try{
+		if (k>TimeSlot.MAX_K)
+		{
+			throw new Exception();
+		}
+		
 			SearchWSStub stub = new SearchWSStub(wsdlUrl);
 			Search search = new Search();
 			search.setK(k);
