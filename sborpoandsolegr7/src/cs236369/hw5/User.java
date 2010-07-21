@@ -107,7 +107,18 @@ public abstract class User {
 		return email;
 	}
 	
-	
+	public String getPermissionsView()
+	{
+		if (premissions==null)
+		{
+			return "not relevant";
+		}
+		if (premissions.equals(""))
+		{
+			return "not specified";
+		}
+		return premissions;
+	}
 	
 	/**
 	 * @return the login
