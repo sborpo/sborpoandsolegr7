@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 import cs236369.hw5.db.DbManager;
+import cs236369.hw5.instrument.Instrument;
+import cs236369.hw5.instrument.InstrumentManager;
 
 public  class ReservationManager {
 	
@@ -64,6 +66,8 @@ public  class ReservationManager {
 
 	}
 	
+
+	
 	public static class ReservationTable
 	{
 		String [][] arr;
@@ -101,8 +105,26 @@ public  class ReservationManager {
 		{
 			return arr;
 		}
+		
+		public static LinkedList<Instrument> parseArrayOfInstruments(String[][] arr,TimeSlot time) {
+			LinkedList<Instrument> result = new LinkedList<Instrument>();
+			String[] instrumentIds = arr[time.getSlotNumber()][time.getDay()].split(";")[1].split(" ");
+			for (int i = 0; i < instrumentIds.length - 1; i++)  {
+				try {
+					result.add(InstrumentManager.getInstrumentDetails(Integer.parseInt(instrumentIds[i])));
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return result;
+		}
 	}
 	
+
 	
 	private static ResultSet executeOccupiedSlotsQuery(Connection conn,TimeSlot initialeSlot,String type, int k,String login) throws SQLException
 	{

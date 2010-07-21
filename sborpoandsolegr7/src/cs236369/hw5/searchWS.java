@@ -1,6 +1,5 @@
 package cs236369.hw5;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
