@@ -1,4 +1,4 @@
-<%if (request.getParameter(UserManager.Usern)==null){ %><jsp:forward page="ParamErrorSetter"></jsp:forward><%} %>
+<%if (request.getParameter(UserManager.Usern)==null){ %><jsp:forward page="/ParamErrorSetter"></jsp:forward><%} %>
 <%if (!UserManager.isUserExists(request.getParameter(UserManager.Usern))){ 		
 		ErrorInfoBean err= new ErrorInfoBean();
 		err.setErrorString("User Error");
