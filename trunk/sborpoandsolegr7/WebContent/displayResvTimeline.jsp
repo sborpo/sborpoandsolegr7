@@ -93,8 +93,8 @@ function updateRows(from,to,lastIndex)
 	
 }
 
-function gotoOptionsScreen(id,year,instrumnetType) {
-	document.location.href = "optionsPage.jsp/?" + "id=" + id + "&year=" + year + "&type=" + instrumnetType;
+function gotoOptionsScreen(id,year,instrumnetType,k) {
+	document.location.href = "optionsPage.jsp?" + "id=" + id + "&year=" + year + "&type=" + instrumnetType + "&k=" + k;
 }
 
 
@@ -153,11 +153,6 @@ div.hours {
 	String type = request.getParameter("type");
 	String[][] arr = new ReservationManager.ReservationTable(year,
 			month, day, k, type,request.getUserPrincipal().getName()).getReservationTable();
-
-	////TODO: remove
-	for (int i=0; i < arr.length; i++ )
-		for (int j=0; j < arr[0].length; j++ )
-			System.out.println(arr[i][j]);
 	TimeSlot weekEnd = new TimeSlot(year,
 			new TimeSlot(year, month, day).getSlotNumber()
 					+ TimeSlot.numOfSlotsInDay() * 6);
@@ -247,7 +242,7 @@ to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 							classcolor = "available";
 						}
 		%>
-		<td class="<%=classcolor%>" id="<%=time.getSlotNumber()%>"<% if (classcolor.equals("available")) { %> onclick="gotoOptionsScreen(id,<%=time.getYear()%>,'<%=type %>')" <%} %>>
+		<td class="<%=classcolor%>" id="<%=time.getSlotNumber()%>"<% if (classcolor.equals("available")) { %> onclick="gotoOptionsScreen(id,<%=time.getYear()%>,'<%=type %>',<%=k %>)" <%} %>>
 		<%
 			if (x == 1) {
 							out.print(arr[i][j].split(";")[1]);
