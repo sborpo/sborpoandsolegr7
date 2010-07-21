@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -506,6 +508,37 @@ public  class ReservationManager {
 			i++;
 		}
 		return i;
+	}
+	
+	public static boolean validateTimeLineParams(String day,String month,String year,String k,String desc)
+	{
+		if ((day==null) || (month==null) || (year==null) || (k==null) || (desc==null))
+		{
+			return false;
+		}
+		try{
+		int y = Integer.valueOf(year);
+		int m = Integer.valueOf(month);
+		int d = Integer.valueOf(day);
+		int kSlots = Integer.valueOf(k); 
+		if ((m<1) || (m>12))
+		{
+			return false;
+		}
+		if ((d>30) || (d<1))
+		{
+			return false;
+		}
+		if ((kSlots<1) || (kSlots>TimeSlot.MAX_K))
+		{
+			return false;
+		}
+		return true;
+		}
+		catch (Exception e)
+		{
+			return false;
+		}
 	}
 	
 

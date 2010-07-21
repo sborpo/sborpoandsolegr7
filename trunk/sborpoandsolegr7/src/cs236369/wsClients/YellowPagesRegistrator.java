@@ -18,7 +18,7 @@ public class YellowPagesRegistrator {
 		try{
 		RegistrationServiceStub stub = new RegistrationServiceStub();
 		AddEndpoint myAppWSDL= new AddEndpoint();
-		myAppWSDL.setUrl("http://ibm411.cs.technion.ac.il/sborpoandsolegr7/services/searchWS?wsdl");
+		myAppWSDL.setUrl("http://localhost:8080/sborpoandsolegr7/services/searchWS?wsdl");
 		AddEndpointResponse reponse=stub.addEndpoint(myAppWSDL);
 		System.out.println("This is the response: "+reponse.get_return()+".");
 		}
