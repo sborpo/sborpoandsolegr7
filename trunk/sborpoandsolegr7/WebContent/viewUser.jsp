@@ -53,6 +53,5 @@ if (((request.getUserPrincipal()!=null) && (request.getUserPrincipal().getName()
 </div>
 <br/>
 <br/>
-
 </body>
 </html>
