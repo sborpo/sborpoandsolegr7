@@ -19,6 +19,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View Instrument</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
+<link rel="stylesheet" type="text/css" href="/sborpoandsolegr7/css/viewUserCss.css" />
 </head>
 
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>

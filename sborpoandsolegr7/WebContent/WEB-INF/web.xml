@@ -155,7 +155,7 @@
       <role-name>researcher</role-name>
     </auth-constraint>
   </security-constraint>
-    <security-constraint>
+  <security-constraint>
     <web-resource-collection>
       <web-resource-name>indexLoged.jsp</web-resource-name>
       <url-pattern>/indexLoged.jsp</url-pattern>
@@ -400,5 +400,25 @@
   <servlet-mapping>
     <servlet-name>SearchLab</servlet-name>
     <url-pattern>/SearchLab</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateInstrument</display-name>
+    <servlet-name>UpdateInstrument</servlet-name>
+    <servlet-class>cs236369.hw5.instrument.UpdateInstrument</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateInstrument</servlet-name>
+    <url-pattern>/UpdateInstrument</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteInstrument</display-name>
+    <servlet-name>DeleteInstrument</servlet-name>
+    <servlet-class>cs236369.hw5.instrument.DeleteInstrument</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteInstrument</servlet-name>
+    <url-pattern>/DeleteInstrument</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -97,7 +97,6 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
     <ul>
 
       <li><a href="addInstrument.jsp" class="submenlink">Add Instrument</a></li>
-      <li><a href="addInstrument.jsp" class="submenlink">Update Instrument</a></li>
       <li><a href="viewInstruments.jsp" class="submenlink">View Instruments</a></li>
 
      </ul>
