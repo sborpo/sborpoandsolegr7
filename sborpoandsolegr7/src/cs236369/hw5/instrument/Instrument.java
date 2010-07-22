@@ -148,4 +148,10 @@ public class Instrument {
 		return prepareStatement;
 	}
 
+	public static PreparedStatement removeInstrumnt(Connection conn,
+			int instrumentID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
