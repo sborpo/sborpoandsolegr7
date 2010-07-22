@@ -47,6 +47,10 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
       onMouseOut="HideItem('instruments_submenu');" 
       onMouseOver="ShowItem('instruments_submenu');"
     >Instruments</a
+><a class="navbartitle" id="t5" 
+      onMouseOut="HideItem('reports_submenu');" 
+      onMouseOver="ShowItem('reports_submenu');"
+    >Reports</a
 >
 
 
@@ -98,6 +102,19 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
 
       <li><a href="addInstrument.jsp" class="submenlink">Add Instrument</a></li>
       <li><a href="viewInstruments.jsp" class="submenlink">View Instruments</a></li>
+
+     </ul>
+
+  </div>
+</div>
+
+<div class="submenu" id="reports_submenu" 
+    onMouseOver="ShowItem('reports_submenu');" 
+    onMouseOut="HideItem('reports_submenu');">
+  <div class="submenubox">
+    <ul>
+
+      <li><a href="test.jsp" class="submenlink">Test</a></li>
 
      </ul>
 
