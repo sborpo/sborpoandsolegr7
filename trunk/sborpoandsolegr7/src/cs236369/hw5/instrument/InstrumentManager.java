@@ -37,7 +37,7 @@ public class InstrumentManager {
 	public static String NotSpecified = "Not Specified";
 
 	public static void updateInstrument(String id, String type, String permission, String timeslot, String location,String description) throws SQLException,
-			InstrumentNotExists {
+	InstrumentNotExists {
 		Instrument inst = null;
 		try {
 			inst = new Instrument(Integer.parseInt(id), type, Integer.parseInt(permission), Integer.parseInt(timeslot), description, location);
@@ -58,13 +58,13 @@ public class InstrumentManager {
 			conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 			conn.setAutoCommit(false);
 			PreparedStatement instrumentExists = Instrument
-					.getDetails(conn, Integer.parseInt(id));
+			.getDetails(conn, Integer.parseInt(id));
 			set = instrumentExists.executeQuery();
 			if (!set.next()) {
 				throw new InstrumentNotExists();
 			}
 			PreparedStatement statementInstruments = inst
-					.setUpdateInstDet(conn);
+			.setUpdateInstDet(conn);
 			statementInstruments.execute();
 			conn.commit();
 		} catch (InstrumentNotExists ex) {
@@ -85,12 +85,12 @@ public class InstrumentManager {
 
 	public static void addInstrument(String id, String description,
 			String location, String permission, String timeslot, String type)
-			throws SQLException, InstrumentExists {
+	throws SQLException, InstrumentExists {
 		Instrument instrument = null;
 		try {
 			instrument = new Instrument(Integer.parseInt(id),type,
 					Integer.parseInt(permission), Integer
-							.parseInt(timeslot),description , location);
+					.parseInt(timeslot),description , location);
 		} catch (NumberFormatException e) {
 			// TODO: add error here
 			e.printStackTrace();
@@ -102,7 +102,7 @@ public class InstrumentManager {
 			conn = DbManager.DbConnections.getInstance().getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement statementInstruments = instrument
-					.setInsertInstrument(conn);
+			.setInsertInstrument(conn);
 			statementInstruments.execute();
 			conn.commit();
 		} catch (SQLException ex) {
@@ -148,7 +148,7 @@ public class InstrumentManager {
 		try {
 			conn = DbManager.DbConnections.getInstance().getConnection();
 			PreparedStatement statementUsers = Instrument
-					.getAllInstruments(conn);
+			.getAllInstruments(conn);
 			set = statementUsers.executeQuery();
 			while (set.next()) {
 
@@ -169,7 +169,7 @@ public class InstrumentManager {
 	}
 
 	static Instrument setInstrumentFromRow(ResultSet set)
-			throws SQLException {
+	throws SQLException {
 		if (!set.wasNull()) {
 			return new Instrument(set.getInt("id"), set.getString("type"), set
 					.getInt("permission"), DEFUALT, set
@@ -177,20 +177,20 @@ public class InstrumentManager {
 		}
 		return null;
 	}
-	
+
 	public static Boolean isInstrumentExists (int id) throws SQLException {
 		Connection conn=null;
-		 ResultSet set= null;
+		ResultSet set= null;
 		try{
-		conn=DbManager.DbConnections.getInstance().getConnection();
-		PreparedStatement userExists= Instrument.getDetails(conn, id); //TODO: change
-		set= userExists.executeQuery();
-		if (!set.next())
-		{
+			conn=DbManager.DbConnections.getInstance().getConnection();
+			PreparedStatement userExists= Instrument.getDetails(conn, id); //TODO: change
+			set= userExists.executeQuery();
+			if (!set.next())
+			{
 				return false;
-				
-		}
-		return true;
+
+			}
+			return true;
 		}
 		finally{
 			if (set!=null)
@@ -202,5 +202,29 @@ public class InstrumentManager {
 				conn.close();
 			}
 		}
+	}
+
+	public static void removeInstrument(String id) throws SQLException, InstrumentNotExists, NumberFormatException {
+		Connection conn=null;
+		ResultSet set= null;
+		try{
+			int instrumentID = Integer.parseInt(id);
+			conn=DbManager.DbConnections.getInstance().getConnection();			
+			PreparedStatement instrumentRemoval= Instrument.removeInstrumnt(conn, instrumentID); //TODO: change
+			set= instrumentRemoval.executeQuery();
+			//TODO: finish
+			
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+
 	}
 }

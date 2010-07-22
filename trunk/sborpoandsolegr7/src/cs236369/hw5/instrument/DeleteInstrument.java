@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.Utils;
-import cs236369.hw5.users.UserManager;
-import cs236369.hw5.users.UserManager.TryDeleteAdmin;
-import cs236369.hw5.users.UserManager.UserNotExists;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
 
 /**
  * Servlet implementation class DeleteInstrument
@@ -32,31 +30,33 @@ public class DeleteInstrument extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username=request.getParameter("id");
+		String id=request.getParameter("id");
 		ErrorInfoBean err = new ErrorInfoBean();
 		err.setLinkStr("Try Again");
-		if (username==null)
+		if (id==null)
 		{
-			err.setLink("viewUsers.jsp");
+			err.setLink("viewInstruments.jsp");
 			err.setErrorString("Parameter Error");
 			err.setReason("The username parameter wasn't specified");
 		}
-		err.setLink("viewUser.jsp?username="+username);
+		err.setLink("viewInstrument.jsp?id="+id);
 		try {
-			UserManager.removeUser(username);
-			Utils.forwardToSuccessPage("viewUsers.jsp", request, response);
+			InstrumentManager.removeInstrument(id);
+			Utils.forwardToSuccessPage("viewInstruments.jsp", request, response);
 			return;
-		} catch (UserNotExists e) {
-			err.setErrorString("User Error");
-			err.setReason("The username that you tried to remove doesn't exists");
 		} catch (SQLException e) {
 			err.setErrorString("Database Error");
 			err.setReason("There was a problem accessing the database.");
 			e.printStackTrace();
-		} catch (TryDeleteAdmin e) {
-			err.setErrorString("Permission Error");
-			err.setReason("You don't have the permission to delete an administrator");
-		}
+		} catch (NumberFormatException e) {
+			err.setErrorString("Instrument Error");
+			err.setReason("Enter ID in digits");
+			e.printStackTrace();
+		} catch (InstrumentNotExists e) {
+			err.setErrorString("Instrument Error");
+			err.setReason("There was a problem accessing the database.");
+			e.printStackTrace();
+		} 
 		Utils.forwardToErrorPage(err,request,response);
 		
 		
