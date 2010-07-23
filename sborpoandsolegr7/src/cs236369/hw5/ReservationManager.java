@@ -123,22 +123,25 @@ public  class ReservationManager {
 			return result;
 		}
 	}
-	public static boolean areReservationsOverlap(Connection conn,TimeSlot start, TimeSlot end,int length) throws SQLException
+	public static boolean areReservationsOverlap(Connection conn,TimeSlot start,int length) throws SQLException
 	{
+		TimeSlot end = TimeSlot.addTimeSlot(start, length);
 		ResultSet set=null;
 		try{
 		String query= " SELECT * FROM reservations WHERE" +
+				//Or someone is disturbing the new slot
 				" ((year=?) AND (slotbegin>=?) AND (slotbegin<?)) OR " + //params:year,start.slotnum, start.slotnum+length case that  (in the same year)--|meStart|----slotbegin---------|end|
-				" ((?<?) AND (year-1=?) AND (slotbegin<?)) OR " +//params: end.slotnum,start.slotnum, year, end.slotnum case that (next year) -----|meStart|------|year|------slotbegin-----|end| 
+				" ((?<?) AND ((year-1)=?) AND (slotbegin<?)) OR " +//params: end.slotnum,start.slotnum, year, end.slotnum case that (next year) -----|meStart|------|year|------slotbegin-----|end| 
+				//Or the new slot disturbing someone
 				" ((slotend>slotbegin) AND (year=?) AND (slotbegin<=?) AND(slotend>?)) OR" +//params : year, start.slotnum,start.slotnum case that -----start-------|meStart|------end
 				" ((slotend<slotbegin) AND (year=?) AND (slotbegin<=?) AND (?<=?)) OR" + //params : year, start.slotnum,start.slotunum,NUmInYear case that -----start-----|meStart|----|year|-----end
-				" ((slotend<slotbegin) AND ((year+1)=?) AND (slotbegin<=?) AND (?<slotend)) ";//params : year, start.slotnum,start.slotunum case that -----start--------|year|----|meStart|--end
+				" ((slotend<slotbegin) AND ((year+1)=?) AND (?<slotend)) ";//params : year, start.slotnum,start.slotunum case that -----start--------|year|----|meStart|--end
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setInt(1, start.getYear()); prepareStatement.setInt(2, start.getSlotNumber()); prepareStatement.setInt(3, start.getSlotNumber()+length);
 		prepareStatement.setInt(4, end.getSlotNumber()); prepareStatement.setInt(5, start.getSlotNumber()); prepareStatement.setInt(6, start.getYear()); prepareStatement.setInt(7, end.getSlotNumber());
-		prepareStatement.setInt(8, start.getYear()); prepareStatement.setInt(9, start.getSlotNumber()); prepareStatement.setInt(10, end.getSlotNumber());
+		prepareStatement.setInt(8, start.getYear()); prepareStatement.setInt(9, start.getSlotNumber()); prepareStatement.setInt(10, start.getSlotNumber());
 		prepareStatement.setInt(11, start.getYear()); prepareStatement.setInt(12, start.getSlotNumber()); prepareStatement.setInt(13, start.getSlotNumber()); prepareStatement.setInt(14, TimeSlot.numberOfTimeSlotsInAYear);
-		prepareStatement.setInt(15, start.getYear()); prepareStatement.setInt(16, start.getSlotNumber()); prepareStatement.setInt(17, start.getSlotNumber());
+		prepareStatement.setInt(15, start.getYear()); prepareStatement.setInt(16, start.getSlotNumber()); 
 		set= prepareStatement.executeQuery();
 		if (set.next())
 		{

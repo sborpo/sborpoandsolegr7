@@ -40,7 +40,7 @@ td.groupMemberUsername {padding-left: 18px;}
 <body>
 <table id="instruments_table">
 <tr>
-<th>ID</th><th>Type</th><th>Permission</th><th>Location</th><th>Description</th>
+<th>ID</th><th>Type</th><th>Permission</th><th>Location</th>
 </tr>
 
 <%
@@ -48,7 +48,7 @@ LinkedList<Instrument> instruments = InstrumentManager.getInstruments();
 for ( Instrument instrument : instruments ){
 %>
 <tr class="instruments" id="instruments">
-<td><input id="in_<%=instrument.getId() %>" type="hidden" value="shown" ></input>&nbsp;&nbsp;<a href=viewInstrument.jsp?id=<%=instrument.getId()%>><%=instrument.getId() %></a></td><td><%=instrument.getType() %></td><td><%=instrument.getPremission() %></td><td><%=instrument.getLocation() %></td><td><%=instrument.getDescription() %></td>
+<td><input id="in_<%=instrument.getId() %>" type="hidden" value="shown" ></input>&nbsp;&nbsp;<a href=viewInstrument.jsp?id=<%=instrument.getId()%>><%=instrument.getId() %></a></td><td><%=instrument.getType() %></td><td><%=instrument.getPremission() %></td><td><%=instrument.getLocation() %></td>
 </tr>
 <% }%>
 </table>

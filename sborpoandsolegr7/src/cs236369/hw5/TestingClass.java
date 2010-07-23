@@ -1,5 +1,8 @@
 package cs236369.hw5;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import cs236369.hw5.db.DbManager;
 
 public class TestingClass {
@@ -8,9 +11,9 @@ public class TestingClass {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	DbManager.DbConnections.getInstance().setDbName("labdb");
-		DbManager.DbConnections.getInstance().setUserName("root");
-		DbManager.DbConnections.getInstance().setPassword("123456");
+	DbManager.DbConnections.getInstance().setDbName("sborpoDB");
+		DbManager.DbConnections.getInstance().setUserName("sborpo");
+		DbManager.DbConnections.getInstance().setPassword("sborpo");
 	DbManager.DbConnections.getInstance().setUrl("jdbc:mysql://localhost");
 //		try {
 //			ReservationManager.ReservationTable table = new ReservationManager.ReservationTable(2010, 2,1, 5, "a");
@@ -46,11 +49,21 @@ public class TestingClass {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-	String z= "asfasf||aaaaa||bbbbb";
-	String[] arr=z.split("\\|\\|");
-	for (String string : arr) {
-		System.out.println(string);
+//	String z= "asfasf||aaaaa||bbbbb";
+//	String[] arr=z.split("\\|\\|");
+//	for (String string : arr) {
+//		System.out.println(string);
+//	}
+	Connection conn=null;
+	try {
+		conn = DbManager.DbConnections.getInstance().getConnection();
+		System.out.println(ReservationManager.areReservationsOverlap(conn, new TimeSlot(2010,2), 4));
+	//	System.out.println(ReservationManager.areReservationsOverlap(conn, new TimeSlot(2009,TimeSlot.numberOfTimeSlotsInAYear-3), 8));
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
+
 
 	}
 	
