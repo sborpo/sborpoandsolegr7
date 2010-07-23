@@ -37,7 +37,6 @@
 </head>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <body> 
-<h1 id="banner">Update Instrument</h1> 
 <div id="main"> 
  
 <div id="content"> 
@@ -49,7 +48,7 @@
     <div id="signupbox"> 
        <div id="signuptab"> 
         <ul> 
-          <li id="signupcurrent">Update Details</li> 
+          <li id="signupcurrent">Update Instrument Details</li> 
         </ul> 
       </div> 
       <div id="signupwrap"> 

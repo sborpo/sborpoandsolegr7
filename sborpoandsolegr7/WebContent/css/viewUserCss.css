@@ -1,12 +1,14 @@
-div.image{ }
-div.table{		width: 50%;
+div.image{ float: right;}
+div.table{		width: 60%;
 				margin-left: auto;
 				margin-right: auto;
 				border: 1px dashed black;
-				height: 20em;
+				height: 30em;
 				margin-top: auto;
 				margin-bottom: auto;}
-#content{ padding-left: 1em;
+#content{
+	font-size: 1.2em;
+	 padding-left: 1em;
 		padding-top: 1em;
 		padding-bottom: 1em;
 		
@@ -26,7 +28,7 @@ div.table{		width: 50%;
 	text-align: cetner;
 	}	
 #heading{
-			
+			font-size: 1.3em;
 			clear:both;
 			border-bottom: 1px solid black;
 			text-align: cetner;
@@ -41,7 +43,7 @@ div.table{		width: 50%;
 
 }
 #photo{		
-			height:17em;
+			height:25em;
 			float:right;
 			overflow: auto;
 			width: 50%;
@@ -50,7 +52,7 @@ div.table{		width: 50%;
 
 			}
 div.options{ 
-	
+			font-size: 1.2em;
 			height: 1.5em;
 			clear:both;
 			border-top: 1px dashed black;

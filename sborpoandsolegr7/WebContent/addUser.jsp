@@ -28,7 +28,6 @@
 <body onload="javascript:init(); toggeleAdminAuth(); "> 
 <br/>
 <br/>
-<h1 id="banner">Add User</h1> 
 <div id="main"> 
  
 <div id="content"> 

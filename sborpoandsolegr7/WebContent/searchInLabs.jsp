@@ -6,28 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" media="screen" href="/sborpoandsolegr7/defualtCss.css" />   
+<link rel="stylesheet" type="text/css" media="screen" href="/sborpoandsolegr7/css/tableCss.css" />  
 <script src="/sborpoandsolegr7/js/common.js" type="text/javascript"></script> 
 <script src="/sborpoandsolegr7/js/searchInLabs.js" type="text/javascript"></script> 
 <style type="text/css">
 .searchPageText
 {
 margin-left: 15%;
-}
-table
-{
-margin-left:15%;
-margin-right:15%;
-border-collapse:collapse;
-width:70%;
-}
-th
-{
-text-align:center;
-height:40 px;
-}
-table,th, td
-{
-border: 1px solid black;
 }
 td.selection{padding: 1px; width: 10%;}
 </style>

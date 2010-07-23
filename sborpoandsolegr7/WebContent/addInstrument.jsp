@@ -28,7 +28,6 @@
 <%@page import="cs236369.hw5.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <body> 
-<h1 id="banner">Add Instrument</h1> 
 <div id="main"> 
  
 <div id="content"> 
@@ -40,7 +39,7 @@
     <div id="signupbox"> 
        <div id="signuptab"> 
         <ul> 
-          <li id="signupcurrent">Signup</li> 
+          <li id="signupcurrent">Add New Instrument</li> 
         </ul> 
       </div> 
       <div id="signupwrap"> 
