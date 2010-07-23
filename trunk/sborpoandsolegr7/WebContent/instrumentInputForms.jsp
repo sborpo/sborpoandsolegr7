@@ -3,17 +3,20 @@
 <%@page import="cs236369.hw5.instrument.AddNewInstrument" %>
 <%@page import="cs236369.hw5.*" %>
 <%
+	Instrument instrument=null;
 	String des=request.getParameter("decision");
 	if (des == null) {
 		des = "";
 	}
+	if (!des.equals("add")){
 	String id=request.getParameter("id");
 	if (id == null) {
 		des = "";
 	}
+	
 	if (request.getParameter(InstrumentManager.ID)==null){ %>
 	
-<%@page import="java.lang.NumberFormatException;"%><jsp:forward page="ParamErrorSetter"></jsp:forward>
+	<%@page import="java.lang.NumberFormatException;"%><jsp:forward page="ParamErrorSetter"></jsp:forward>
 	<%} %>
 	<%
 	try {
@@ -31,9 +34,9 @@
 			<jsp:forward page="/errorPages/errorPage.jsp"></jsp:forward>
 <%	} %>
 <% 
-Instrument instrument = InstrumentManager.getInstrumentDetails(Integer.parseInt(request.getParameter(InstrumentManager.ID)));
+ instrument = InstrumentManager.getInstrumentDetails(Integer.parseInt(request.getParameter(InstrumentManager.ID)));
 
-%>
+}%>
 <table> 
 			
 			 <tr> 
@@ -62,9 +65,14 @@ Instrument instrument = InstrumentManager.getInstrumentDetails(Integer.parseInt(
 	  			<td class="status"></td> 
 	  		  </tr> 
 			    <tr> 
+			    <!-- 
 	  			<td class="label"><label id="ldescription" for="description">Description</label></td> 
 	  			<td class="field"><input id="description" name="<%=InstrumentManager.Description%>" type="text" <% if (des.equals("update")) { %> value="<%=instrument.getDescription()%>"  <% } else { %>value="" <%} %>  maxlength="150" /></td> 
 	  			<td class="status"></td> 
+	  			 -->
+	  			<td class="label"><label id="ldescription" for="description">Description</label></td> 
+	  			<td class="field"><textarea id="description" name="<%=InstrumentManager.Description%>" rows="4" cols="20" ><% if (des.equals("update")) { %><%=instrument.getDescription()%><%}%></textarea></td> 
+	  			<td class="status"></td>
 	  		  </tr> 
 			  <tr>
 			  <td class="label"><label id="lcaptcha" for="captcha">Enter the letters below:</label></td>

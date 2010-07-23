@@ -44,7 +44,7 @@
 <td>Location:<%=(inst.getLocation()) %></td>
 </tr>
 <tr>
-<td>Description: <%=inst.getDescription() %></td>
+<td>Description: <textarea rows="4" cols="20"><%=inst.getDescription() %></textarea></td>
 </tr>
 
 </table>
