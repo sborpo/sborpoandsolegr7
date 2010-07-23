@@ -10,30 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View System's Users</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
+<link href="/sborpoandsolegr7/css/tableCss.css" rel="stylesheet" type="text/css">
 
-
-<style type="text/css">
-table
-{
-border-collapse:collapse;
-width:90%;
-}
-th
-{
-height:40 px;
-}
-td
-{
-padding:15 px;
-}
-table,th, td
-{
-border: 1px solid black;
-}
-tr.groupLeader {background-color:#e4f3b0;} 
-tr.userTypesRow {background-color:yellow;}
-td.groupMemberUsername {padding-left: 18px;}
-</style>
 </head>
 <%@page import="cs236369.hw5.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>

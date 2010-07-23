@@ -5,20 +5,26 @@
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
 </head>
 <body>
-<h1>In order to use the system , you must log in:</h1>
-<p>
-If you have been issued a username and password, key them in here now!
-</p>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="centeredBox">
+
 <form method="POST" action="j_security_check">
+<fieldset>
+<legend>Log-In</legend>
+<br/>
 Username : <input type="text" size="15" maxlength="25" name="j_username"><br><br>
 Password : <input type="password" size="15" maxlength="25" name="j_password"><br><br>
 <input value="Login" type="submit">&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset">
+</fieldset>
 </form>
+
 <br/>
 <a href="passRecover.jsp">I forgot my password.</a>
 <br/>
-
-<br/>
-if you don't have an username , you can sign-up <a href="addUser.jsp">here.</a>
+</div>
 </body>
 </html>

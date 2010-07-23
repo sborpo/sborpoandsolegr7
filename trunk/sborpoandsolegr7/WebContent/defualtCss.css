@@ -4,6 +4,7 @@ body {background: #f9fee8;margin: 0; padding: 1em; text-align:left; font-family:
 		 p {margin: 0.75em 0; padding: 0;}		
 		a {color: #9caa6d; text-decoration:none;}
 		a:hover {color: #9caa6d; text-decoration:underline;}
+  p {font-size:1.2em}
   div.transbox
   {
   width: 100%;
@@ -16,6 +17,7 @@ body {background: #f9fee8;margin: 0; padding: 1em; text-align:left; font-family:
   filter:alpha(opacity=60);
   /* CSS3 standard */
   opacity:0.6;
+  font-size: 1.2em;
 		}
 	div.transbox p
   {
@@ -28,18 +30,39 @@ body {background: #f9fee8;margin: 0; padding: 1em; text-align:left; font-family:
   }
 
 
+ div.centeredBox
+ {
+ 	width: 40%;
+ 	margin-left: auto;
+ 	margin-right: auto;
+ 	clear: both;
+ 	font-size: 1.6em;
+ 	text-align: center;
+ }
+
+
 ul {list-style-type: square; list-style: square;}
 li.list{list-style: square;}
 
-input ,textarea
+legend{
+	font-weight: bold;
+	}
+
+input
 {
-color: green;
-background: white;
-border: 1px solid #000000
-}
+	font-size: 0.8em;
+	}
 
 input:focus, textarea:focus{
-background-color: lightyellow;
+background-color: #d6f7c0;
+border: 1px solid #8fc26d;
 }
+
+ 
+ div.centeredBox.input
+ {
+ 	height: 1.6em;
+ 	padding: 0.2em;
+ }
 
 

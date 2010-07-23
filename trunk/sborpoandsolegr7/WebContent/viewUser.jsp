@@ -8,6 +8,7 @@
 <%@page import="cs236369.hw5.User"%>
 <%@page import="cs236369.hw5.users.*"%>
 <%@page import="cs236369.hw5.ErrorInfoBean"%>
+<%@page import="cs236369.hw5.User.UserType"%>
 <%@page import="cs236369.hw5.User.UserType"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -20,10 +21,19 @@
 
 
 <body>
-<% String login = request.getParameter("username"); User user=UserManager.getUserDetails(login); %>
+<% String login = request.getParameter("username"); User user=UserManager.getUserDetails(login); 
+String userTypeImage;
+if (user.getRole().equals(User.UserType.ADMIN))
+{
+	userTypeImage="/sborpoandsolegr7/images/Administrator2.png";
+}
+else
+{
+	userTypeImage="/sborpoandsolegr7/images/Usericon.png";
+}%>
 <h1>User Details</h1><br/><br/>
 <div class="table">
-<div id=heading><div id="heading-text"><%=user.getLogin()%></div></div>
+<div id=heading><div id="heading-text"><img src="<%=userTypeImage%>" />&nbsp;&nbsp;<%=user.getLogin()%></div></div>
 <div id="details">
 <div id="content">
 <strong>Name:</strong> <%=user.getName() %><br/>

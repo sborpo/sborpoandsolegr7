@@ -47,7 +47,6 @@ function init()
 <%@page import="cs236369.hw5.users.*" %>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <body onload="javascript:init();  toggeleAdminAuth();"> 
-<h1 id="banner">Update User</h1> 
 <div id="main"> 
  
 <div id="content"> 
@@ -59,7 +58,7 @@ function init()
     <div id="signupbox"> 
        <div id="signuptab"> 
         <ul> 
-          <li id="signupcurrent">Update Details</li> 
+          <li id="signupcurrent">Update User Details</li> 
         </ul> 
       </div> 
       <div id="signupwrap"> 
@@ -75,13 +74,15 @@ function init()
 <br/>
 			<input value="Update User" type="submit"/>&nbsp;&nbsp;&nbsp;&nbsp;<input value="Clear" type="reset"/>
 </form>
+<br/>
+<a href="passReseter.jsp?username=<%=request.getParameter("username")%>">Reset Password</a>
       </div> 
     </div> 
 </div> 
  
 </div> 
 <br/>
-<a href="passReseter.jsp?username=<%=request.getParameter("username")%>">Reset Password</a>
+
  
 </div> 
  

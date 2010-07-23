@@ -30,7 +30,7 @@ a.navbartitle:hover {
 #t2 { width: 100px; }
 #t3 { width: 102px; }
 #t4 { width: 102px; }
-#t5 { width: 180px; }
+#t5 { width: 102px; }
 /* We just specify a fixed width for each menu title. Then, down below we specify
     a fixed left position for the corresponding submenus (e.g. #products_submenu, etc.)
     Using these fixed values isn't as elegant as just letting the text of each 
@@ -63,6 +63,7 @@ a.navbartitle:hover {
 #users_submenu {  left: 104px; visibility: hidden;  }
 #reservations_submenu {  left: 204px; visibility: hidden; }
 #instruments_submenu {  left: 306px; visibility: hidden; }
+#reports_submenu {  left: 408px; visibility: hidden; }
 /* Note, each submenu is hidden when the page loads - then made visible when
     the mouse goes over the menu title. Using the 'visibility' property instead
     of using the 'display' property avoided a bug in some versions of Safari. 
