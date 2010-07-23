@@ -31,10 +31,15 @@ body {background: #f9fee8;margin: 0; padding: 1em; text-align:left; font-family:
 ul {list-style-type: square; list-style: square;}
 li.list{list-style: square;}
 
-input
+input ,textarea
 {
 color: green;
 background: white;
 border: 1px solid #000000
 }
+
+input:focus, textarea:focus{
+background-color: lightyellow;
+}
+
 
