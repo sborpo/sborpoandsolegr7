@@ -212,7 +212,7 @@ public class InstrumentManager {
 			conn=DbManager.DbConnections.getInstance().getConnection();			
 			PreparedStatement instrumentRemoval= Instrument.removeInstrumnt(conn, instrumentID); //TODO: change
 			instrumentRemoval.execute();
-			
+			conn.commit();
 		}
 		finally{
 			if (set!=null)
