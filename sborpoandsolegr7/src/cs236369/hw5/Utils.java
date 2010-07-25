@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.util.Streams;
 
 import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 
+import cs236369.hw5.ReservationManager.ReservationOverlapingException;
 import cs236369.hw5.instrument.InstrumentManager;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
@@ -113,6 +114,9 @@ public class Utils {
 		} catch (InstrumentExists e) {
 			err.setErrorString("Instrument Error");
 			err.setReason("The id that you have tried to add already <br/> exists in the system.");
+			e.printStackTrace();
+		} catch (ReservationOverlapingException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Utils.forwardToErrorPage(err, request, response);
