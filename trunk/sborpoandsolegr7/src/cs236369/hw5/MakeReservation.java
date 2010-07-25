@@ -1,4 +1,4 @@
-package cs236369.hw5.reporter;
+package cs236369.hw5;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cs236369.hw5.DeafaultManipulator;
-import cs236369.hw5.ErrorInfoBean;
-import cs236369.hw5.ReservationManager;
-import cs236369.hw5.Utils;
 import cs236369.hw5.ReservationManager.ReservationOverlapingException;
 import cs236369.hw5.Utils.ParametersExp;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
