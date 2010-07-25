@@ -24,7 +24,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       </tr>
      </xsl:for-each>
   </table>
-  
+<xsl:text>Total number of reservation for this group: </xsl:text><xsl:value-of select="count(/Results/Row[groupId=$GROUP])"/><br/>
+
      </xsl:for-each>
 </body>
 </html>
