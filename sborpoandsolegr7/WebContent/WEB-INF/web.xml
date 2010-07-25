@@ -27,7 +27,7 @@
   </context-param>
   <context-param>
     <param-name>successRedirectDelay</param-name>
-    <param-value>5</param-value>
+    <param-value>3</param-value>
   </context-param>
   <context-param>
     <param-name>authKey</param-name>
@@ -459,6 +459,16 @@
   <servlet-mapping>
     <servlet-name>AdminUpdateUser</servlet-name>
     <url-pattern>/AdminUpdateUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MakeReservation</display-name>
+    <servlet-name>MakeReservation</servlet-name>
+    <servlet-class>cs236369.hw5.reporter.MakeReservation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MakeReservation</servlet-name>
+    <url-pattern>/MakeReservation</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
