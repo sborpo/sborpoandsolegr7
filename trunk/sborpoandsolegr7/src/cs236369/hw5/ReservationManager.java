@@ -621,6 +621,8 @@ public  class ReservationManager {
 				throw new ReservationOverlapingException ();
 			}
 			PreparedStatement statement = createInsertStatement(conn, instrumentID, num, year, length, userId);
+			statement.execute();
+			conn.commit();
 			
 		} 
 		finally {
