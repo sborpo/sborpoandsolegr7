@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>View System's Users</title>
+<title>View Booking Options</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
 
 <style type="text/css">
