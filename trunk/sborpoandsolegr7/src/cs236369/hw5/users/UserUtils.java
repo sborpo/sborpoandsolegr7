@@ -25,6 +25,7 @@ import cs236369.hw5.DeafaultManipulator;
 import cs236369.hw5.ErrorInfoBean;
 import cs236369.hw5.User;
 import cs236369.hw5.Utils;
+import cs236369.hw5.ReservationManager.ReservationOverlapingException;
 import cs236369.hw5.User.UserType;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
@@ -142,6 +143,9 @@ public class UserUtils {
 		}
 		 catch (Utils.ParametersExp e) {
 			
+		} catch (ReservationOverlapingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		Utils.forwardToErrorPage(err,request,response);
 	}

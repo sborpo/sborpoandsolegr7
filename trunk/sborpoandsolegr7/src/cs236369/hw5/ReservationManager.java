@@ -16,6 +16,16 @@ import cs236369.hw5.instrument.InstrumentManager;
 
 public  class ReservationManager {
 	
+	public static class ReservationOverlapingException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+	}
+
+
 	public static enum Avilability {
 		AVAILABLE(1), TAKEN(0), NOT_AVAILABLE(-1);
 
@@ -109,11 +119,11 @@ public  class ReservationManager {
 		public static LinkedList<Instrument> parseArrayOfInstruments(String[][] arr,TimeSlot time) {
 			LinkedList<Instrument> result = new LinkedList<Instrument>();
 			String[] instrumentIds = arr[time.getSlotNumber()][time.getDay()].split(";")[1].split(" ");
-			for (int i = 0; i < instrumentIds.length - 1; i++)  {
+			for (int i = 1; i < instrumentIds.length ; i++)  {
 				try {
 					result.add(InstrumentManager.getInstrumentDetails(Integer.parseInt(instrumentIds[i])));
 				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
+					System.out.println(i);
 					e.printStackTrace();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -594,6 +604,29 @@ public  class ReservationManager {
 		{
 			return false;
 		}
+	}
+
+
+	public static void makeReservation(String id, String slotYear,
+			String slotNum, String k, String userId) throws SQLException, ReservationOverlapingException {
+		Connection conn=null;
+		ResultSet set= null;
+		try{
+			int instrumentID = Integer.parseInt(id);
+			int num = Integer.parseInt(slotNum);
+			int year = Integer.parseInt(slotYear);
+			int length = Integer.parseInt(k);
+			conn=DbManager.DbConnections.getInstance().getConnection();
+			if (areReservationsOverlap(conn, new TimeSlot(year, num), length)) {
+				throw new ReservationOverlapingException ();
+			}
+			
+		} 
+		finally {
+			if (set!=null){set.close();}
+			if (conn!=null){conn.close();}
+		}
+		
 	}
 	
 

@@ -149,9 +149,11 @@ public class Instrument {
 	}
 
 	public static PreparedStatement removeInstrumnt(Connection conn,
-			int instrumentID) {
-		// TODO Auto-generated method stub
-		return null;
+			int instrumentID) throws SQLException {
+		String query = "DELETE FROM instruments WHERE id=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setLong(1, instrumentID);
+		return prepareStatement;
 	}
 
 }

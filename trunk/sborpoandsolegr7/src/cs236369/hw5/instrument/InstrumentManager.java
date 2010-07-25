@@ -211,8 +211,7 @@ public class InstrumentManager {
 			int instrumentID = Integer.parseInt(id);
 			conn=DbManager.DbConnections.getInstance().getConnection();			
 			PreparedStatement instrumentRemoval= Instrument.removeInstrumnt(conn, instrumentID); //TODO: change
-			set= instrumentRemoval.executeQuery();
-			//TODO: finish
+			instrumentRemoval.execute();
 			
 		}
 		finally{

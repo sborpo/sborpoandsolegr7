@@ -37,7 +37,7 @@ public class DeleteInstrument extends HttpServlet {
 		{
 			err.setLink("viewInstruments.jsp");
 			err.setErrorString("Parameter Error");
-			err.setReason("The username parameter wasn't specified");
+			err.setReason("The id parameter wasn't specified");
 		}
 		err.setLink("viewInstrument.jsp?id="+id);
 		try {
