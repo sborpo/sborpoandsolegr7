@@ -462,16 +462,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>MakeReservation</display-name>
-    <servlet-name>MakeReservation</servlet-name>
-    <servlet-class>cs236369.hw5.reporter.MakeReservation</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MakeReservation</servlet-name>
-    <url-pattern>/MakeReservation</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>ParamErrorSetter</display-name>
     <servlet-name>ParamErrorSetter</servlet-name>
     <servlet-class>cs236369.hw5.ParamErrorSetter</servlet-class>

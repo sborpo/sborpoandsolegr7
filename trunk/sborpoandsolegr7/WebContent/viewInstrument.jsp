@@ -32,7 +32,7 @@
 <h1>Instrument Details</h1><br/><br/>
 
 <div class="table">
-<div id=heading><div id="heading-text"><img src="theimage" />&nbsp;&nbsp;# <%=inst.getId()%></div></div>
+<div id=heading><div id="heading-text"><img src="/sborpoandsolegr7/images/lab_icon.png" />&nbsp;&nbsp;# <%=inst.getId()%></div></div>
 <div id="details">
 <div id="content">
 

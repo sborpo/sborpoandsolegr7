@@ -55,6 +55,7 @@ public class ApplicationStarts implements ServletContextListener {
 		e.printStackTrace();
 	}
 	  try {
+		  
 		YellowPagesRegistrator.registerApplicationToYellow();
 	} catch (YelloPageError e) {
 		//cannot register
