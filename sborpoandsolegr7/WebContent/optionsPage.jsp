@@ -54,7 +54,7 @@ LinkedList<Instrument> instruments = ReservationManager.ReservationTable.parseAr
 for ( Instrument instrument : instruments ){
 %>
 <tr class="instruments" id="instruments">
-<td><input id="in_<%=instrument.getId() %>" type="hidden" value="shown" ></input>&nbsp;&nbsp;<a href=makeReservation.jsp?id=<%=instrument.getId()%>><%=instrument.getId() %></a></td><td><%=instrument.getType() %></td><td><%=instrument.getPremission() %></td><td><%=instrument.getLocation() %></td><td><%=instrument.getDescription() %></td>
+<td><input id="in_<%=instrument.getId() %>" type="hidden" value="shown" ></input>&nbsp;&nbsp;<a href="MakeReservation?id=<%=instrument.getId()%>&slotYear=<%=chosenSlot.getYear()%>&slotNum=<%=chosenSlot.getSlotNumber()%>&k=<%=k%>&userId=<%="kaka" %>"><%=instrument.getId() %></a></td><td><%=instrument.getType() %></td><td><%=instrument.getPremission() %></td><td><%=instrument.getLocation() %></td><td><%=instrument.getDescription() %></td>
 </tr>
 <% }%>
 </table>
