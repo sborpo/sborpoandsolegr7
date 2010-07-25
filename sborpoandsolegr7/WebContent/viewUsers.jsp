@@ -47,7 +47,7 @@ function toggleDisplay(rowname) {
 <style type="text/css">
 tr.groupLeader {background-color:#e4f3b0;} 
 tr.userTypesRow {background-color:yellow;}
-td.groupMemberUsername {padding-left: 18px;}
+td.groupMemberUsername {padding-left: 50px;}
 </style>
 </head>
 <%@page import="cs236369.hw5.*" %>
@@ -66,11 +66,11 @@ for ( User user : users ){ if (!user.getRole().equals(User.UserType.REASEARCHER)
 %>
 <%if (user.isGroupLeader()){ %>
 <tr class="groupLeader" id="<%=user.getGroup() %>">
-<td><input id="in_<%=user.getLogin() %>" type="hidden" value="shown" ></input><img src="/sborpoandsolegr7/images/minus.gif" id="im_<%=user.getLogin()%>" onclick="handleClick('<%=user.getLogin() %>','in_<%=user.getLogin() %>','im_<%=user.getLogin() %>')" align="left">&nbsp;&nbsp;<a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPermissionsView()%></td>
+<td ><input id="in_<%=user.getLogin() %>" type="hidden" value="shown" ></input><img src="/sborpoandsolegr7/images/minus.gif" id="im_<%=user.getLogin()%>" onclick="handleClick('<%=user.getLogin() %>','in_<%=user.getLogin() %>','im_<%=user.getLogin() %>')" align="left">&nbsp;&nbsp;<a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPermissionsView()%></td>
 </tr>
 <%}else { %>
 <tr class="groupMember" title="<%=user.getGroup() %>">
-<td class="groupMemberUsername"><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td><%=user.getName() %></td><td><%=user.getEmail() %></td><td><%=user.getPermissionsView() %></td>
+<td class="groupMemberUsername"><a href=viewUser.jsp?username=<%=user.getLogin()%>><%=user.getLogin() %></a></td><td class="groupMemberUsername"><%=user.getName() %></td><td class="groupMemberUsername"><%=user.getEmail() %></td><td class="groupMemberUsername"><%=user.getPermissionsView() %></td>
 </tr>
 <%}} %>
 <tr class="userTypesRow">

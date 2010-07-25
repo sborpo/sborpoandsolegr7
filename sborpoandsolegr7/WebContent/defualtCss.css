@@ -39,13 +39,32 @@ body {background: #f9fee8;margin: 0; padding: 1em; text-align:left; font-family:
  	font-size: 1.6em;
  	text-align: center;
  }
+ 
 
 
 ul {list-style-type: square; list-style: square;}
 li.list{list-style: square;}
 
 legend{
-	font-weight: bold;
+	font-weight: bolder;
+	border: 2px bold green;
+	}
+
+#logo
+{
+	background-color: #666633;
+	font-size: 2em;
+	padding-left: 2em;
+	padding-top: 2px;
+	color: white;
+	border-bottom: 1px solid white;
+	padding-bottom: 5px;
+	}	
+#timeTableLeg{
+	width:100%;
+	font-weight: bolder;
+	border: 2px bold green;
+
 	}
 
 input

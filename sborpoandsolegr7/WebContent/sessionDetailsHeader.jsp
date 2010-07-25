@@ -1,18 +1,14 @@
 <%if ((request.getUserPrincipal()!=null)&&(request.getUserPrincipal().getName()!=null)){ %>
-<p>
 Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;&nbsp;<a href=viewUser.jsp?username=<%=request.getUserPrincipal().getName()%>>View Details</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout">Log-Out</a>
-</p>
-<hr/>
 <br/>
 <br/>
 <%}else{ %>
-<p>
 <a href="/sborpoandsolegr7/indexLoged.jsp">Log-in</a> 
-</p>
-<hr/>
 <br/>
 <br/>
 <%} %>
+<div id="logo">Lab Managment System</div>
+
 <!-- ############### #### Navigation Bar #### ############### -->
 
 <!-- Link to styles used for our Navigation Bar -->
