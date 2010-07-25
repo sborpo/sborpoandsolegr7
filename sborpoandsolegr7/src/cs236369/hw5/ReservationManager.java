@@ -620,6 +620,7 @@ public  class ReservationManager {
 			if (areReservationsOverlap(conn, new TimeSlot(year, num), length)) {
 				throw new ReservationOverlapingException ();
 			}
+			PreparedStatement statement = createInsertStatement(conn, instrumentID, num, year, length, userId);
 			
 		} 
 		finally {
@@ -627,6 +628,23 @@ public  class ReservationManager {
 			if (conn!=null){conn.close();}
 		}
 		
+	}
+
+
+	private static PreparedStatement createInsertStatement(Connection conn, int instrumentID, int num, int year, int k, String userId) throws SQLException {
+		String query = "INSERT INTO reservations (`instId`,`year`,`month`,`day`,`slotbegin`,`slotend`,`userId`) VALUES(?,?,?,?,?,?,?)";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setInt(1, instrumentID);
+		TimeSlot begin = new TimeSlot(year, num);
+		TimeSlot end = new TimeSlot(year, num + k);
+		prepareStatement.setInt(2, begin.getYear());
+		prepareStatement.setInt(3, begin.getMonth());
+		prepareStatement.setInt(4, begin.getDay());
+		prepareStatement.setInt(5, begin.getSlotNumber());
+		prepareStatement.setInt(6, end.getSlotNumber());
+		prepareStatement.setString(7, userId);
+
+		return prepareStatement;
 	}
 	
 
