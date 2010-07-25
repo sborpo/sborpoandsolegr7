@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileUploadException;
+
 import cs236369.hw5.ReservationManager.ReservationOverlapingException;
 import cs236369.hw5.Utils.ParametersExp;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentExists;
@@ -16,6 +18,7 @@ import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
 import cs236369.hw5.users.UserManager;
 import cs236369.hw5.users.UserUtils;
 import cs236369.hw5.users.UserManager.Unauthenticated;
+import cs236369.hw5.users.UserUtils.FileTooBigExp;
 
 /**
  * Servlet implementation class MakeReservation
@@ -34,14 +37,6 @@ public class MakeReservation extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ErrorInfoBean err = Utils.notSupported();
-		Utils.forwardToErrorPage(err, request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DeafaultManipulator manipulator = new DeafaultManipulator() {
 
 			@Override
@@ -53,7 +48,7 @@ public class MakeReservation extends HttpServlet {
 
 			@Override
 			public void returnLinkSetter(ErrorInfoBean err) {
-				err.setLink("viewRservations.jsp");
+				err.setLink("viewReservations.jsp");
 				err.setLinkStr("Try again");
 
 			}
@@ -80,18 +75,24 @@ public class MakeReservation extends HttpServlet {
 			}
 		};
 		try {
-			Utils.manipulateInstrument(request, response, manipulator);
-		} catch (ParametersExp e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (cs236369.hw5.users.UserUtils.ParametersExp e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Utils.manipulateReservation(request, response, manipulator);
 		} catch (InstrumentNotExists e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (FileTooBigExp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileUploadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 	protected void makeReservationCheckParameters(

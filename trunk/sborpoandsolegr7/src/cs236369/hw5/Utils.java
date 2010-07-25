@@ -188,4 +188,38 @@ public class Utils {
 		}
 		
 	}
+
+
+	public static void manipulateReservation(HttpServletRequest request,
+			HttpServletResponse response, DeafaultManipulator manipulator) throws InstrumentNotExists, FileTooBigExp, FileUploadException, IOException {
+		HashMap<String, String> params = new HashMap<String, String>();
+		ErrorInfoBean err = new ErrorInfoBean();
+		// TODO: err
+		manipulator.returnLinkSetter(err);
+		try {	
+				handleParameters(request, params);
+				manipulator.paramsChecker(params, err);
+				manipulator.manipulate(params, null, null);
+				Utils.forwardToSuccessPage("viewInstruments.jsp", request,response);
+				return;
+		} catch (SQLException e) {
+			err.setErrorString("Database Error");
+			err.setReason("There was a problem accessing the database.");
+			e.printStackTrace();
+		} catch (UserExists e) {
+		} catch (UserNotExists e) {
+		} catch (Utils.ParametersExp e) {
+		} catch (LeaderNotExists e) {
+		} catch (InstrumentExists e) {
+			err.setErrorString("Instrument Error");
+			err.setReason("The id that you have tried to add already <br/> exists in the system.");
+			e.printStackTrace();
+		} catch (ReservationOverlapingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Utils.forwardToErrorPage(err, request, response);
+	}
+
+
 }

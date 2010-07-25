@@ -36,8 +36,8 @@ public class ReportGenerator {
 	ResultSet set= null;
 	try{
 		con=DbManager.DbConnections.getInstance().getConnection();
-		PreparedStatement userExists= Instrument.getDetails(con, 0); //TODO: change
-		set= userExists.executeQuery();
+		PreparedStatement report= con.prepareStatement("select * from reservations"); //TODO: change
+		set= report.executeQuery();
 	}
 	catch (SQLException e) {
 		// TODO: handle exception
