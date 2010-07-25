@@ -19,7 +19,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View Instrument</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
-<link rel="stylesheet" type="text/css" href="/sborpoandsolegr7/css/viewUserCss.css" />
+<link rel="stylesheet" type="text/css" href="/sborpoandsolegr7/css/viewInstrument.css" />
 </head>
 
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
@@ -30,26 +30,26 @@
 	Instrument inst=InstrumentManager.getInstrumentDetails(Integer.parseInt(id));
 %>
 <h1>Instrument Details</h1><br/><br/>
-<table>
-<tr>
-<td>ID: <%=inst.getId()%></td>
-</tr>
-<tr>
-<td>Type: <%=inst.getType() %></td>
-</tr>
-<tr>
-<td>Premission: <%=inst.getPremission() %></td>
-</tr>
-<tr>
-<td>Location:<%=(inst.getLocation()) %></td>
-</tr>
-<tr>
-<td>Description: <textarea rows="4" cols="20"><%=inst.getDescription() %></textarea></td>
-</tr>
 
-</table>
-<br/>
-<br/>
-<a href=updateInstrument.jsp?id=<%=id%>>Updated Instrument Details</a> <a href="DeleteInstrument?id=<%=id%>"> remove Instrument</a>
+<div class="table">
+<div id=heading><div id="heading-text"><img src="theimage" />&nbsp;&nbsp;# <%=inst.getId()%></div></div>
+<div id="details">
+<div id="content">
+
+<strong>Type: </strong><%=inst.getType() %><br/>
+
+<strong>Premission: </strong><%=inst.getPremission() %><br/>
+
+<strong>Location: </strong><%=(inst.getLocation()) %><br/>
+
+<strong>Description: </strong><div id="descArea"><textarea id="textarea" rows="4" cols="20"><%=inst.getDescription() %></textarea></div>
+
+</div>
+</div>
+
+<div class="options" ><div class="button-text">
+<a href=updateInstrument.jsp?id=<%=id%>>Updated Instrument Details</a> || <a href="DeleteInstrument?id=<%=id%>"> remove Instrument</a>
+</div></div>
+</div>
 </body>
 </html>
