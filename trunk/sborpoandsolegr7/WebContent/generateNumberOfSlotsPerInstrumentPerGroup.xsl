@@ -7,12 +7,12 @@
 		<link rel="stylesheet" type="text/css" href="defualtCss.css" />
 		<link href="/sborpoandsolegr7/css/tableCss.css" rel="stylesheet" type="text/css"/>
 			<body>
-				<h2>Group By Group Type</h2>
+				<h1>Group By Group Type</h1>
 				<xsl:for-each select="Results/Row[not(groupId=preceding::groupId)]/groupId">
 					<xsl:variable name="GROUP" select="."/>
-					<h3>
+					<h2>
 						<xsl:value-of select="."/>
-					</h3>
+					</h2>
 					<table>
 						<xsl:for-each select="/Results/Row[1]/*">
 							<xsl:if test="local-name() != 'groupId' ">
@@ -33,7 +33,7 @@
 							</tr>
 						</xsl:for-each>
 					</table>
-					
+					<hr/>
 					<br/><!-- start count-->
 					<xsl:variable name="tmpTotal">
 						<total_amount>
@@ -45,10 +45,10 @@
 						</total_amount>
 					</xsl:variable>
 					<xsl:variable name="myTotal" select="exsl:node-set($tmpTotal)"/>
-					<xsl:text>The total number of reserved slots for instrument </xsl:text>
+					<div align="center"><xsl:text>The total number of reserved slots for instrument </xsl:text>
 					<xsl:value-of select="/Results/Row/instid"/>
 					<xsl:text> for this group is: </xsl:text>
-					<xsl:value-of select="sum($myTotal/total_amount/item)"/><!-- end count -->
+					<xsl:value-of select="sum($myTotal/total_amount/item)"/><!-- end count --></div>
 				</xsl:for-each>
 			</body>
 		</html>

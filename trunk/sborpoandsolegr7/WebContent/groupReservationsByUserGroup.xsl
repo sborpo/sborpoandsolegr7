@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="defualtCss.css" />
 		<link href="/sborpoandsolegr7/css/tableCss.css" rel="stylesheet" type="text/css"/>
 			<body>
-				<h2>Group By Instrument Type</h2>
+				<h1>Group By Instrument Type</h1>
 				<xsl:for-each select="Results/Row[not(instid=preceding::instid)]/instid">
 					<xsl:variable name="INST" select="."/>
 					<h3>
@@ -33,7 +33,8 @@
 							</tr>
 						</xsl:for-each>
 					</table>
-					<xsl:text>Total number of reservation for this instrument: </xsl:text>
+					<hr/>
+					<div align="center"><xsl:text>Total number of reservation for this instrument: </xsl:text></div>
 					<xsl:value-of select="count(/Results/Row[instid=$INST])"/>
 					<br/>
 				</xsl:for-each>

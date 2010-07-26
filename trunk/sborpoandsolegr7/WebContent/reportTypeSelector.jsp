@@ -25,7 +25,7 @@ text-align: left;
 Please Choose Your XSLT Type:<br/>
 <select name="styleId">
 <option value="1">Reserved Slots Of Instruments Per Group</option>
-<option value="2">Reserved Slots Of Instruments Per Group</option>
+<option value="2">Reserved Slots Of Group Per Instruments</option>
 <% if (XsltTransformer.xsltExists(request.getUserPrincipal().getName())){ %><option value="3">Your Uploaded XSLT Report</option><%} %>
 </select>
 <br/>
