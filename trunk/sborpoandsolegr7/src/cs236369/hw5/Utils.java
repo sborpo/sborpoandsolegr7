@@ -142,6 +142,19 @@ public class Utils {
 
 	}
 
+	
+	public static HashMap<String,String> paramGetter(HttpServletRequest request,String[] params)
+	{
+		HashMap<String, String> paramsMap= new HashMap<String, String>();
+		for (String parameter : params) {
+			if (request.getParameter(parameter)!=null)
+			{
+				paramsMap.put(parameter, request.getParameter(parameter));
+			}
+		}
+		return paramsMap;
+	}
+	
 	public static void forwardToSuccessPage(String link,HttpServletRequest request,HttpServletResponse response)
 	{
 		request.getSession().setAttribute("successPage", link);

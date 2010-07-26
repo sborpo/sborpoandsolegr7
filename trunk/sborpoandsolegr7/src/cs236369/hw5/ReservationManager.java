@@ -282,7 +282,7 @@ public  class ReservationManager {
 		ArrayList<UserReservation> ans = new ArrayList<UserReservation>();
 		try{	
 			 conn=DbManager.DbConnections.getInstance().getConnection();
-			 String query="SELECT instId,year,slotbegin,userId FROM reservations ORDER BY year ,slotbegin";
+			 String query="SELECT instId,year,slotbegin,userId FROM reservations ";
 			 PreparedStatement prepareStatement = conn.prepareStatement(query);
 			 set= prepareStatement.executeQuery();
 			 while (set.next())
@@ -306,7 +306,7 @@ public  class ReservationManager {
 		ArrayList<UserReservation> ans = new ArrayList<UserReservation>();
 		try{	
 			 conn=DbManager.DbConnections.getInstance().getConnection();
-			 String query="SELECT instId,year,slotbegin FROM reservations WHERE (((year=?) AND (slotbegin>=?)) OR (year>?)) AND (userId=?) ORDER BY year,slotbegin";
+			 String query="SELECT instId,year,slotbegin FROM reservations WHERE (((year=?) AND (slotbegin>=?)) OR (year>?)) AND (userId=?)";
 			 PreparedStatement prepareStatement = conn.prepareStatement(query);
 			 prepareStatement.setInt(1, current.getYear());
 			 prepareStatement.setInt(2, current.getSlotNumber());
@@ -731,6 +731,30 @@ public  class ReservationManager {
 		prepareStatement.setString(7, userId);
 
 		return prepareStatement;
+	}
+
+
+	public static void deleteReservationFromDb(String instId, String year,
+			String slotNum, String userId) throws SQLException {
+		Connection conn=null;
+		try{
+			conn=DbManager.DbConnections.getInstance().getConnection();
+			String query = "DELETE FROM reservations WHERE instId=? AND year=? AND slotbegin=? AND userId=?";
+			PreparedStatement prepareStatement = conn.prepareStatement(query);
+			prepareStatement.setLong(1, Long.parseLong(instId));
+			prepareStatement.setInt(2, Integer.parseInt(year));
+			prepareStatement.setInt(3, Integer.parseInt(slotNum));
+			prepareStatement.setString(4, userId);
+			prepareStatement.execute();
+		}
+		finally
+		{
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+		
 	}
 	
 

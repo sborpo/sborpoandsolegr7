@@ -36,7 +36,7 @@
 </tr>
 <%for (int i=0; i<resv.size(); i++){ %>
 <tr>
-<td><%=resv.get(i).getIntsId() %></td><td><%=resv.get(i).getTimeslot().getDatePrint() %></td><td><%=TimeSlot.getSlotTime(resv.get(i).getTimeslot().getSlotNumber())%></td><%if (isAdmin){ %><td><%=resv.get(i).getUsername() %></td><%} %><td><a href="DeleteReservedTimeSlot?id=<%=resv.get(i).getIntsId()%>&year=<%=resv.get(i).getTimeslot().getYear() %>&slotNum=<%=resv.get(i).getTimeslot().getSlotNumber() %>">Remove</a></td>
+<td><%=resv.get(i).getIntsId() %></td><td><%=resv.get(i).getTimeslot().getDatePrint() %></td><td><%=TimeSlot.getSlotTime(resv.get(i).getTimeslot().getSlotNumber())%></td><%if (isAdmin){ %><td><%=resv.get(i).getUsername() %></td><%} %><td><a href="DeleteReservedTimeSlot?id=<%=resv.get(i).getIntsId()%>&year=<%=resv.get(i).getTimeslot().getYear() %>&slotNum=<%=resv.get(i).getTimeslot().getSlotNumber() %>&userId=<%=(isAdmin)? resv.get(i).getUsername() : request.getUserPrincipal().getName()  %>">Remove</a></td>
 </tr>
 <%} %>
 </table>
