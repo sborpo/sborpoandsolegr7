@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="http://jquery.bassistance.de/validate/demo/css/chili.css" /> 
 <script src="http://jquery.bassistance.de/validate/lib/jquery.js" type="text/javascript"></script> 
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js" type="text/javascript"></script> 
-<script src="dynamicTestForAddUser.js" type="text/javascript"></script> 
+<script src="/sborpoandsolegr7/js/dynamicTestForAddUser.js" type="text/javascript"></script> 
 <script src="js/common.js" type="text/javascript"></script> 
 <script src="js/addUserValidate.js" type="text/javascript"></script> 
 

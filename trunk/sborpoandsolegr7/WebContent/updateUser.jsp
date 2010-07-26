@@ -31,7 +31,7 @@
 	pre { text-align: left; }
 </style> 
  
-<script src="dynamicTestForUpdateUser.js" type="text/javascript"></script> 
+<script src="/sborpoandsolegr7/js/dynamicTestForUpdateUser.js" type="text/javascript"></script> 
 <script type="text/javascript">
 function init()
 {
