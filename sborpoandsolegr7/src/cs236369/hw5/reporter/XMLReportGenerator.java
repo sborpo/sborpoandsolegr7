@@ -1,6 +1,9 @@
 package cs236369.hw5.reporter;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -79,15 +82,21 @@ public class XMLReportGenerator extends HttpServlet {
 				}
 			}
 			String str=null;
+			InputStream xsltInputStream=null;
 			if (request.getParameter("styleId").equals("1"))
 			{
-				str= getServletContext().getRealPath( "generateNumberOfSlotsPerInstrumentPerGroup.xsl"); 
+				str= getServletContext().getRealPath( "generateNumberOfSlotsPerInstrumentPerGroup.xsl");
+				File f = new File(str);
+				xsltInputStream= new FileInputStream(f);
 			}
 			else
 			{
 				str= getServletContext().getRealPath( "groupReservationsByUserGroup.xsl"); 
+				File f = new File(str);
+				xsltInputStream= new FileInputStream(f);
 			}
-			XsltTransformer.transform(doc,str, response.getWriter());
+			
+			XsltTransformer.transform(doc,xsltInputStream, response.getWriter());
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -394,5 +394,21 @@ public abstract class User {
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		return prepareStatement;
 	}
+
+
+	public PreparedStatement setDeleteFromReservations(Connection conn) throws SQLException {
+		String query= "DELETE FROM reservations WHERE userId=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, login);
+		return prepareStatement;
+	}
+
+
+	public PreparedStatement setDeleteFromXSLT(Connection conn) throws SQLException {
+		String query= "DELETE FROM xslt WHERE login=? ";
+		PreparedStatement prepareStatement = conn.prepareStatement(query);
+		prepareStatement.setString(1, login);
+		return prepareStatement;
+	}
 		
 }	
