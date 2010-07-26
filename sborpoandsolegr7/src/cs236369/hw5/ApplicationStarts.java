@@ -54,25 +54,25 @@ public class ApplicationStarts implements ServletContextListener {
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	  try {
-		  
-		YellowPagesRegistrator.registerApplicationToYellow();
-	} catch (YelloPageError e) {
-		//cannot register
-		System.out.println("Cannot register application to yellow pages");
-	}
+//	  try {
+//		  
+//		YellowPagesRegistrator.registerApplicationToYellow();
+//	} catch (YelloPageError e) {
+//		//cannot register
+//		System.out.println("Cannot register application to yellow pages");
+//	}
     }
 
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
-        try {
-			YellowPagesRegistrator.removeApplicationFromYellow();
-			System.out.println("The yellow page was removed!");
-		} catch (YelloPageError e) {
-			System.out.println("Failed to remove application to yellow pages");
-		}
+//        try {
+//			YellowPagesRegistrator.removeApplicationFromYellow();
+//			System.out.println("The yellow page was removed!");
+//		} catch (YelloPageError e) {
+//			System.out.println("Failed to remove application to yellow pages");
+//		}
     }
 	
 }

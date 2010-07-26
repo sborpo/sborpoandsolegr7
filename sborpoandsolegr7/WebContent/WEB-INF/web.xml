@@ -57,7 +57,10 @@
     <error-code>501</error-code>
     <location>/errorPages/unauthorized.html</location>
   </error-page>
-  <security-constraint>
+  <error-page>
+  	<error-code>403</error-code>
+  	<location>/errorPages/unauthorized.html</location>
+  </error-page><security-constraint>
     <web-resource-collection>
       <web-resource-name>viewReservations.jsp</web-resource-name>
       <url-pattern>/viewReservations.jsp</url-pattern>
@@ -175,6 +178,7 @@
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
+       <role-name>researcher</role-name>
     </auth-constraint>
   </security-constraint>
   <security-constraint>
@@ -557,4 +561,5 @@
     <servlet-name>DeleteReservedTimeSlot</servlet-name>
     <url-pattern>/DeleteReservedTimeSlot</url-pattern>
   </servlet-mapping>
+  
 </web-app>

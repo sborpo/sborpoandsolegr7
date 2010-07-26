@@ -1,6 +1,8 @@
 package cs236369.hw5.xslt;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.Writer;
 import java.net.URL;
 
@@ -11,6 +13,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.fileupload.util.Streams;
 import org.w3c.dom.Document;
 
 public class XsltTransformer {
@@ -28,10 +31,6 @@ public class XsltTransformer {
 		TransformerFactory tFactory= TransformerFactory.newInstance();
 		File f = new File(url);
 		StreamSource stream = new StreamSource(f);
-		System.out.println(f.toString());
-		System.out.println(f.canRead());
-		System.out.println(f.length());
-		
 		Transformer transofrmer= tFactory.newTransformer(stream);
 	
 		transofrmer.transform(new DOMSource(inDoc), new StreamResult(resultWriter));

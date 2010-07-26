@@ -130,9 +130,11 @@ public class UpdateUser extends HttpServlet {
 				err.setReason("The email that you specified is not a valid one");
 				throw new Utils.ParametersExp(err);
 			}
+		
 		if (params.containsKey(UserManager.PhoneNumber))
 		{
-			if (!(UserUtils.containsOnlyNumbers(params.get(UserManager.PhoneNumber))))
+			String phoneN=params.get(UserManager.PhoneNumber);
+			if ((!phoneN.equals(""))&&(!(UserUtils.containsOnlyNumbers(params.get(UserManager.PhoneNumber)))))
 			{
 				err.setErrorString("Phone Number Error");
 				err.setReason("The phone number should contain only numbers");

@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import cs236369.hw5.db.DbManager;
 import cs236369.hw5.instrument.Instrument;
 import cs236369.hw5.instrument.InstrumentManager;
+import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
 
 public  class ReservationManager {
 	
@@ -175,7 +176,7 @@ public  class ReservationManager {
 	private static ResultSet executeOccupiedSlotsQuery(Connection conn,TimeSlot initialeSlot,String type, int k,String login) throws SQLException
 	{
 		String query= " SELECT id,year,slotbegin,slotend,I.type AS type FROM " +
-		" (SELECT INST.* FROM instruments INST,users U WHERE U.login=? AND INST.type=? AND ((U.permission IS NULL) OR (U.permission LIKE (SELECT CONCAT('%,',INST.permission,',%'))) OR (U.permission LIKE (SELECT CONCAT(INST.permission,',%'))))  )I" +
+		" (SELECT INST.* FROM instruments INST,users U WHERE U.login=? AND INST.type=? AND ((U.permission IS NULL) OR (U.permission=INST.permission) OR (U.permission LIKE (SELECT CONCAT('%,',INST.permission,',%'))) OR (U.permission LIKE (SELECT CONCAT(INST.permission,',%'))))  )I" +
 		"  LEFT OUTER JOIN reservations R" +
 		" ON ((R.slotbegin>=? AND R.year=?) OR (R.slotbegin<=? AND R.year=?)) AND I.id=R.instid AND I.type=?" +
 		" ORDER BY id,year,slotbegin ";
@@ -690,7 +691,7 @@ public  class ReservationManager {
 
 
 	public static void makeReservation(String id, String slotYear,
-			String slotNum, String k, String userId) throws SQLException, ReservationOverlapingException {
+			String slotNum, String k, String userId) throws SQLException, ReservationOverlapingException, InstrumentNotExists {
 		Connection conn=null;
 		ResultSet set= null;
 		try{
@@ -701,6 +702,10 @@ public  class ReservationManager {
 			conn=DbManager.DbConnections.getInstance().getConnection();
 			conn.setAutoCommit(false);
 			conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+			if (!InstrumentManager.isInstrumentExists(Integer.getInteger(id), conn))
+			{
+				throw new InstrumentManager.InstrumentNotExists();
+			}
 			if (areReservationsOverlap(conn, new TimeSlot(year, num), length)) {
 				throw new ReservationOverlapingException ();
 			}
@@ -709,6 +714,16 @@ public  class ReservationManager {
 			conn.commit();
 			
 		} 
+		catch(SQLException e)
+		{
+			conn.rollback();
+			throw e;
+		}
+		catch (InstrumentNotExists e)
+		{
+			conn.rollback();
+			throw e;
+		}
 		finally {
 			if (set!=null){set.close();}
 			if (conn!=null){conn.close();}
