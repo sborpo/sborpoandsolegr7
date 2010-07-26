@@ -1,5 +1,6 @@
 <%if ((request.getUserPrincipal()!=null)&&(request.getUserPrincipal().getName()!=null)){ %>
-Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;&nbsp;<a href=viewUser.jsp?username=<%=request.getUserPrincipal().getName()%>>View Details</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout">Log-Out</a>
+Logged in as: 
+<%@page import="cs236369.hw5.users.UserManager"%><b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;&nbsp;<a href=viewUser.jsp?username=<%=request.getUserPrincipal().getName()%>>View Details</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="Logout">Log-Out</a>
 <br/>
 <br/>
 <%}else{ %>
@@ -84,6 +85,7 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
   <div class="submenubox">
     <ul>
       <li><a href="/sborpoandsolegr7/viewReservations.jsp" class="submenlink">View time line</a></li>
+       <%if (request.getUserPrincipal()!=null){ %>     <li><a href="/sborpoandsolegr7/viewUsersReservations.jsp?<%=UserManager.Usern%>=<%=request.getUserPrincipal().getName() %>" class="submenlink">View Reservations</a></li><%} %>
        <li><a href="/sborpoandsolegr7/searchInLabs.jsp" class="submenlink">Search for slots in other labs</a></li>
     </ul>
   </div>

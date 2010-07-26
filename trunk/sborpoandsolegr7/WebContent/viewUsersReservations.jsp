@@ -16,10 +16,13 @@
 <%@page import="cs236369.hw5.ReservationManager"%>
 <%@page import="cs236369.hw5.TimeSlot"%><html>
 <head>
+<link rel="stylesheet" type="text/css" media="screen" href="defualtCss.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="/sborpoandsolegr7/css/tableCss.css" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
 </head>
 <body>
+<jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
 <br/>
 <br/>
 <br/>
@@ -29,7 +32,7 @@
 <%}else{ %>
 <table>
 <tr>
-<th>Instrument Id</th><th>Date</th><th>Start Time</th><%if (isAdmin){ %><th>Username</th><%} %><th>Remove</th>
+<th>Instrument Id</th><th>Date</th><th>Start Time</th><%if (isAdmin){ %><th>Username</th><%} %><th></th>
 </tr>
 <%for (int i=0; i<resv.size(); i++){ %>
 <tr>
