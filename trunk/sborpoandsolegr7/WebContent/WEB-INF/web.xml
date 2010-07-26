@@ -119,6 +119,20 @@
   </security-constraint>
   <security-constraint>
     <web-resource-collection>
+      <web-resource-name>MakeReservation</web-resource-name>
+      <url-pattern>/MakeReservation</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
       <web-resource-name>addInstrument.jsp</web-resource-name>
       <url-pattern>/addInstrument.jsp</url-pattern>
       <http-method>GET</http-method>
