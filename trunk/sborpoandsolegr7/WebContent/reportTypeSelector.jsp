@@ -41,8 +41,12 @@ Please Choose Your XSLT Type:<br/>
 <% if (XsltTransformer.xsltExists(request.getUserPrincipal().getName())){ %><option value="3">Your Uploaded XSLT Report</option><%} %>
 </select>
 <div class="instID" id="instID" style="display: none">
+<br/>
+<br/>
 <label id="lid" for="id">ID</label>
 <input id="id" type="text" maxlength="50" name="instId"/>
+<br/>
+
  </div>
 <br/>
 <input value="Generate Report" type="submit" onclick="this.form.target='_blank';return true;"/>
