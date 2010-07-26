@@ -242,7 +242,7 @@ to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 							classcolor = "available";
 						}
 		%>
-		<td class="<%=classcolor%>" id="<%=i%>"<% if (classcolor.equals("available")) { %> onclick="gotoOptionsScreen(<%=i-1 %>,<%=j-1 %>,<%=time.getYear()%>,<%=time.getMonth()%>,<%=time.getDay()%>,'<%=type %>',<%=k %>)" <%} %>>
+		<td class="<%=classcolor%>" id="<%=i%>"<% if (classcolor.equals("available")) { %> onclick="gotoOptionsScreen(<%=i %>,<%=j %>,<%=time.getYear()%>,<%=time.getMonth()%>,<%=time.getDay()%>,'<%=type %>',<%=k %>)" <%} %>>
 		<%
 			if (x == 1) {
 							out.print(arr[i][j].split(";")[1]);
