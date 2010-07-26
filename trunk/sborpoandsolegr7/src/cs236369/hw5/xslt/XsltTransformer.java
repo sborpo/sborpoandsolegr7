@@ -24,13 +24,13 @@ public class XsltTransformer {
 		 */
 		private static final long serialVersionUID = 1L;}
 	
-	public static void transform(Document doc, String url,Writer resultWriter) throws TransformationError
+	public static void transform(Document doc, InputStream xsltInputStream,Writer resultWriter) throws TransformationError
 	{
 		try{
 		Document inDoc= doc;
 		TransformerFactory tFactory= TransformerFactory.newInstance();
-		File f = new File(url);
-		StreamSource stream = new StreamSource(f);
+		
+		StreamSource stream = new StreamSource(xsltInputStream);
 		Transformer transofrmer= tFactory.newTransformer(stream);
 	
 		transofrmer.transform(new DOMSource(inDoc), new StreamResult(resultWriter));

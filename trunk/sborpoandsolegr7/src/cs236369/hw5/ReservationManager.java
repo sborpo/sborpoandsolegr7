@@ -15,6 +15,8 @@ import cs236369.hw5.db.DbManager;
 import cs236369.hw5.instrument.Instrument;
 import cs236369.hw5.instrument.InstrumentManager;
 import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
+import cs236369.hw5.users.UserManager;
+import cs236369.hw5.users.UserManager.UserNotExists;
 
 public  class ReservationManager {
 	
@@ -691,7 +693,7 @@ public  class ReservationManager {
 
 
 	public static void makeReservation(String id, String slotYear,
-			String slotNum, String k, String userId) throws SQLException, ReservationOverlapingException, InstrumentNotExists {
+			String slotNum, String k, String userId) throws SQLException, ReservationOverlapingException, InstrumentNotExists, UserNotExists {
 		Connection conn=null;
 		ResultSet set= null;
 		try{
@@ -702,6 +704,11 @@ public  class ReservationManager {
 			conn=DbManager.DbConnections.getInstance().getConnection();
 			conn.setAutoCommit(false);
 			conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+			User userDet=UserManager.getUserDetails(userId,conn);
+			if (userDet==null)
+			{
+				throw new UserManager.UserNotExists();
+			}
 			if (!InstrumentManager.isInstrumentExists(Integer.getInteger(id), conn))
 			{
 				throw new InstrumentManager.InstrumentNotExists();
@@ -709,7 +716,7 @@ public  class ReservationManager {
 			if (areReservationsOverlap(conn, new TimeSlot(year, num), length)) {
 				throw new ReservationOverlapingException ();
 			}
-			PreparedStatement statement = createInsertStatement(conn, instrumentID, num, year, length, userId);
+			PreparedStatement statement = createInsertStatement(conn, instrumentID, num, year, length, userId,userDet.getGroup());
 			statement.execute();
 			conn.commit();
 			
@@ -723,6 +730,9 @@ public  class ReservationManager {
 		{
 			conn.rollback();
 			throw e;
+		} catch (UserNotExists e) {
+			conn.rollback();
+			throw e;
 		}
 		finally {
 			if (set!=null){set.close();}
@@ -732,8 +742,8 @@ public  class ReservationManager {
 	}
 
 
-	private static PreparedStatement createInsertStatement(Connection conn, int instrumentID, int num, int year, int k, String userId) throws SQLException {
-		String query = "INSERT INTO reservations (`instId`,`year`,`month`,`day`,`slotbegin`,`slotend`,`userId`) VALUES(?,?,?,?,?,?,?)";
+	private static PreparedStatement createInsertStatement(Connection conn, int instrumentID, int num, int year, int k, String userId,String groupId) throws SQLException {
+		String query = "INSERT INTO reservations (`instId`,`year`,`month`,`day`,`slotbegin`,`slotend`,`userId`,`groupid`) VALUES(?,?,?,?,?,?,?,?)";
 		PreparedStatement prepareStatement = conn.prepareStatement(query);
 		prepareStatement.setInt(1, instrumentID);
 		TimeSlot begin = new TimeSlot(year, num);
@@ -744,6 +754,7 @@ public  class ReservationManager {
 		prepareStatement.setInt(5, begin.getSlotNumber());
 		prepareStatement.setInt(6, end.getSlotNumber());
 		prepareStatement.setString(7, userId);
+		prepareStatement.setString(8, groupId);
 
 		return prepareStatement;
 	}

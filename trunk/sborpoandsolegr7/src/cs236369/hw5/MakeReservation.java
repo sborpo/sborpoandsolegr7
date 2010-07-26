@@ -18,6 +18,7 @@ import cs236369.hw5.instrument.InstrumentManager.InstrumentNotExists;
 import cs236369.hw5.users.UserManager;
 import cs236369.hw5.users.UserUtils;
 import cs236369.hw5.users.UserManager.Unauthenticated;
+import cs236369.hw5.users.UserManager.UserNotExists;
 import cs236369.hw5.users.UserUtils.FileTooBigExp;
 
 /**
@@ -56,6 +57,9 @@ public class MakeReservation extends HttpServlet {
 		} catch (InstrumentNotExists e) {
 			err.setErrorString("Instrument Error");
 			err.setReason("The requested instrument doesn't exists ");
+		} catch (UserNotExists e) {
+			err.setErrorString("User Error");
+			err.setReason("The username which tries to reserve time slot <br/> doesn't exists in the system ");
 		}
 
 		Utils.forwardToErrorPage(err, request, response);

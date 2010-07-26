@@ -239,8 +239,12 @@ public class UserManager {
 		//delete the user and his role
 		 PreparedStatement statementUsers= user.setDeleteUser(conn);
 		 PreparedStatement statementRoles = user.setDeleteUserRole(conn);
+		 PreparedStatement statementResv= user.setDeleteFromReservations(conn);
+		 PreparedStatement statementXslt = user.setDeleteFromXSLT(conn);
 		 statementUsers.execute();
 		 statementRoles.execute();
+		 statementResv.execute();
+		 statementXslt.execute();
 		 conn.commit();
 		}
 		catch (SQLException ex)
@@ -351,6 +355,26 @@ public class UserManager {
 		 return user;
 	}
 	
+	public static User getUserDetails(String username , Connection conn) throws SQLException
+	{
+		ResultSet set=null;
+		try{
+			 PreparedStatement statementUsers= User.getUserDetails(conn, username);
+			 set= statementUsers.executeQuery();
+			 User user=null;
+			 if (set.next())
+			 {
+				user=setUserFromRow(set);
+			 }
+			 return user;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+		}
+	}
 	public static User getUserDetails(String username) throws SQLException
 	{
 		Connection conn=null;ResultSet set=null;
