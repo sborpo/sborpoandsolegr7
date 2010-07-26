@@ -282,7 +282,7 @@ public  class ReservationManager {
 		ArrayList<UserReservation> ans = new ArrayList<UserReservation>();
 		try{	
 			 conn=DbManager.DbConnections.getInstance().getConnection();
-			 String query="SELECT instId,year,slotbegin,userId FROM reservations ";
+			 String query="SELECT instId,year,slotbegin,userId FROM reservations ORDER BY year ,slotbegin";
 			 PreparedStatement prepareStatement = conn.prepareStatement(query);
 			 set= prepareStatement.executeQuery();
 			 while (set.next())
@@ -306,7 +306,7 @@ public  class ReservationManager {
 		ArrayList<UserReservation> ans = new ArrayList<UserReservation>();
 		try{	
 			 conn=DbManager.DbConnections.getInstance().getConnection();
-			 String query="SELECT instId,year,slotbegin FROM reservations WHERE (((year=?) AND (slotbegin>=?)) OR (year>?)) AND (userId=?)";
+			 String query="SELECT instId,year,slotbegin FROM reservations WHERE (((year=?) AND (slotbegin>=?)) OR (year>?)) AND (userId=?) ORDER BY year,slotbegin";
 			 PreparedStatement prepareStatement = conn.prepareStatement(query);
 			 prepareStatement.setInt(1, current.getYear());
 			 prepareStatement.setInt(2, current.getSlotNumber());

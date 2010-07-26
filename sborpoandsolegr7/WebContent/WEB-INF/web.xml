@@ -290,6 +290,20 @@
   </security-constraint>
   <security-constraint>
     <web-resource-collection>
+      <web-resource-name>viewUsersReservations.jsp</web-resource-name>
+      <url-pattern>/viewUsersReservations.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
       <web-resource-name>DeleteUser</web-resource-name>
       <url-pattern>/DeleteUser</url-pattern>
       <http-method>GET</http-method>
@@ -518,5 +532,15 @@
   <servlet-mapping>
     <servlet-name>XMLReportGenerator</servlet-name>
     <url-pattern>/XMLReportGenerator</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteReservedTimeSlot</display-name>
+    <servlet-name>DeleteReservedTimeSlot</servlet-name>
+    <servlet-class>cs236369.hw5.DeleteReservedTimeSlot</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteReservedTimeSlot</servlet-name>
+    <url-pattern>/DeleteReservedTimeSlot</url-pattern>
   </servlet-mapping>
 </web-app>
