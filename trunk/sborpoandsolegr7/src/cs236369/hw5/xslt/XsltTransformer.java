@@ -28,6 +28,34 @@ public class XsltTransformer {
 		 */
 		private static final long serialVersionUID = 1L;}
 	public static class NoXsltStyleInDb extends Exception{}
+	
+	public static boolean xsltExists(String username) throws SQLException
+	{
+		Connection conn=null;
+		ResultSet set=null;
+		try{
+		conn=DbManager.DbConnections.getInstance().getConnection();
+		String query="SELECT xslt FROM xslt WHERE login=?";
+		PreparedStatement getStyleSheet= conn.prepareStatement(query);
+		getStyleSheet.setString(1, username);
+		set= getStyleSheet.executeQuery();
+		if (!set.next())
+		{
+			return false;
+		}
+		return true;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+			if (conn!=null)
+			{
+				conn.close();
+			}
+		}
+	}
 	public static InputStream getXsltFromDb(String username) throws NoXsltStyleInDb, SQLException
 	{
 		Connection conn=null;
