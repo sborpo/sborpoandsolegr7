@@ -12,7 +12,7 @@
 <%@page import="cs236369.hw5.User.UserType"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>View User</title>
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
 <link rel="stylesheet" type="text/css" href="/sborpoandsolegr7/css/viewUserCss.css" />
 </head>
