@@ -14,7 +14,8 @@
 <br/>
 <div class="centeredBox">
 <form action="UploadXSLT" enctype="multipart/form-data" method="post">
-Upload your XSLT file : <input type="file" id ="xsltFile" name="xsltFileN" />
+Upload your XSLT file : <br/><input type="file" id ="xsltFile" name="xsltFileN" />
+<br/>
 <br/>
 <input value="Send" type="submit"/>
 </form>
