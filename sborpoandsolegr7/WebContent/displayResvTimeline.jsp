@@ -93,8 +93,8 @@ function updateRows(from,to,lastIndex)
 	
 }
 
-function gotoOptionsScreen(id,year,instrumnetType,k) {
-	document.location.href = "optionsPage.jsp?" + "id=" + id + "&year=" + year + "&type=" + instrumnetType + "&k=" + k;
+function gotoOptionsScreen(i,j,year,month,day,instrumnetType,k) {
+	document.location.href = "optionsPage.jsp?" + "i=" + i + "&j=" + j + "&year=" + year +"&month=" + month + "&day=" + day +"&type=" + instrumnetType + "&k=" + k;
 }
 
 
@@ -175,7 +175,7 @@ div.hours {
 
 <body
 	onload="javascript: updateRows(<%=startTime%>,<%=endTime%>,<%=arr.length%>);">
-<h3>You can see the reservations scheduale on the week between: <%=day%>/<%=month%>/<%=year%>
+<h3>You can see the reservations schedule on the week between: <%=day%>/<%=month%>/<%=year%>
 to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 <br></br>
 <div class="hours">Display Hours: From:&nbsp;&nbsp;<input
@@ -242,7 +242,7 @@ to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 							classcolor = "available";
 						}
 		%>
-		<td class="<%=classcolor%>" id="<%=time.getSlotNumber()%>"<% if (classcolor.equals("available")) { %> onclick="gotoOptionsScreen(id,<%=time.getYear()%>,'<%=type %>',<%=k %>)" <%} %>>
+		<td class="<%=classcolor%>" id="<%=i%>"<% if (classcolor.equals("available")) { %> onclick="gotoOptionsScreen(<%=i-1 %>,<%=j-1 %>,<%=time.getYear()%>,<%=time.getMonth()%>,<%=time.getDay()%>,'<%=type %>',<%=k %>)" <%} %>>
 		<%
 			if (x == 1) {
 							out.print(arr[i][j].split(";")[1]);
