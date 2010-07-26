@@ -32,7 +32,7 @@ $(document).ready(function() {
 			id : {
 				required: "Specifiy an id",
 				number: "Enter digits only",
-				remote: "An instrument with the specified id already exists"
+				remote: jQuery.format("{0} is already in use")
 			},
 			type: {
 				required: "Specify a type",

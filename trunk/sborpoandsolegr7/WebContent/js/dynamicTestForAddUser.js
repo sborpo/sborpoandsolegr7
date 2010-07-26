@@ -11,11 +11,12 @@ $(document).ready(function() {
 	// validate signup form on keyup and submit
 	 $("#signupform").validate({
 		rules: {
-			name: "required",
-			username: {
+			 username: {
 				required: true,
-				minlength: 2
-			},
+				minlength: 2,
+				remote: "UserInDB.jsp"
+			},	
+			name: "required",
 			password: {
 				required: true,
 				minlength: 5
@@ -47,12 +48,13 @@ $(document).ready(function() {
 			}
 		},
 		messages: {
-			name: "Enter your name",
+			
 			username: {
 				required: "Enter a username",
-				minlength: jQuery.format("Enter at least {0} characters")
-			//	remote: jQuery.format("{0} is already in use")
+				minlength: jQuery.format("Enter at least {0} characters"),
+				remote: jQuery.format("{0} is already in use")
 			},
+			name: "Enter your name",
 			password: {
 				required: "Provide a password",
 				rangelength: jQuery.format("Enter at least {0} characters")
