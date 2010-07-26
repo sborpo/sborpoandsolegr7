@@ -2,6 +2,7 @@ package cs236369.hw5.xslt;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.io.Writer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
