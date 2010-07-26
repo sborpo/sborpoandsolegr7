@@ -32,7 +32,7 @@
 	pre { text-align: left; }
 </style> 
  
-<script src="dynamicTestForUpdateInstrument.js" type="text/javascript"></script> 
+<script src="/sborpoandsolegr7/js/dynamicTestForUpdateInstrument.js" type="text/javascript"></script> 
 
 </head>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>

@@ -21,7 +21,7 @@
 	pre { text-align: left; }
 </style> 
  
-<script src="dynamicTestForAddInstrument.js" type="text/javascript"></script> 
+<script src="/sborpoandsolegr7/js/dynamicTestForAddInstrument.js" type="text/javascript"></script> 
 
  
 </head>
