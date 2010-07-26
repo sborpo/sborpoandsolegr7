@@ -118,22 +118,22 @@ public  class ReservationManager {
 		}
 		
 		public static LinkedList<Instrument> parseArrayOfInstruments(String[][] arr,TimeSlot time) {
-			LinkedList<Instrument> result = new LinkedList<Instrument>();
-			String[] instrumentIds = arr[time.getSlotNumber()][time.getDay()].split(";")[1].split(" ");
-			for (int i = 1; i < instrumentIds.length ; i++)  {
-				try {
-					result.add(InstrumentManager.getInstrumentDetails(Integer.parseInt(instrumentIds[i])));
-				} catch (NumberFormatException e) {
-					System.out.println(i);
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			return result;
-		}
-	}
+			   LinkedList<Instrument> result = new LinkedList<Instrument>();
+			   String[] instrumentIds = arr[time.getSlotNumber()][time.getDay()].split(";")[1].split(" ");
+			   for (int i = 1; i < instrumentIds.length ; i++)  {
+			    try {
+			     result.add(InstrumentManager.getInstrumentDetails(Integer.parseInt(instrumentIds[i])));
+			    } catch (NumberFormatException e) {
+			     System.out.println(i);
+			     e.printStackTrace();
+			    } catch (SQLException e) {
+			     // TODO Auto-generated catch block
+			     e.printStackTrace();
+			    }
+			   }
+			   return result;
+			  }
+			 }
 	public static boolean areReservationsOverlap(Connection conn,TimeSlot start,int length) throws SQLException
 	{
 		TimeSlot end = TimeSlot.addTimeSlot(start, length);

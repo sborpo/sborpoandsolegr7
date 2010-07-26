@@ -37,28 +37,6 @@ public class MakeReservation extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		ErrorInfoBean err = Utils.notSupported();
-		Utils.forwardToErrorPage(err, request, response);
-	}
-
-	private HashMap<String,String> paramGetter(HttpServletRequest request,String[] params)
-	{
-		HashMap<String, String> paramsMap= new HashMap<String, String>();
-		for (String parameter : params) {
-			if (request.getParameter(parameter)!=null)
-			{
-				paramsMap.put(parameter, request.getParameter(parameter));
-			}
-		}
-		return paramsMap;
-	}
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
 		HashMap<String, String> params= paramGetter(request, new String [] {"id","slotYear","slotNum","k","userId"});
 		ErrorInfoBean err = new ErrorInfoBean();
 		try{
@@ -78,6 +56,28 @@ public class MakeReservation extends HttpServlet {
 		
 		
 		
+		
+	}
+
+	private HashMap<String,String> paramGetter(HttpServletRequest request,String[] params)
+	{
+		HashMap<String, String> paramsMap= new HashMap<String, String>();
+		for (String parameter : params) {
+			if (request.getParameter(parameter)!=null)
+			{
+				paramsMap.put(parameter, request.getParameter(parameter));
+			}
+		}
+		return paramsMap;
+	}
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		
+		ErrorInfoBean err = Utils.notSupported();
+		Utils.forwardToErrorPage(err, request, response);
 		
 		
 //		DeafaultManipulator manipulator = new DeafaultManipulator() {
