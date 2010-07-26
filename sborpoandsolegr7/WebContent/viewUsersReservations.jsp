@@ -1,5 +1,6 @@
 <%if (request.getParameter(UserManager.Usern)==null){ %><jsp:forward page="ParamErrorSetter"></jsp:forward><%} %>
-<%if ((!request.getUserPrincipal().getName().equals(request.getParameter(UserManager.Usern)))&& (!UserUtils.isAdmin(request))) {%>
+<%boolean isAdmin=UserUtils.isAdmin(request);%>
+<%if ((!request.getUserPrincipal().getName().equals(request.getParameter(UserManager.Usern)))&& (!isAdmin)) {%>
 <jsp:forward page="/sborpoandsolegr7/errorPages/unauthorized.html"></jsp:forward>
 <%} %>
 <%if (!UserManager.isUserExists(request.getParameter(UserManager.Usern))){ 		
@@ -22,17 +23,17 @@
 <br/>
 <br/>
 <br/>
-<%ArrayList<ReservationManager.UserReservation> resv= ReservationManager.getUserReservations(request.getUserPrincipal().getName()); %>
+<%ArrayList<ReservationManager.UserReservation> resv=(isAdmin)? ReservationManager.getAllReservations() : ReservationManager.getUserReservations(request.getUserPrincipal().getName()); %>
 <%if (resv.size()==0){ %>
 <div class="centeredBox">There are no reserved time slots for you!</div>
 <%}else{ %>
 <table>
 <tr>
-<th>Instrument Id</th><th>Date</th><th>Start Time</th><th>Remove</th>
+<th>Instrument Id</th><th>Date</th><th>Start Time</th><%if (isAdmin){ %><th>Username</th><%} %><th>Remove</th>
 </tr>
 <%for (int i=0; i<resv.size(); i++){ %>
 <tr>
-<td><%=resv.get(i).getIntsId() %></td><td><%=resv.get(i).getTimeslot().getDatePrint() %></td><td><%=TimeSlot.getSlotTime(resv.get(i).getTimeslot().getSlotNumber())%></td><td><a href="DeleteReservedTimeSlot?id=<%=resv.get(i).getIntsId()%>&year=<%=resv.get(i).getTimeslot().getYear() %>&slotNum=<%=resv.get(i).getTimeslot().getSlotNumber() %>">Remove</a></td>
+<td><%=resv.get(i).getIntsId() %></td><td><%=resv.get(i).getTimeslot().getDatePrint() %></td><td><%=TimeSlot.getSlotTime(resv.get(i).getTimeslot().getSlotNumber())%></td><%if (isAdmin){ %><td><%=resv.get(i).getUsername() %></td><%} %><td><a href="DeleteReservedTimeSlot?id=<%=resv.get(i).getIntsId()%>&year=<%=resv.get(i).getTimeslot().getYear() %>&slotNum=<%=resv.get(i).getTimeslot().getSlotNumber() %>">Remove</a></td>
 </tr>
 <%} %>
 </table>

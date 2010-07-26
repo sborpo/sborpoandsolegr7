@@ -45,7 +45,10 @@ public class MakeReservation extends HttpServlet {
 			Utils.forwardToSuccessPage("/sborpoandsolegr7/viewUsersReservations.jsp?"+UserManager.Usern+"="+params.get("userId"), request, response);
 			return;
 		}catch (ParametersExp e){
+			
 		} catch (SQLException e) {
+			err.setErrorString("Database Error");
+			err.setReason("There was an error updating the database ");
 		} catch (ReservationOverlapingException e) {
 			err.setErrorString("Requested Slot Error");
 			err.setReason("The requested time slot is overlapping with other slot,<br/> please try other instrument" +
