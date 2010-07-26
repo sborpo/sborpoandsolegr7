@@ -8,23 +8,23 @@
 		<link href="/sborpoandsolegr7/css/tableCss.css" rel="stylesheet" type="text/css"/>
 			<body>
 				<h1>Group By Group Type</h1>
-				<xsl:for-each select="Results/Row[not(groupId=preceding::groupId)]/groupId">
+				<xsl:for-each select="Results/Row[not(groupid=preceding::groupid)]/groupid">
 					<xsl:variable name="GROUP" select="."/>
 					<h2>
 						<xsl:text>Group name: </xsl:text><xsl:value-of select="."/>
 					</h2>
 					<table>
 						<xsl:for-each select="/Results/Row[1]/*">
-							<xsl:if test="local-name() != 'groupId' ">
+							<xsl:if test="local-name() != 'groupid' ">
 								<th>
 									<xsl:value-of select="local-name()"/>
 								</th>
 							</xsl:if>
 						</xsl:for-each>
-						<xsl:for-each select="/Results/Row[groupId=$GROUP]">
+						<xsl:for-each select="/Results/Row[groupid=$GROUP]">
 							<tr>
 								<xsl:for-each select="*">
-									<xsl:if test="(local-name() != 'groupId' )">
+									<xsl:if test="(local-name() != 'groupid' )">
 										<td>
 											<xsl:value-of select="."/>
 										</td>
@@ -37,7 +37,7 @@
 					<br/><!-- start count-->
 					<xsl:variable name="tmpTotal">
 						<total_amount>
-							<xsl:for-each select="/Results/Row[groupId=$GROUP]">
+							<xsl:for-each select="/Results/Row[groupid=$GROUP]">
 								<item>
 									<xsl:value-of select="slotend - slotbegin"/>
 								</item>

@@ -15,7 +15,7 @@
 					</h3>
 					<table>
 						<xsl:for-each select="/Results/Row[1]/*">
-							<xsl:if test="local-name() != 'instid' and local-name() != 'groupId'">
+							<xsl:if test="local-name() != 'instid' and local-name() != 'groupid'">
 								<th>
 									<xsl:value-of select="local-name()"/>
 								</th>
@@ -24,7 +24,7 @@
 						<xsl:for-each select="/Results/Row[instid=$INST]">
 							<tr>
 								<xsl:for-each select="*">
-									<xsl:if test="(local-name() != 'instid' and local-name() != 'groupId')">
+									<xsl:if test="(local-name() != 'instid' and local-name() != 'groupid')">
 										<td>
 											<xsl:value-of select="."/>
 										</td>
