@@ -13,7 +13,6 @@ public class Researcher extends User {
 			String premissions, String group, String phoneNumber, String address, Blob stream,String email) {
 		super(login, password, name, premissions, group, phoneNumber,address,
 				stream,email);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Researcher()

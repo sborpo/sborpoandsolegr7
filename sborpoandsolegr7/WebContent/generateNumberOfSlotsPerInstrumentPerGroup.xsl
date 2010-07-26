@@ -11,7 +11,7 @@
 				<xsl:for-each select="Results/Row[not(groupId=preceding::groupId)]/groupId">
 					<xsl:variable name="GROUP" select="."/>
 					<h2>
-						<xsl:value-of select="."/>
+						<xsl:text>Group name: </xsl:text><xsl:value-of select="."/>
 					</h2>
 					<table>
 						<xsl:for-each select="/Results/Row[1]/*">
@@ -33,7 +33,7 @@
 							</tr>
 						</xsl:for-each>
 					</table>
-					<hr/>
+
 					<br/><!-- start count-->
 					<xsl:variable name="tmpTotal">
 						<total_amount>
@@ -49,6 +49,7 @@
 					<xsl:value-of select="/Results/Row/instid"/>
 					<xsl:text> for this group is: </xsl:text>
 					<xsl:value-of select="sum($myTotal/total_amount/item)"/><!-- end count --></div>
+					<hr/>
 				</xsl:for-each>
 			</body>
 		</html>

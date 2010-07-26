@@ -85,16 +85,12 @@ public class InstrumentManager {
 
 	public static void addInstrument(String id, String description,
 			String location, String permission, String timeslot, String type)
-	throws SQLException, InstrumentExists {
+	throws SQLException, InstrumentExists, NumberFormatException {
 		Instrument instrument = null;
-		try {
-			instrument = new Instrument(Integer.parseInt(id),type,
-					Integer.parseInt(permission), Integer
-					.parseInt(timeslot),description , location);
-		} catch (NumberFormatException e) {
-			// TODO: add error here
-			e.printStackTrace();
-		}
+		instrument = new Instrument(Integer.parseInt(id),type,
+				Integer.parseInt(permission), Integer
+				.parseInt(timeslot),description , location);
+
 
 		Connection conn = null;
 
@@ -178,11 +174,11 @@ public class InstrumentManager {
 		return null;
 	}
 
-	
+
 	public static Boolean isInstrumentExists (int id,Connection conn) throws SQLException {
 		ResultSet set= null;
 		try{
-			PreparedStatement userExists= Instrument.getDetails(conn, id); //TODO: change
+			PreparedStatement userExists= Instrument.getDetails(conn, id);
 			set= userExists.executeQuery();
 			if (!set.next())
 			{
@@ -198,13 +194,13 @@ public class InstrumentManager {
 			}
 		}
 	}
-	
+
 	public static Boolean isInstrumentExists (int id) throws SQLException {
 		Connection conn=null;
 		ResultSet set= null;
 		try{
 			conn=DbManager.DbConnections.getInstance().getConnection();
-			PreparedStatement userExists= Instrument.getDetails(conn, id); //TODO: change
+			PreparedStatement userExists= Instrument.getDetails(conn, id); 
 			set= userExists.executeQuery();
 			if (!set.next())
 			{
@@ -231,7 +227,7 @@ public class InstrumentManager {
 		try{
 			int instrumentID = Integer.parseInt(id);
 			conn=DbManager.DbConnections.getInstance().getConnection();			
-			PreparedStatement instrumentRemoval= Instrument.removeInstrumnt(conn, instrumentID); //TODO: change
+			PreparedStatement instrumentRemoval= Instrument.removeInstrumnt(conn, instrumentID);
 			instrumentRemoval.execute();
 			conn.commit();
 		}

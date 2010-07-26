@@ -40,7 +40,7 @@ Please Choose Your XSLT Type:<br/>
 <option value="2" >Reserved Slots Of Group Per Instruments</option>
 <% if (XsltTransformer.xsltExists(request.getUserPrincipal().getName())){ %><option value="3">Your Uploaded XSLT Report</option><%} %>
 </select>
-<div class="instID" id="instId" style="display: none">
+<div class="instID" id="instID" style="display: none">
 <label id="lid" for="id">ID</label>
 <input id="id" type="text" maxlength="50" name="instId"/>
  </div>

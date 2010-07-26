@@ -19,7 +19,6 @@ public class ReservationTimesSaver extends HttpServlet {
      */
     public ReservationTimesSaver() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

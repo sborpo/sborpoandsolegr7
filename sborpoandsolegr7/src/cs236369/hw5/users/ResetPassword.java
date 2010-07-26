@@ -24,7 +24,6 @@ public class ResetPassword extends HttpServlet {
      */
     public ResetPassword() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -61,7 +60,9 @@ public class ResetPassword extends HttpServlet {
 			err.setReason("There was a problem accessing the database.");
 			e.printStackTrace();
 		} catch (ParametersExp e) {
-			// TODO Auto-generated catch block
+			err.setLinkStr("Main Page");
+			err.setLink("javascript:history.back(1)");
+			err.setErrorString("Parameter Error");
 			e.printStackTrace();
 		}
 	

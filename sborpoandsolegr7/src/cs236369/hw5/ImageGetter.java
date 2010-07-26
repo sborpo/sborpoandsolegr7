@@ -23,7 +23,6 @@ public class ImageGetter extends HttpServlet {
      */
     public ImageGetter() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

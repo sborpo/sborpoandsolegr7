@@ -83,13 +83,11 @@ public class AddNewUser extends HttpServlet {
 		try {
 			UserUtils.manipulateUser(request, response, manipulator);
 		} catch (InstrumentExists e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  catch (ParametersExp e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstrumentNotExists e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

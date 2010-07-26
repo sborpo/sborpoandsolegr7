@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cs236369.hw5.ErrorInfoBean;
+import cs236369.hw5.Utils;
+
 /**
  * Servlet implementation class Logout
  */
@@ -18,7 +21,6 @@ public class Logout extends HttpServlet {
      */
     public Logout() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,7 +35,8 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		ErrorInfoBean err= Utils.notSupported();
+		Utils.forwardToErrorPage(err,request,response);
 	}
 
 }

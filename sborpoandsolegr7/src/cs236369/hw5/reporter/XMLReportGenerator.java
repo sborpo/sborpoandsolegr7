@@ -40,7 +40,6 @@ public class XMLReportGenerator extends HttpServlet {
 	 */
 	public XMLReportGenerator() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -54,19 +53,19 @@ public class XMLReportGenerator extends HttpServlet {
 		ErrorInfoBean err = new ErrorInfoBean();
 		String styleId=request.getParameter("styleId");
 		String instId=request.getParameter("instId");
-		if (!styleId.equals("1"))
+		if (!styleId.equals("2"))
 		{
 			instId=null;
 		}
 		
-		if ( (!styleId.equals("1")) && (!styleId.equals("2"))  )
+		if ( (!styleId.equals("1")) && (!styleId.equals("2")) && (!styleId.equals("3")) )
 		{
 			err.setErrorString("Parameter Error");
 			err.setReason("The parameters are not correct");
 			Utils.forwardToErrorPage(err, request, response);
 			return;
 		}
-		if ( styleId.equals("1"))
+		if ( styleId.equals("2"))
 		{
 			
 			if ((instId==null) || (instId=="") || (notNumber(instId)))
@@ -115,8 +114,8 @@ public class XMLReportGenerator extends HttpServlet {
 			
 
 			con=DbManager.DbConnections.getInstance().getConnection();
-			PreparedStatement report=(styleId.equals("1"))? con.prepareStatement("select * from reservations") :  con.prepareStatement("select * from reservations where instId=?") ;//TODO: change
-			if (styleId.equals("1"))
+			PreparedStatement report=(!styleId.equals("2"))? con.prepareStatement("select * from reservations") :  con.prepareStatement("select * from reservations where instId=?") ;//TODO: change
+			if (styleId.equals("2"))
 			{
 				report.setLong(1, Long.valueOf(instId));
 			}
@@ -160,11 +159,11 @@ public class XMLReportGenerator extends HttpServlet {
 	private boolean notNumber(String instId) {
 		try{
 		Long.valueOf(instId);
-		return true;
+		return false;
 		}
 		catch (NumberFormatException e)
 		{
-			return false;
+			return true;
 		}
 	
 	}
@@ -173,7 +172,8 @@ public class XMLReportGenerator extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		ErrorInfoBean err= Utils.notSupported();
+		Utils.forwardToErrorPage(err,request,response);
 	}
 
 }
