@@ -6,7 +6,8 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%><html>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="java.net.URLEncoder"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>See Available Reservations</title>
@@ -78,11 +79,12 @@ to: <%=weekEnd.getDay()%>/<%=weekEnd.getMonth()%>/<%=weekEnd.getYear()%></h3>
 </select></div>
 <br></br>
 <table>
+<%String typeInc = URLEncoder.encode(type); %>
 	<tr style="border: none">
-		<td colspan="4" style="text-align: left; border: none"><a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=prevWeek.getYear()%>&month=<%=prevWeek.getMonth()%>&day=<%=prevWeek.getDay()%>&type=<%=type%>&slotSequence=<%=k%>>&lt;&lt;</a>
+		<td colspan="4" style="text-align: left; border: none"><a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=prevWeek.getYear()%>&month=<%=prevWeek.getMonth()%>&day=<%=prevWeek.getDay()%>&type=<%=typeInc%>&slotSequence=<%=k%>>&lt;&lt;</a>
 		Previous Week</td>
 		<td colspan="4" style="text-align: right; border: none">Next Week
-		<a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=nextWeek.getYear()%>&month=<%=nextWeek.getMonth()%>&day=<%=nextWeek.getDay()%>&type=<%=type%>&slotSequence=<%=k%>>
+		<a href=/sborpoandsolegr7/displayResvTimeline.jsp?year=<%=nextWeek.getYear()%>&month=<%=nextWeek.getMonth()%>&day=<%=nextWeek.getDay()%>&type=<%=typeInc%>&slotSequence=<%=k%>>
 		&gt;&gt;</a></td>
 	</tr>
 	<tr>
