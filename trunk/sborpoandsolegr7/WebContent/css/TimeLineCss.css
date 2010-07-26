@@ -1,0 +1,35 @@
+table {
+	border-collapse: collapse;
+	width: 90%;
+	border-top: none;
+}
+
+th {
+	height: 3em;
+	text-align: center;
+}
+
+td {
+	padding: 1em;
+	text-align: center;
+}
+
+table,th,td {
+	border: 1px solid black;
+}
+
+td.notAvailible {
+	background-color: red;
+}
+
+td.taken {
+	background-color: yellow;
+}
+
+td.available {
+	background-color: lightgreen;
+}
+
+div.hours {
+	text-align: center;
+}
