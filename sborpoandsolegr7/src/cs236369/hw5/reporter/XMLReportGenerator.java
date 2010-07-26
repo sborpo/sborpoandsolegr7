@@ -111,6 +111,7 @@ public class XMLReportGenerator extends HttpServlet {
 			Document doc = builder.newDocument();
 			Element results = doc.createElement("Results");
 			doc.appendChild(results);
+			System.out.println(doc);
 			
 
 			con=DbManager.DbConnections.getInstance().getConnection();
