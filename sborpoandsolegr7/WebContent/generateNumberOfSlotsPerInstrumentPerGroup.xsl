@@ -5,6 +5,7 @@
 	<xsl:template match="/">
 		<html>
 		<link rel="stylesheet" type="text/css" href="defualtCss.css" />
+		<link href="/sborpoandsolegr7/css/tableCss.css" rel="stylesheet" type="text/css"/>
 			<body>
 				<h2>Group By Group Type</h2>
 				<xsl:for-each select="Results/Row[not(groupId=preceding::groupId)]/groupId">
@@ -12,12 +13,12 @@
 					<h3>
 						<xsl:value-of select="."/>
 					</h3>
-					<table border="1">
+					<table>
 						<xsl:for-each select="/Results/Row[1]/*">
 							<xsl:if test="local-name() != 'groupId' ">
-								<td>
+								<th>
 									<xsl:value-of select="local-name()"/>
-								</td>
+								</th>
 							</xsl:if>
 						</xsl:for-each>
 						<xsl:for-each select="/Results/Row[groupId=$GROUP]">
