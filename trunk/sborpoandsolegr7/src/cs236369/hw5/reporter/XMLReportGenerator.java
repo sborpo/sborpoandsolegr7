@@ -82,7 +82,7 @@ public class XMLReportGenerator extends HttpServlet {
 				}
 			}
 			PrintWriter sw = response.getWriter();
-			String str= getServletContext().getRealPath("groupReservationsByUserGroup.xsl"); //TODO: Boris
+			String str= getServletContext().getRealPath("/sborpoandsolegr7/groupReservationsByUserGroup.xsl"); 
 			XsltTransformer.transform(doc, str, response.getWriter());
 			
 			System.out.println(sw);
