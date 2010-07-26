@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE CATALOG [
+<!ELEMENT Results (Row*)>
+<!ELEMENT instid (#PCDATA)>
+<!ELEMENT year (#PCDATA)>
+<!ELEMENT month (#PCDATA)>
+<!ELEMENT day (#PCDATA)>
+<!ELEMENT slotbegin (#PCDATA)>
+<!ELEMENT slotend (#PCDATA)>
+<!ELEMENT userId (#PCDATA)>
+<!ELEMENT groupId (#PCDATA)>
+]>
