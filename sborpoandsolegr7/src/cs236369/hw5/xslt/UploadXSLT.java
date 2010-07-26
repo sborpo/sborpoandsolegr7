@@ -66,6 +66,7 @@ public class UploadXSLT extends HttpServlet {
 		String xsltFile=Streams.asString(stream);
 		String currentUser=request.getUserPrincipal().getName();
 		insertXsltFile(currentUser,xsltFile);
+		Utils.forwardToSuccessPage("/sborpoandsolegr7/reportTypeSelector.jsp", request, response);
 		return;
 		}
 		catch (SQLException e) {
