@@ -53,6 +53,9 @@ public class MakeReservation extends HttpServlet {
 			err.setErrorString("Requested Slot Error");
 			err.setReason("The requested time slot is overlapping with other slot,<br/> please try other instrument" +
 					"or other timeslot. ");
+		} catch (InstrumentNotExists e) {
+			err.setErrorString("Instrument Error");
+			err.setReason("The requested instrument doesn't exists ");
 		}
 
 		Utils.forwardToErrorPage(err, request, response);

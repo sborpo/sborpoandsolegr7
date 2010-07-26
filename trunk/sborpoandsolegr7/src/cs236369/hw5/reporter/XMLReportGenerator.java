@@ -45,31 +45,28 @@ public class XMLReportGenerator extends HttpServlet {
 		DocumentBuilder builder = null;
 		Connection con=null;
 		ResultSet set= null;
+		String styleId=request.getParameter("styleId");
+		if ( (!styleId.equals("1")) && (!styleId.equals("2"))  )
+		{
+			//TODO: go to error page
+		}
 		try {
 			builder = factory.newDocumentBuilder();
 
 			Document doc = builder.newDocument();
 			Element results = doc.createElement("Results");
 			doc.appendChild(results);
-
 			
 
 			con=DbManager.DbConnections.getInstance().getConnection();
 			PreparedStatement report= con.prepareStatement("select * from reservations"); //TODO: change
 			set= report.executeQuery();
 
-
-
 			ResultSetMetaData rsmd = null;
-
 			rsmd = set.getMetaData();
-
+			
 			int colCount;
-
 			colCount = rsmd.getColumnCount();
-
-
-
 			while (set.next()) {
 				Element row = doc.createElement("Row");
 				results.appendChild(row);
@@ -81,14 +78,16 @@ public class XMLReportGenerator extends HttpServlet {
 					row.appendChild(node);
 				}
 			}
-			PrintWriter sw = response.getWriter();
-			String str= getServletContext().getRealPath("/sborpoandsolegr7/groupReservationsByUserGroup.xsl"); 
-			XsltTransformer.transform(doc, str, response.getWriter());
-			
-			System.out.println(sw);
-
-
-			System.out.println(sw.toString());
+			String str=null;
+			if (request.getParameter("styleId").equals("1"))
+			{
+				str= getServletContext().getRealPath( "generateNumberOfSlotsPerInstrumentPerGroup.xsl"); 
+			}
+			else
+			{
+				str= getServletContext().getRealPath( "groupReservationsByUserGroup.xsl"); 
+			}
+			XsltTransformer.transform(doc,str, response.getWriter());
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

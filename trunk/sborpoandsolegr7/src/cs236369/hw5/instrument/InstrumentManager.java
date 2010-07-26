@@ -178,6 +178,27 @@ public class InstrumentManager {
 		return null;
 	}
 
+	
+	public static Boolean isInstrumentExists (int id,Connection conn) throws SQLException {
+		ResultSet set= null;
+		try{
+			PreparedStatement userExists= Instrument.getDetails(conn, id); //TODO: change
+			set= userExists.executeQuery();
+			if (!set.next())
+			{
+				return false;
+
+			}
+			return true;
+		}
+		finally{
+			if (set!=null)
+			{
+				set.close();
+			}
+		}
+	}
+	
 	public static Boolean isInstrumentExists (int id) throws SQLException {
 		Connection conn=null;
 		ResultSet set= null;
