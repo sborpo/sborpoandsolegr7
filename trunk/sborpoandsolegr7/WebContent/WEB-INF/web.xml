@@ -155,6 +155,7 @@
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
+       <role-name>researcher</role-name>
     </auth-constraint>
   </security-constraint>
   <security-constraint>
@@ -168,6 +169,7 @@
     </web-resource-collection>
     <auth-constraint>
       <role-name>admin</role-name>
+       <role-name>researcher</role-name>
     </auth-constraint>
   </security-constraint>
   <security-constraint>

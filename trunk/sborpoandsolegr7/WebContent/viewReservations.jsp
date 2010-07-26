@@ -22,11 +22,12 @@ text-align: left;
 <form method="GET" action="/sborpoandsolegr7/displayResvTimeline.jsp" onsubmit="return validateSlotsInput('slotInput');">
 <fieldset>
 <legend id="timeTableLeg">View Timetable On:</legend>
+<%Calendar cal = Calendar.getInstance(); %>
 <br/>
 Instrument Type : <input type="text" size="15" maxlength="25" name="type"><br><br>
-Day : <select  name="day"><%for (int i=1; i<=30; i++){ %><option value=<%=i %>><%=i %></option><%} %></select>&nbsp;&nbsp;&nbsp;
-Month : <select name="month"><%for (int i=1; i<=12; i++){ %><option value=<%=i %>><%=i %></option><%} %></select>&nbsp;&nbsp;&nbsp;
-Year : <select name="year"><%	Calendar cal = Calendar.getInstance(); int year=cal.get(Calendar.YEAR); for (int i=year; i<=year+3; i++){ %><option value=<%=i %>><%=i %></option><%} %></select>&nbsp;&nbsp;&nbsp;
+Day : <select  name="day"><%for (int i=1; i<=30; i++){ %><option <%if (cal.get(Calendar.DAY_OF_MONTH)==i) {%> selected="selected" <%} %> value=<%=i %>><%=i %></option><%} %></select>&nbsp;&nbsp;&nbsp;
+Month : <select name="month"><%for (int i=1; i<=12; i++){ %><option  <%if ((cal.get(Calendar.MONTH)+1)==i) {%> selected="selected" <%} %> value=<%=i %>><%=i %></option><%} %></select>&nbsp;&nbsp;&nbsp;
+Year : <select name="year"><%	 int year=cal.get(Calendar.YEAR); for (int i=year; i<=year+3; i++){ %><option <%if ((cal.get(Calendar.YEAR))==i) {%> selected="selected" <%} %> value=<%=i %>><%=i %></option><%} %></select>&nbsp;&nbsp;&nbsp;
 <br/>
 <br/>
 <label>Sequence Slots Number : </label><input type="text" size="4" maxlength="4" id="slotInput" name="slotSequence" onchange="javascript:validateSlotsInput('slotInput')"><br><br>
