@@ -31,7 +31,6 @@ public class AddNewInstrument extends HttpServlet {
 	 */
 	public AddNewInstrument() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

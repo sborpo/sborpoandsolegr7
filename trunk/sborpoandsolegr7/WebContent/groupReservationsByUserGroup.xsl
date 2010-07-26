@@ -11,7 +11,7 @@
 				<xsl:for-each select="Results/Row[not(instid=preceding::instid)]/instid">
 					<xsl:variable name="INST" select="."/>
 					<h3>
-						<xsl:value-of select="."/>
+						<xsl:text>Instrumnent id: </xsl:text><xsl:value-of select="."/>
 					</h3>
 					<table>
 						<xsl:for-each select="/Results/Row[1]/*">
@@ -33,9 +33,10 @@
 							</tr>
 						</xsl:for-each>
 					</table>
-					<hr/>
+					
 					<div align="center"><xsl:text>Total number of reservation for this instrument: </xsl:text>
 					<xsl:value-of select="count(/Results/Row[instid=$INST])"/></div>
+					<hr/>
 					<br/>
 				</xsl:for-each>
 			</body>

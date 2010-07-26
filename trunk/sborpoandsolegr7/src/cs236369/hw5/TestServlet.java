@@ -1,5 +1,4 @@
 package cs236369.hw5;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -22,7 +21,6 @@ public class TestServlet extends HttpServlet {
      */
     public TestServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -34,7 +32,6 @@ public class TestServlet extends HttpServlet {
 		try {
 			DbManager.constructTables();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			wr.println("An error was Occured");
 			return;
 		}
@@ -45,7 +42,6 @@ public class TestServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

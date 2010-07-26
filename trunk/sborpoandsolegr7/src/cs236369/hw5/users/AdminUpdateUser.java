@@ -32,7 +32,6 @@ public class AdminUpdateUser extends HttpServlet {
      */
     public AdminUpdateUser() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -80,13 +79,10 @@ DeafaultManipulator manipulator = new DeafaultManipulator() {
 		try {
 			UserUtils.manipulateUser(request, response, manipulator);
 		} catch (InstrumentExists e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (cs236369.hw5.Utils.ParametersExp e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstrumentNotExists e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

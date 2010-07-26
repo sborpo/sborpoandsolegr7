@@ -22,7 +22,6 @@ public class ApplicationStarts implements ServletContextListener {
      * Default constructor. 
      */
     public ApplicationStarts() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -32,13 +31,10 @@ public class ApplicationStarts implements ServletContextListener {
      try {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
 	} catch (InstantiationException e1) {
-		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	} catch (IllegalAccessException e1) {
-		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	} catch (ClassNotFoundException e1) {
-		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
     Utils.redirectDelay=Integer.parseInt(arg0.getServletContext().getInitParameter("successRedirectDelay"));

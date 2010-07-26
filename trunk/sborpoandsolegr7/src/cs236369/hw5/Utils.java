@@ -116,7 +116,6 @@ public class Utils {
 			err.setReason("The id that you have tried to add already <br/> exists in the system.");
 			e.printStackTrace();
 		} catch (ReservationOverlapingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Utils.forwardToErrorPage(err, request, response);
@@ -207,7 +206,6 @@ public class Utils {
 			HttpServletResponse response, DeafaultManipulator manipulator) throws InstrumentNotExists, FileTooBigExp, FileUploadException, IOException {
 		HashMap<String, String> params = new HashMap<String, String>();
 		ErrorInfoBean err = new ErrorInfoBean();
-		// TODO: err
 		manipulator.returnLinkSetter(err);
 		try {	
 				handleParameters(request, params);
@@ -228,7 +226,8 @@ public class Utils {
 			err.setReason("The id that you have tried to add already <br/> exists in the system.");
 			e.printStackTrace();
 		} catch (ReservationOverlapingException e) {
-			// TODO Auto-generated catch block
+			err.setErrorString("Database Error");
+			err.setReason("The Time-Slot you requested is no longer available");
 			e.printStackTrace();
 		}
 		Utils.forwardToErrorPage(err, request, response);

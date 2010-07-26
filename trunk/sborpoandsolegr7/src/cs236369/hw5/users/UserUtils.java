@@ -144,8 +144,6 @@ public class UserUtils {
 		 catch (Utils.ParametersExp e) {
 			
 		} catch (ReservationOverlapingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		Utils.forwardToErrorPage(err,request,response);
 	}

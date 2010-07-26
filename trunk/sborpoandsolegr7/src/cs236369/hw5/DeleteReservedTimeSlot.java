@@ -25,7 +25,6 @@ public class DeleteReservedTimeSlot extends HttpServlet {
      */
     public DeleteReservedTimeSlot() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

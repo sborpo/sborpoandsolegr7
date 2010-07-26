@@ -23,7 +23,6 @@ public class DeleteInstrument extends HttpServlet {
      */
     public DeleteInstrument() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

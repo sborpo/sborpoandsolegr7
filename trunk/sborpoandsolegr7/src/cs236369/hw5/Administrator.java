@@ -21,7 +21,6 @@ public class Administrator extends User{
 
 	public Administrator(String login) {
 		super(login);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -28,7 +28,6 @@ public class SearchLab extends HttpServlet {
      */
     public SearchLab() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
