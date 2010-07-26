@@ -50,7 +50,7 @@ int i =Integer.parseInt(request.getParameter("i"));
 int j =Integer.parseInt(request.getParameter("j"));
 int k =Integer.parseInt(request.getParameter("k"));
 String type =request.getParameter("type");
-TimeSlot chosenSlot = TimeSlot.addTimeSlot(new TimeSlot(year, month, day),i);
+TimeSlot chosenSlot = TimeSlot.addTimeSlot(new TimeSlot(year, month, day),i-1);
 
 String[][] arr = new ReservationManager.ReservationTable(
 		year,chosenSlot.getMonth(), chosenSlot.getDay(), k, type,request.getUserPrincipal().getName()).getReservationTable();
