@@ -120,9 +120,9 @@ public  class ReservationManager {
 			return arr;
 		}
 		
-		public static LinkedList<Instrument> parseArrayOfInstruments(String[][] arr,TimeSlot time) {
+		public static LinkedList<Instrument> parseArrayOfInstruments(String[][] arr,int k, int j) {
 			LinkedList<Instrument> result = new LinkedList<Instrument>();
-			String[] instrumentIds = arr[id-1][day-1].split(";")[1].split(" ");
+			String[] instrumentIds = arr[k-1][j-1].split(";")[1].split(" ");
 			for (int i = 1; i < instrumentIds.length ; i++)  {
 				try {
 					result.add(InstrumentManager.getInstrumentDetails(Integer.parseInt(instrumentIds[i])));
