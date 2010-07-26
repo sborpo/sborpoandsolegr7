@@ -12,7 +12,7 @@
 <title>See Available Reservations</title>
 <link rel="stylesheet" type="text/css" href="addUser.css" />
 <link rel="stylesheet" type="text/css" href="defualtCss.css" />
-<script src="/sborpoandsolegr/js/displayTimeLine.js" type="text/javascript"></script> 
+<script src="/sborpoandsolegr7/js/displayTimeLine.js" type="text/javascript"></script> 
 
 <link rel="stylesheet" type="text/css" href="/sborpoandsolegr7/css/TimeLineCss.css" />
 
