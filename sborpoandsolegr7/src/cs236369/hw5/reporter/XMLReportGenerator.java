@@ -22,8 +22,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import cs236369.hw5.ErrorInfoBean;
+import cs236369.hw5.Utils;
 import cs236369.hw5.db.DbManager;
 import cs236369.hw5.xslt.XsltTransformer;
+import cs236369.hw5.xslt.XsltTransformer.NoXsltStyleInDb;
 import cs236369.hw5.xslt.XsltTransformer.TransformationError;
 
 /**
@@ -48,10 +51,14 @@ public class XMLReportGenerator extends HttpServlet {
 		DocumentBuilder builder = null;
 		Connection con=null;
 		ResultSet set= null;
+		ErrorInfoBean err = new ErrorInfoBean();
 		String styleId=request.getParameter("styleId");
 		if ( (!styleId.equals("1")) && (!styleId.equals("2"))  )
 		{
-			//TODO: go to error page
+			err.setErrorString("Parameter Error");
+			err.setReason("The parameters are not correct");
+			Utils.forwardToErrorPage(err, request, response);
+			return;
 		}
 		try {
 			builder = factory.newDocumentBuilder();
@@ -89,14 +96,29 @@ public class XMLReportGenerator extends HttpServlet {
 				File f = new File(str);
 				xsltInputStream= new FileInputStream(f);
 			}
-			else
+			if (request.getParameter("styleId").equals("2"))
 			{
 				str= getServletContext().getRealPath( "groupReservationsByUserGroup.xsl"); 
 				File f = new File(str);
 				xsltInputStream= new FileInputStream(f);
 			}
+			if (request.getParameter("styleId").equals("3"))
+			{
+				//get the uploaded file from the database
+				try {
+					xsltInputStream= XsltTransformer.getXsltFromDb(request.getUserPrincipal().getName());
+				} catch (NoXsltStyleInDb e) {
+					err.setErrorString("XSLT File Error");
+					err.setReason("You haven't uploaded and XSLT file yet, please do it.");
+					Utils.forwardToErrorPage(err, request, response);
+					return;
+				}
+			}
+			err.setErrorString("XSLT Transform Error");
+			err.setReason("There was a problem transforming the XML to HTML wil the given XSLT");
 			
 			XsltTransformer.transform(doc,xsltInputStream, response.getWriter());
+			return;
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,17 +129,7 @@ public class XMLReportGenerator extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-
-			try {
-				con.close();
-				set.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
+		Utils.forwardToErrorPage(err, request, response);
 	}
 
 	/**
