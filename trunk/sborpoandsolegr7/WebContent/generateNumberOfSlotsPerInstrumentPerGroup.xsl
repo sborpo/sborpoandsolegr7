@@ -4,6 +4,7 @@
 	<xsl:key name="groupID" match="Results/Row[not(groupId=preceding::groupId)]/groupId" use="."/>
 	<xsl:template match="/">
 		<html>
+		<link rel="stylesheet" type="text/css" href="defualtCss.css" />
 			<body>
 				<h2>Group By Group Type</h2>
 				<xsl:for-each select="Results/Row[not(groupId=preceding::groupId)]/groupId">
