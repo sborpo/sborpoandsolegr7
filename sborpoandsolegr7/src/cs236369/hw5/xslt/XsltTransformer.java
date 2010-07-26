@@ -1,14 +1,12 @@
 package cs236369.hw5.xslt;
 
-import java.io.InputStream;
+import java.io.File;
 import java.io.Writer;
+import java.net.URL;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -16,15 +14,26 @@ import javax.xml.transform.stream.StreamSource;
 import org.w3c.dom.Document;
 
 public class XsltTransformer {
-	public static class TransformationError extends Exception{}
+	public static class TransformationError extends Exception{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;}
 	
-	public static void transform(Document doc, InputStream xsltInputStream,Writer resultWriter) throws TransformationError
+	public static void transform(Document doc, String url,Writer resultWriter) throws TransformationError
 	{
 		try{
 		Document inDoc= doc;
 		TransformerFactory tFactory= TransformerFactory.newInstance();
-		Transformer transofrmer= tFactory.newTransformer(new StreamSource(xsltInputStream));
+		File f = new File(url);
+		StreamSource stream = new StreamSource(f);
+		System.out.println(f.toString());
+		System.out.println(f.canRead());
+		System.out.println(f.length());
 		
+		Transformer transofrmer= tFactory.newTransformer(stream);
+	
 		transofrmer.transform(new DOMSource(inDoc), new StreamResult(resultWriter));
 		transofrmer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 		transofrmer.setOutputProperty(OutputKeys.METHOD, "xml");
@@ -32,7 +41,9 @@ public class XsltTransformer {
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			throw new TransformationError();
+			
 		}
 		
 		
