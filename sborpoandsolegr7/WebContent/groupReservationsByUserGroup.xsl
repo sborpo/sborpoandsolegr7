@@ -34,8 +34,8 @@
 						</xsl:for-each>
 					</table>
 					<hr/>
-					<div align="center"><xsl:text>Total number of reservation for this instrument: </xsl:text></div>
-					<xsl:value-of select="count(/Results/Row[instid=$INST])"/>
+					<div align="center"><xsl:text>Total number of reservation for this instrument: </xsl:text>
+					<xsl:value-of select="count(/Results/Row[instid=$INST])"/></div>
 					<br/>
 				</xsl:for-each>
 			</body>
