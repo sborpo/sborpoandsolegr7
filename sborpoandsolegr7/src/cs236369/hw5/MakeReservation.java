@@ -37,7 +37,7 @@ public class MakeReservation extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HashMap<String, String> params= paramGetter(request, new String [] {"id","slotYear","slotNum","k","userId"});
+		HashMap<String, String> params= Utils.paramGetter(request, new String [] {"id","slotYear","slotNum","k","userId"});
 		ErrorInfoBean err = new ErrorInfoBean();
 		try{
 			makeReservationCheckParameters(params, err);
@@ -62,17 +62,7 @@ public class MakeReservation extends HttpServlet {
 		
 	}
 
-	private HashMap<String,String> paramGetter(HttpServletRequest request,String[] params)
-	{
-		HashMap<String, String> paramsMap= new HashMap<String, String>();
-		for (String parameter : params) {
-			if (request.getParameter(parameter)!=null)
-			{
-				paramsMap.put(parameter, request.getParameter(parameter));
-			}
-		}
-		return paramsMap;
-	}
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -175,9 +165,9 @@ public class MakeReservation extends HttpServlet {
 			err.setReason("K must be a number");
 			throw new Utils.ParametersExp(err);
 		}
-		if (id<0 || slotNum<0 || slotYear<0 || k<0) {
+		if (id<0 || slotNum<0 || slotYear<0 || slotNum>TimeSlot.numberOfTimeSlotsInAYear || k<0) {
 			err.setErrorString("Parameters Error");
-			err.setReason("All values must be above zero");
+			err.setReason("The values are not legal");
 			throw new Utils.ParametersExp(err);
 		}
 		
