@@ -14,6 +14,18 @@ width:60%;
 text-align: left;
 }
 </style>
+
+<script type="text/javascript">
+function showSelect(value) {
+	id = 'instID';
+	if (value == 2) {
+		document.getElementById(id).style.display = '';;
+	}
+	else {
+		document.getElementById(id).style.display = 'none';;
+	}	
+}
+</script>
 </head>
 <body>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
@@ -23,11 +35,15 @@ text-align: left;
 <div class="centeredBox">
 <form action="XMLReportGenerator"  method="get">
 Please Choose Your XSLT Type:<br/>
-<select name="styleId">
+<select name="styleId" onchange="showSelect(value)">
 <option value="1">Reserved Slots Of Instruments Per Group</option>
-<option value="2">Reserved Slots Of Group Per Instruments</option>
+<option value="2" >Reserved Slots Of Group Per Instruments</option>
 <% if (XsltTransformer.xsltExists(request.getUserPrincipal().getName())){ %><option value="3">Your Uploaded XSLT Report</option><%} %>
 </select>
+<div class="instID" id="instId" style="display: none">
+<label id="lid" for="id">ID</label>
+<input id="id" type="text" maxlength="50" name="instId"/>
+ </div>
 <br/>
 <input value="Generate Report" type="submit" onclick="this.form.target='_blank';return true;"/>
 </form>
