@@ -113,6 +113,7 @@ Logged in as:
     <ul>
 
       <li><a href="uploadXsltFile.jsp" class="submenlink">Upload XSLT Stylesheet</a></li>
+       <li><a href="reportTypeSelector.jsp" class="submenlink">Generate a report</a></li>
 
      </ul>
 
