@@ -53,6 +53,12 @@ public class XMLReportGenerator extends HttpServlet {
 		ResultSet set= null;
 		ErrorInfoBean err = new ErrorInfoBean();
 		String styleId=request.getParameter("styleId");
+		String instId=request.getParameter("instId");
+		if (!styleId.equals("1"))
+		{
+			instId=null;
+		}
+		
 		if ( (!styleId.equals("1")) && (!styleId.equals("2"))  )
 		{
 			err.setErrorString("Parameter Error");
@@ -60,34 +66,21 @@ public class XMLReportGenerator extends HttpServlet {
 			Utils.forwardToErrorPage(err, request, response);
 			return;
 		}
-		try {
-			builder = factory.newDocumentBuilder();
-
-			Document doc = builder.newDocument();
-			Element results = doc.createElement("Results");
-			doc.appendChild(results);
+		if ( styleId.equals("1"))
+		{
 			
-
-			con=DbManager.DbConnections.getInstance().getConnection();
-			PreparedStatement report= con.prepareStatement("select * from reservations"); //TODO: change
-			set= report.executeQuery();
-
-			ResultSetMetaData rsmd = null;
-			rsmd = set.getMetaData();
-			
-			int colCount;
-			colCount = rsmd.getColumnCount();
-			while (set.next()) {
-				Element row = doc.createElement("Row");
-				results.appendChild(row);
-				for (int i = 1; i <= colCount; i++) {
-					String columnName = rsmd.getColumnName(i);
-					Object value = set.getObject(i);
-					Element node = doc.createElement(columnName);
-					node.appendChild(doc.createTextNode(value.toString()));
-					row.appendChild(node);
-				}
+			if ((instId==null) || (instId=="") || (notNumber(instId)))
+			{
+			err.setErrorString("Parameter Error");
+			err.setReason("The parameters are not correct");
+			Utils.forwardToErrorPage(err, request, response);
+			return;
 			}
+		}
+		try {
+			
+			
+			
 			String str=null;
 			InputStream xsltInputStream=null;
 			if (request.getParameter("styleId").equals("1"))
@@ -114,6 +107,38 @@ public class XMLReportGenerator extends HttpServlet {
 					return;
 				}
 			}
+			builder = factory.newDocumentBuilder();
+
+			Document doc = builder.newDocument();
+			Element results = doc.createElement("Results");
+			doc.appendChild(results);
+			
+
+			con=DbManager.DbConnections.getInstance().getConnection();
+			PreparedStatement report=(styleId.equals("1"))? con.prepareStatement("select * from reservations") :  con.prepareStatement("select * from reservations where instId=?") ;//TODO: change
+			if (styleId.equals("1"))
+			{
+				report.setLong(1, Long.valueOf(instId));
+			}
+			set= report.executeQuery();
+
+			ResultSetMetaData rsmd = null;
+			rsmd = set.getMetaData();
+			
+			int colCount;
+			colCount = rsmd.getColumnCount();
+			while (set.next()) {
+				Element row = doc.createElement("Row");
+				results.appendChild(row);
+				for (int i = 1; i <= colCount; i++) {
+					String columnName = rsmd.getColumnName(i);
+					Object value = set.getObject(i);
+					Element node = doc.createElement(columnName);
+					node.appendChild(doc.createTextNode(value.toString()));
+					row.appendChild(node);
+				}
+			}
+
 			err.setErrorString("XSLT Transform Error");
 			err.setReason("There was a problem transforming the XML to HTML wil the given XSLT");
 			
@@ -130,6 +155,18 @@ public class XMLReportGenerator extends HttpServlet {
 			e.printStackTrace();
 		}
 		Utils.forwardToErrorPage(err, request, response);
+	}
+
+	private boolean notNumber(String instId) {
+		try{
+		Long.valueOf(instId);
+		return true;
+		}
+		catch (NumberFormatException e)
+		{
+			return false;
+		}
+	
 	}
 
 	/**
