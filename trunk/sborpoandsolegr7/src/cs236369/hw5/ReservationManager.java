@@ -251,12 +251,19 @@ public  class ReservationManager {
 	
 	public static class UserReservation
 	{
+		public String getUsername() {
+			return username;
+		}
+		public void setUsername(String username) {
+			this.username = username;
+		}
 		public long getIntsId() {
 			return intsId;
 		}
 		public TimeSlot getTimeslot() {
 			return timeslot;
 		}
+		private String username;
 		private long intsId;
 		private TimeSlot timeslot;
 		public UserReservation(long intsId, TimeSlot timeslot) {
@@ -275,12 +282,14 @@ public  class ReservationManager {
 		ArrayList<UserReservation> ans = new ArrayList<UserReservation>();
 		try{	
 			 conn=DbManager.DbConnections.getInstance().getConnection();
-			 String query="SELECT instId,year,slotbegin FROM reservations ";
+			 String query="SELECT instId,year,slotbegin,userId FROM reservations ";
 			 PreparedStatement prepareStatement = conn.prepareStatement(query);
 			 set= prepareStatement.executeQuery();
 			 while (set.next())
 			 {
-				 ans.add(new UserReservation(set.getLong("instId"), new TimeSlot(set.getInt("year"), set.getInt("slotbegin"))));
+				 UserReservation res= new UserReservation(set.getLong("instId"), new TimeSlot(set.getInt("year"), set.getInt("slotbegin")));
+				 res.setUsername(set.getString("userId"));
+				 ans.add(res);
 			 }
 			 return ans;
 		} finally
@@ -690,6 +699,8 @@ public  class ReservationManager {
 			int year = Integer.parseInt(slotYear);
 			int length = Integer.parseInt(k);
 			conn=DbManager.DbConnections.getInstance().getConnection();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 			if (areReservationsOverlap(conn, new TimeSlot(year, num), length)) {
 				throw new ReservationOverlapingException ();
 			}
