@@ -707,7 +707,7 @@ public  class ReservationManager {
 			{
 				throw new UserManager.UserNotExists();
 			}
-			if (!InstrumentManager.isInstrumentExists(Integer.getInteger(id), conn))
+			if (!InstrumentManager.isInstrumentExists(instrumentID, conn))
 			{
 				throw new InstrumentManager.InstrumentNotExists();
 			}
