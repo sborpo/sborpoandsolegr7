@@ -26,7 +26,7 @@
   </context-param>
   <context-param>
     <param-name>successRedirectDelay</param-name>
-    <param-value>3</param-value>
+    <param-value>5</param-value>
   </context-param>
   <context-param>
     <param-name>authKey</param-name>
@@ -195,34 +195,6 @@
     <web-resource-collection>
       <web-resource-name>viewUsers.jsp</web-resource-name>
       <url-pattern>/viewUsers.jsp</url-pattern>
-      <http-method>GET</http-method>
-      <http-method>POST</http-method>
-      <http-method>PUT</http-method>
-      <http-method>DELETE</http-method>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>admin</role-name>
-      <role-name>researcher</role-name>
-    </auth-constraint>
-  </security-constraint>
-   <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>uploadXsltFile.jsp</web-resource-name>
-      <url-pattern>/uploadXsltFile.jsp</url-pattern>
-      <http-method>GET</http-method>
-      <http-method>POST</http-method>
-      <http-method>PUT</http-method>
-      <http-method>DELETE</http-method>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>admin</role-name>
-      <role-name>researcher</role-name>
-    </auth-constraint>
-  </security-constraint>
-   <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>UploadXSLT</web-resource-name>
-      <url-pattern>/UploadXSLT</url-pattern>
       <http-method>GET</http-method>
       <http-method>POST</http-method>
       <http-method>PUT</http-method>
@@ -529,12 +501,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>UploadXSLT</display-name>
-    <servlet-name>UploadXSLT</servlet-name>
-    <servlet-class>cs236369.hw5.xslt.UploadXSLT</servlet-class>
+    <display-name>MakeReservation</display-name>
+    <servlet-name>MakeReservation</servlet-name>
+    <servlet-class>cs236369.hw5.MakeReservation</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UploadXSLT</servlet-name>
-    <url-pattern>/UploadXSLT</url-pattern>
+    <servlet-name>MakeReservation</servlet-name>
+    <url-pattern>/MakeReservation</url-pattern>
   </servlet-mapping>
 </web-app>
