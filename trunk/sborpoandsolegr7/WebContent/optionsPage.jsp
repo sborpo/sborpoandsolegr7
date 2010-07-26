@@ -44,13 +44,17 @@ td.groupMemberUsername {padding-left: 18px;}
 
 <%
 int year =Integer.parseInt(request.getParameter("year"));
-int id =Integer.parseInt(request.getParameter("id"));
+int month =Integer.parseInt(request.getParameter("month"));
+int day =Integer.parseInt(request.getParameter("day"));
+int i =Integer.parseInt(request.getParameter("i"));
+int j =Integer.parseInt(request.getParameter("j"));
 int k =Integer.parseInt(request.getParameter("k"));
 String type =request.getParameter("type");
-TimeSlot chosenSlot = new TimeSlot(year, id);
+TimeSlot chosenSlot = TimeSlot.addTimeSlot(new TimeSlot(year, month, day),i);
+
 String[][] arr = new ReservationManager.ReservationTable(
 		year,chosenSlot.getMonth(), chosenSlot.getDay(), k, type,request.getUserPrincipal().getName()).getReservationTable();
-LinkedList<Instrument> instruments = ReservationManager.ReservationTable.parseArrayOfInstruments(arr, chosenSlot);
+LinkedList<Instrument> instruments = ReservationManager.ReservationTable.parseArrayOfInstruments(arr, i, j);
 for ( Instrument instrument : instruments ){
 %>
 <tr class="instruments" id="instruments">
