@@ -5,7 +5,7 @@
 <head>
 <link rel="stylesheet" type="text/css" media="screen" href="defualtCss.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Upload your XSLT file</title>
 </head>
 <body>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>

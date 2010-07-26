@@ -32,7 +32,7 @@ div.transbox p
   }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Success</title>
 <script type="text/javascript">
 function delayer(){
     window.location = "<%=((String)request.getSession().getAttribute("successPage")) %>"
