@@ -110,7 +110,7 @@ Logged in as: <b><%=request.getUserPrincipal().getName()%></b>&nbsp;&nbsp;&nbsp;
   <div class="submenubox">
     <ul>
 
-      <li><a href="test.jsp" class="submenlink">Test</a></li>
+      <li><a href="uploadXsltFile.jsp" class="submenlink">Upload XSLT Stylesheet</a></li>
 
      </ul>
 

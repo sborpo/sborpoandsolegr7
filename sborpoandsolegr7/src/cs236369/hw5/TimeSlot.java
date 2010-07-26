@@ -1,5 +1,8 @@
 package cs236369.hw5;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class TimeSlot {
 	
 	public static int MAX_K=288;
@@ -161,6 +164,19 @@ public class TimeSlot {
 		}
 		return hourStr+String.valueOf(thehour)+":"+minuteStr+String.valueOf(quarter*slotSizeInMinutes);
 		
+	}
+	
+	public String getDatePrint()
+	{
+		return String.valueOf(day)+"/"+String.valueOf(month)+"/"+String.valueOf(year);
+	}
+	
+	public static TimeSlot getTodayTimeSlot()
+	{
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String[] date=sdf.format(cal.getTime()).split("/");
+		return new TimeSlot(Integer.valueOf(date[2]), Integer.valueOf(date[1]),Integer.valueOf(date[0]));
 	}
 	
 	

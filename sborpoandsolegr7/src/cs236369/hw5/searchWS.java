@@ -1,9 +1,7 @@
 package cs236369.hw5;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 import cs236369.hw5.ReservationManager.Period;
@@ -13,12 +11,8 @@ import cs236369.hw5.ReservationManager.Period;
 public class searchWS {
 
 	public String[] search(String[] keywords, int k){
-
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String[] date=sdf.format(cal.getTime()).split("/");
+		TimeSlot initialeTimeSlot= TimeSlot.getTodayTimeSlot();
 		try{
-		TimeSlot initialeTimeSlot= new TimeSlot(Integer.valueOf(date[2]), Integer.valueOf(date[1]),Integer.valueOf(date[0]));
 		HashMap<Long,Period> slots=ReservationManager.searchForSlotsAv(initialeTimeSlot, keywords, k);
 		ArrayList<String> avSlots= new ArrayList<String>();
 		for (Period period : slots.values()) {
