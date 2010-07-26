@@ -509,4 +509,14 @@
     <servlet-name>MakeReservation</servlet-name>
     <url-pattern>/MakeReservation</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>XMLReportGenerator</display-name>
+    <servlet-name>XMLReportGenerator</servlet-name>
+    <servlet-class>cs236369.hw5.reporter.XMLReportGenerator</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>XMLReportGenerator</servlet-name>
+    <url-pattern>/XMLReportGenerator</url-pattern>
+  </servlet-mapping>
 </web-app>
