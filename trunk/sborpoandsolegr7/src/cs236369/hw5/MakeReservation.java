@@ -37,63 +37,100 @@ public class MakeReservation extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DeafaultManipulator manipulator = new DeafaultManipulator() {
 
-			@Override
-			public void paramsChecker(HashMap<String, String> params,
-					ErrorInfoBean err) throws ParametersExp {
-				makeReservationCheckParameters(params, err);
-
-			}
-
-			@Override
-			public void returnLinkSetter(ErrorInfoBean err) {
-				err.setLink("viewReservations.jsp");
-				err.setLinkStr("Try again");
-
-			}
-
-			@Override
-			public void manipulate(HashMap<String, String> params,
-					Object image, Object type) throws SQLException,
-					InstrumentExists, ReservationOverlapingException {
-				ReservationManager.makeReservation(params.get("id"),
-				params.get("slotYear"),
-				params.get("slotNum"),
-				params.get("k"), params.get("userID"));
-
-			}
-
-			@Override
-			public void authenticate(HashMap<String, String> params,
-					HttpServletRequest request, HttpServletResponse respone)
-					throws Unauthenticated {
-				if ((request.getUserPrincipal()==null) || (!UserUtils.isAdmin(request)))
-				{
-					throw new UserManager.Unauthenticated();
-				}	
-			}
-		};
-		try {
-			Utils.manipulateReservation(request, response, manipulator);
-		} catch (InstrumentNotExists e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileTooBigExp e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileUploadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ErrorInfoBean err = Utils.notSupported();
+		Utils.forwardToErrorPage(err, request, response);
 	}
 
+	private HashMap<String,String> paramGetter(HttpServletRequest request,String[] params)
+	{
+		HashMap<String, String> paramsMap= new HashMap<String, String>();
+		for (String parameter : params) {
+			if (request.getParameter(parameter)!=null)
+			{
+				paramsMap.put(parameter, request.getParameter(parameter));
+			}
+		}
+		return paramsMap;
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+
+		
+		HashMap<String, String> params= paramGetter(request, new String [] {"id","slotYear","slotNum","k","userId"});
+		ErrorInfoBean err = new ErrorInfoBean();
+		try{
+			makeReservationCheckParameters(params, err);
+			ReservationManager.makeReservation(params.get("id"),params.get("slotYear"),params.get("slotNum"),params.get("k"), params.get("userId"));
+			Utils.forwardToSuccessPage("/sborpoandsolegr7/viewUsersReservations.jsp?"+UserManager.Usern+"="+params.get("userId"), request, response);
+			return;
+		}catch (ParametersExp e){
+		} catch (SQLException e) {
+		} catch (ReservationOverlapingException e) {
+			err.setErrorString("Requested Slot Error");
+			err.setReason("The requested time slot is overlapping with other slot,<br/> please try other instrument" +
+					"or other timeslot. ");
+		}
+
+		Utils.forwardToErrorPage(err, request, response);
+		
+		
+		
+		
+		
+//		DeafaultManipulator manipulator = new DeafaultManipulator() {
+//
+//			@Override
+//			public void paramsChecker(HashMap<String, String> params,
+//					ErrorInfoBean err) throws ParametersExp {
+//				makeReservationCheckParameters(params, err);
+//
+//			}
+//
+//			@Override
+//			public void returnLinkSetter(ErrorInfoBean err) {
+//				err.setLink("viewRservations.jsp");
+//				err.setLinkStr("Try again");
+//
+//			}
+//
+//			@Override
+//			public void manipulate(HashMap<String, String> params,
+//					Object image, Object type) throws SQLException,
+//					InstrumentExists, ReservationOverlapingException {
+//				ReservationManager.makeReservation(params.get("id"),
+//				params.get("slotYear"),
+//				params.get("slotNum"),
+//				params.get("k"), params.get("userID"));
+//
+//			}
+//
+//			@Override
+//			public void authenticate(HashMap<String, String> params,
+//					HttpServletRequest request, HttpServletResponse respone)
+//					throws Unauthenticated {
+//				if ((request.getUserPrincipal()==null) || (!UserUtils.isAdmin(request)))
+//				{
+//					throw new UserManager.Unauthenticated();
+//				}	
+//			}
+//		};
+//		try {
+//			Utils.manipulateInstrument(request, response, manipulator);
+//		} catch (ParametersExp e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (cs236369.hw5.users.UserUtils.ParametersExp e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (InstrumentNotExists e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
+
 
 	protected void makeReservationCheckParameters(
 			HashMap<String, String> params, ErrorInfoBean err) throws ParametersExp {

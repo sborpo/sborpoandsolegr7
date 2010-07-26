@@ -76,7 +76,7 @@ public class DbManager {
 			statment= conn.createStatement(); 
 			String db="CREATE USER 'sborpo'@'%' IDENTIFIED BY 'sborpo';" +
 					" GRANT USAGE ON * . * TO 'sborpo'@'%' IDENTIFIED BY 'sborpo' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ; " +
-					"CREATE DATABASE IF NOT EXISTS `sborpoDB` ;" +
+					" CREATE DATABASE IF NOT EXISTS `sborpoDB` ;" +
 					" GRANT ALL PRIVILEGES ON `sborpoDB` . * TO 'sborpo'@'%';";
 			statment.executeUpdate(db); 
 		}
@@ -103,6 +103,8 @@ public class DbManager {
 		 statment.executeUpdate(reservations); 
 		String userRoles="CREATE TABLE IF NOT EXISTS `user_roles` (`login` varchar(30) NOT NULL, `rolename` varchar(45) NOT NULL, PRIMARY KEY (`login`,`rolename`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		statment.executeUpdate(userRoles); 
+		String xsltDocs="CREATE TABLE IF NOT EXISTS `xslt` ( `login` varchar(30) NOT NULL,  `xslt` text NOT NULL,  PRIMARY KEY (`login`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		statment.executeUpdate(xsltDocs);
 		PreparedStatement statement=User.getUserDetails(conn, "root");
 		set=statement.executeQuery();
 		if (!set.next())

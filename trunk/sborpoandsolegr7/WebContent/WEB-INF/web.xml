@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation=
-"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>sborpoandsolegr7</display-name>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
@@ -100,7 +99,7 @@
       <role-name>researcher</role-name>
     </auth-constraint>
   </security-constraint>
-   <security-constraint>
+  <security-constraint>
     <web-resource-collection>
       <web-resource-name>addInstrument.jsp</web-resource-name>
       <url-pattern>/addInstrument.jsp</url-pattern>
@@ -113,7 +112,7 @@
       <role-name>admin</role-name>
     </auth-constraint>
   </security-constraint>
-    <security-constraint>
+  <security-constraint>
     <web-resource-collection>
       <web-resource-name>viewInstrument.jsp</web-resource-name>
       <url-pattern>/viewInstrument.jsp</url-pattern>
@@ -125,8 +124,8 @@
     <auth-constraint>
       <role-name>admin</role-name>
     </auth-constraint>
-  </security-constraint> 
-     <security-constraint>
+  </security-constraint>
+  <security-constraint>
     <web-resource-collection>
       <web-resource-name>viewInstruments.jsp</web-resource-name>
       <url-pattern>/viewInstruments.jsp</url-pattern>
@@ -165,7 +164,7 @@
       <role-name>admin</role-name>
     </auth-constraint>
   </security-constraint>
-   <security-constraint>
+  <security-constraint>
     <web-resource-collection>
       <web-resource-name>optionsPage.jsp</web-resource-name>
       <url-pattern>/optionsPage.jsp</url-pattern>
@@ -196,6 +195,34 @@
     <web-resource-collection>
       <web-resource-name>viewUsers.jsp</web-resource-name>
       <url-pattern>/viewUsers.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+   <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>uploadXsltFile.jsp</web-resource-name>
+      <url-pattern>/uploadXsltFile.jsp</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>researcher</role-name>
+    </auth-constraint>
+  </security-constraint>
+   <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>UploadXSLT</web-resource-name>
+      <url-pattern>/UploadXSLT</url-pattern>
       <http-method>GET</http-method>
       <http-method>POST</http-method>
       <http-method>PUT</http-method>
@@ -499,5 +526,15 @@
   <servlet-mapping>
     <servlet-name>DeleteInstrument</servlet-name>
     <url-pattern>/DeleteInstrument</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadXSLT</display-name>
+    <servlet-name>UploadXSLT</servlet-name>
+    <servlet-class>cs236369.hw5.xslt.UploadXSLT</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadXSLT</servlet-name>
+    <url-pattern>/UploadXSLT</url-pattern>
   </servlet-mapping>
 </web-app>

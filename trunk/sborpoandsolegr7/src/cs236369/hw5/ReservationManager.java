@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -244,6 +245,76 @@ public  class ReservationManager {
 		private TimeSlot end;
 		
 	}
+	
+	
+	public static class UserReservation
+	{
+		public long getIntsId() {
+			return intsId;
+		}
+		public TimeSlot getTimeslot() {
+			return timeslot;
+		}
+		private long intsId;
+		private TimeSlot timeslot;
+		public UserReservation(long intsId, TimeSlot timeslot) {
+			super();
+			this.intsId = intsId;
+			this.timeslot = timeslot;
+		}
+	}
+	
+	
+
+	
+	public static ArrayList<UserReservation> getAllReservations() throws SQLException
+	{
+		ResultSet set=null;Connection conn=null;
+		ArrayList<UserReservation> ans = new ArrayList<UserReservation>();
+		try{	
+			 conn=DbManager.DbConnections.getInstance().getConnection();
+			 String query="SELECT instId,year,slotbegin FROM reservations ";
+			 PreparedStatement prepareStatement = conn.prepareStatement(query);
+			 set= prepareStatement.executeQuery();
+			 while (set.next())
+			 {
+				 ans.add(new UserReservation(set.getLong("instId"), new TimeSlot(set.getInt("year"), set.getInt("slotbegin"))));
+			 }
+			 return ans;
+		} finally
+				{
+					if (set!=null){set.close();}
+					if (conn!=null){conn.close();}
+				}
+	}
+	
+	public static ArrayList<UserReservation> getUserReservations(String username) throws SQLException
+	{
+		ResultSet set=null;Connection conn=null;
+		TimeSlot current= TimeSlot.getTodayTimeSlot();
+		ArrayList<UserReservation> ans = new ArrayList<UserReservation>();
+		try{	
+			 conn=DbManager.DbConnections.getInstance().getConnection();
+			 String query="SELECT instId,year,slotbegin FROM reservations WHERE (((year=?) AND (slotbegin>=?)) OR (year>?)) AND (userId=?)";
+			 PreparedStatement prepareStatement = conn.prepareStatement(query);
+			 prepareStatement.setInt(1, current.getYear());
+			 prepareStatement.setInt(2, current.getSlotNumber());
+			 prepareStatement.setInt(3, current.getYear());
+			 prepareStatement.setString(4, username);
+			 set= prepareStatement.executeQuery();
+			 
+			 while (set.next())
+			 {
+				 ans.add(new UserReservation(set.getLong("instId"), new TimeSlot(set.getInt("year"), set.getInt("slotbegin"))));
+			 }
+			 return ans;
+		} finally
+				{
+					if (set!=null){set.close();}
+					if (conn!=null){conn.close();}
+				}
+	}
+	
 	public static HashMap<Long,Period> searchForSlotsAv(TimeSlot initialeTimeSlot,String [] descriptions , int k) throws SQLException
 	{
 		

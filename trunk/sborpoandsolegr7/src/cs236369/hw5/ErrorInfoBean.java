@@ -2,6 +2,12 @@ package cs236369.hw5;
 
 public class ErrorInfoBean {
 	
+	public ErrorInfoBean()
+	{
+		linkStr="Back";
+		link="javascript:history.back(1)";
+	}
+	
 	public String getErrorString() {
 		return errorString;
 	}
