@@ -7,6 +7,13 @@
 <link rel="stylesheet" type="text/css" media="screen" href="defualtCss.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<style type="text/css">
+div.centeredBox
+{
+width:60%;
+text-align: left;
+}
+</style>
 </head>
 <body>
 <jsp:include page="/sessionDetailsHeader.jsp"></jsp:include>
@@ -22,7 +29,7 @@ Please Choose Your XSLT Type:<br/>
 <% if (XsltTransformer.xsltExists(request.getUserPrincipal().getName())){ %><option value="3">Your Uploaded XSLT Report</option><%} %>
 </select>
 <br/>
-<input value="Generate Report" type="submit"/>
+<input value="Generate Report" type="submit" onclick="this.form.target='_blank';return true;"/>
 </form>
 <br/>
 <br/>
