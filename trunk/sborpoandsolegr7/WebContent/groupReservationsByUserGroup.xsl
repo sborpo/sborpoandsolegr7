@@ -5,6 +5,7 @@
 	<xsl:template match="/">
 		<html>
 		<link rel="stylesheet" type="text/css" href="defualtCss.css" />
+		<link href="/sborpoandsolegr7/css/tableCss.css" rel="stylesheet" type="text/css"/>
 			<body>
 				<h2>Group By Instrument Type</h2>
 				<xsl:for-each select="Results/Row[not(instid=preceding::instid)]/instid">
@@ -12,18 +13,18 @@
 					<h3>
 						<xsl:value-of select="."/>
 					</h3>
-					<table border="1">
+					<table>
 						<xsl:for-each select="/Results/Row[1]/*">
-							<xsl:if test="local-name() != 'instid' ">
-								<td>
+							<xsl:if test="local-name() != 'instid' and local-name() != 'groupId'">
+								<th>
 									<xsl:value-of select="local-name()"/>
-								</td>
+								</th>
 							</xsl:if>
 						</xsl:for-each>
 						<xsl:for-each select="/Results/Row[instid=$INST]">
 							<tr>
 								<xsl:for-each select="*">
-									<xsl:if test="(local-name() != 'instid' )">
+									<xsl:if test="(local-name() != 'instid' and local-name() != 'groupId')">
 										<td>
 											<xsl:value-of select="."/>
 										</td>
