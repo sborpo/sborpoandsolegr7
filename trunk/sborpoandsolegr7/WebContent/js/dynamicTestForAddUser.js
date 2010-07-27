@@ -13,8 +13,7 @@ $(document).ready(function() {
 		rules: {
 			 username: {
 				required: true,
-				minlength: 2,
-				remote: "UserInDB.jsp"
+				minlength: 2
 			},	
 			name: "required",
 			password: {
@@ -52,7 +51,7 @@ $(document).ready(function() {
 			username: {
 				required: "Enter a username",
 				minlength: jQuery.format("Enter at least {0} characters"),
-				remote: jQuery.format("{0} is already in use")
+
 			},
 			name: "Enter your name",
 			password: {
