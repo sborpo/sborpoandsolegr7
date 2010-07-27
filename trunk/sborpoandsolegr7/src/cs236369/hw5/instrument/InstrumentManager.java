@@ -225,8 +225,11 @@ public class InstrumentManager {
 		Connection conn=null;
 		ResultSet set= null;
 		try{
+		
+			
 			int instrumentID = Integer.parseInt(id);
-			conn=DbManager.DbConnections.getInstance().getConnection();			
+			conn=DbManager.DbConnections.getInstance().getConnection();	
+			conn.setAutoCommit(false);
 			PreparedStatement instrumentRemoval= Instrument.removeInstrumnt(conn, instrumentID);
 			instrumentRemoval.execute();
 			conn.commit();
