@@ -32,7 +32,7 @@ $(document).ready(function() {
 			id : {
 				required: "Specifiy an id",
 				number: "Enter digits only",
-				remote: jQuery.format("{0} is already in use")
+				remote: "Specified ID already in use"
 			},
 			type: {
 				required: "Specify a type",
